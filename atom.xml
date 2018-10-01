@@ -8,6 +8,21 @@
     
       
       <item>
+        <title>Introduction to ARM</title>
+        
+          <description>&lt;h2&gt;ARM Introduction&lt;/h2&gt;
+
+</description>
+        
+        <pubDate>Tue, 25 Sep 2018 08:00:00 +0000</pubDate>
+        <link>
+        //arm-intro</link>
+        <guid isPermaLink="true">//arm-intro</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Introduction to Machine Learning</title>
         
           <description>    &lt;p&gt;Machine learning has got a lot of popularity in our modern world due to the development
@@ -334,39 +349,8 @@
         
         <pubDate>Thu, 31 Aug 2017 08:00:00 +0000</pubDate>
         <link>
-        /intro-to-machine-learning</link>
-        <guid isPermaLink="true">/intro-to-machine-learning</guid>
-      </item>
-      
-    
-      
-      <item>
-        <title>Im using markdown</title>
-        
-          <description>&lt;p&gt;USING MARKDOWN LULZ
-&lt;strong&gt;Get marked DOWN&lt;/strong&gt;&lt;/p&gt;
-
-</description>
-        
-        <pubDate>Thu, 27 Jul 2017 11:00:00 +0000</pubDate>
-        <link>
-        /welcome2</link>
-        <guid isPermaLink="true">/welcome2</guid>
-      </item>
-      
-    
-      
-      <item>
-        <title>Dummy Page</title>
-        
-          <description>&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin non tortor dolor. Aliquam semper non est vel molestie. Donec urna tortor, tempus eget rhoncus vitae, luctus in lorem. Pellentesque vitae mi lectus. Mauris mattis 
-    feugiat justo, sit amet aliquet justo suscipit eget. Vestibulum nec condimentum justo. Etiam vel diam convallis 
-    lorem rhoncus finibus quis nec odio. Nullam a tortor sed turpis auctor tempor. Quisque in semper sem. Praesent ut velit ac tellus ullamcorper rhoncus. Sed dictum faucibus velit, eu cursus dui imperdiet ac. &lt;/p&gt;</description>
-        
-        <pubDate>Thu, 27 Jul 2017 09:00:00 +0000</pubDate>
-        <link>
-        /dummy-page</link>
-        <guid isPermaLink="true">/dummy-page</guid>
+        //intro-to-machine-learning</link>
+        <guid isPermaLink="true">//intro-to-machine-learning</guid>
       </item>
       
     
@@ -443,8 +427,8 @@
         
         <pubDate>Sat, 01 Sep 2012 10:00:00 +0000</pubDate>
         <link>
-        /styles-showcase</link>
-        <guid isPermaLink="true">/styles-showcase</guid>
+        //styles-showcase</link>
+        <guid isPermaLink="true">//styles-showcase</guid>
       </item>
       
     
