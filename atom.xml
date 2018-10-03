@@ -8,9 +8,48 @@
     
       
       <item>
+        <title>Managing Github Stars</title>
+        
+          <description>&lt;h2&gt;The problem&lt;/h2&gt;
+
+</description>
+        
+        <pubDate>Wed, 03 Oct 2018 08:00:00 +0000</pubDate>
+        <link>
+        //Github-Stars</link>
+        <guid isPermaLink="true">//Github-Stars</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Introduction to ARM</title>
         
-          <description>&lt;h2&gt;ARM Introduction&lt;/h2&gt;
+          <description>&lt;p&gt;
+    ARM is a RISC (Reduced Instruction Set Computing) architecture.  &lt;br&gt;
+    It operates with registers with a few instructions for loading and saving data from/to memory. 
+&lt;/p&gt;
+&lt;p&gt;
+    ARM in comparison to other architectures such as x86, is simpler in general terms.&lt;br&gt;
+    It also has other advantages such as better power consumption, more registers, and easier manufacture.&lt;br&gt;
+    &lt;br&gt;
+    All those advantages allow phone companies or similar use cases be interested in this architecture.&lt;br&gt;
+    Both OS X and Android run ARM.&lt;br&gt;
+&lt;/p&gt;
+&lt;p&gt;
+    I myself have created an introductory course for ARM, as well as exercises for practicing.&lt;br&gt;
+    In this github repo you will find all my videos:&lt;br&gt;
+    &lt;a href=&quot;https://github.com/memoriasIT/ARM-VideoTutorials&quot;&gt;ARM VIDEOTUTORIALS&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+    And here the exercises for you to practice:&lt;br&gt;
+    &lt;a href=&quot;https://github.com/memoriasIT/Assembly-Practice/tree/master/ARM%20Projects&quot;&gt;ARM EXERCISES&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+    Most exercises have their own video and are explained, so if you go straight for them and don't understand the code just search for the corresponding video.
+    Here you have the first introductory video:
+&lt;/p&gt;
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/ZfWXKLYiDc4?rel=0&quot; frameborder=&quot;0&quot; allow=&quot;autoplay; encrypted-media&quot; allowfullscreen&gt;&lt;/iframe&gt;
 
 </description>
         
@@ -351,84 +390,6 @@
         <link>
         //intro-to-machine-learning</link>
         <guid isPermaLink="true">//intro-to-machine-learning</guid>
-      </item>
-      
-    
-      
-      <item>
-        <title>Styles Showcase hehe xd</title>
-        
-          <description>&lt;p&gt;First p tag is a subheader so it is bigger hehe xd&lt;/p&gt;
-&lt;p&gt;This is a  &lt;a href=&quot;/the-editor/&quot;&gt;very beautiful link&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;specialformatting&quot;&gt;Special formatting id is big&lt;/h2&gt;
-&lt;p&gt;As well as bold and italics, you can also use some other special formatting in Markdown when the need arises, for example:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;s&gt;strike through&lt;/s&gt;&lt;/li&gt;
-&lt;li&gt;&lt;mark&gt;highlight&lt;/mark&gt;&lt;/li&gt;
-&lt;li&gt;*escaped characters*&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;writingcodeblocks&quot;&gt;Writing code blocks&lt;/h2&gt;
-&lt;p&gt;There are two types of code elements which can be inserted in Markdown, the first is inline, and the other is block. Inline code is formatted by wrapping any word or words in back-ticks, &lt;code&gt;like this&lt;/code&gt;. Larger snippets of code can be displayed across multiple lines using triple back ticks:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;.my-link {
-    text-decoration: underline;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;If you want to get really fancy, you can even add syntax highlighting using &lt;a href=&quot;http://prismjs.com/&quot;&gt;Prism.js&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;fullbleedimages&quot;&gt;Full bleed images&lt;/h2&gt;
-&lt;p&gt;One neat trick which you can use in Markdown to distinguish between different types of images is to add a &lt;code&gt;#hash&lt;/code&gt; value to the end of the source URL, and then target images containing the hash with special styling. For example:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://casper.ghost.org/v1.0.0/images/walking.jpg#full&quot; alt=&quot;walking&quot;&gt;&lt;/p&gt;
-&lt;p&gt;which is styled with...&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;img[src$=&amp;quot;#full&amp;quot;] {
-    max-width: 100vw;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This creates full-bleed images in the Casper theme, which stretch beyond their usual boundaries right up to the edge of the window. Every theme handles these types of things slightly differently, but it's a great trick to play with if you want to have a variety of image sizes and styles.&lt;/p&gt;
-&lt;h2 id=&quot;referencelists&quot;&gt;Reference lists&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;The quick brown &lt;a href=&quot;https://en.wikipedia.org/wiki/Fox&quot; title=&quot;Wikipedia: Fox&quot;&gt;fox&lt;/a&gt;, jumped over the lazy &lt;a href=&quot;https://en.wikipedia.org/wiki/Dog&quot; title=&quot;Wikipedia: Dog&quot;&gt;dog&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Another way to insert links in markdown is using reference lists. You might want to use this style of linking to cite reference material in a Wikipedia-style. All of the links are listed at the end of the document, so you can maintain full separation between content and its source or reference.&lt;/p&gt;
-&lt;h2 id=&quot;creatingfootnotes&quot;&gt;Creating footnotes&lt;/h2&gt;
-&lt;p&gt;The quick brown fox&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn1&quot; id=&quot;fnref1&quot;&gt;[1]&lt;/a&gt;&lt;/sup&gt; jumped over the lazy dog&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn2&quot; id=&quot;fnref2&quot;&gt;[2]&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
-&lt;p&gt;Footnotes are a great way to add additional contextual details when appropriate. Ghost will automatically add footnote content to the very end of your post.&lt;/p&gt;
-&lt;h2 id=&quot;fullhtml&quot;&gt;Full HTML&lt;/h2&gt;
-&lt;p&gt;Perhaps the best part of Markdown is that you're never limited to just Markdown. You can write HTML directly in the Ghost editor and it will just work as HTML usually does. No limits! Here's a standard YouTube embed code as an example:&lt;/p&gt;
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/Cniqsc9QfDo?rel=0&amp;amp;showinfo=0&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
-&lt;hr class=&quot;footnotes-sep&quot;&gt;
-&lt;section class=&quot;footnotes&quot;&gt;
-&lt;ol class=&quot;footnotes-list&quot;&gt;
-&lt;li id=&quot;fn1&quot; class=&quot;footnote-item&quot;&gt;&lt;p&gt;Foxes are red &lt;a href=&quot;#fnref1&quot; class=&quot;footnote-backref&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li id=&quot;fn2&quot; class=&quot;footnote-item&quot;&gt;&lt;p&gt;Dogs are usually not red &lt;a href=&quot;#fnref2&quot; class=&quot;footnote-backref&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Ghost has a single, powerful organisational taxonomy, called tags.&lt;/p&gt;
-&lt;p&gt;It doesn't matter whether you want to call them categories, tags, boxes, or anything else. You can think of Ghost tags a lot like Gmail labels. By tagging posts with one or more keyword, you can organise articles into buckets of related content.&lt;/p&gt;
-&lt;h2 id=&quot;basictagging&quot;&gt;Basic tagging&lt;/h2&gt;
-&lt;p&gt;When you write a post, you can assign tags to help differentiate between categories of content. For example, you might tag some posts with &lt;code&gt;News&lt;/code&gt; and other posts with &lt;code&gt;Cycling&lt;/code&gt;, which would create two distinct categories of content listed on &lt;code&gt;/tag/news/&lt;/code&gt; and &lt;code&gt;/tag/cycling/&lt;/code&gt;, respectively.&lt;/p&gt;
-&lt;p&gt;If you tag a post with both &lt;code&gt;News&lt;/code&gt; &lt;em&gt;and&lt;/em&gt; &lt;code&gt;Cycling&lt;/code&gt; - then it appears in both sections.&lt;/p&gt;
-&lt;p&gt;Tag archives are like dedicated home-pages for each category of content that you have. They have their own pages, their own RSS feeds, and can support their own cover images and meta data.&lt;/p&gt;
-&lt;h2 id=&quot;theprimarytag&quot;&gt;The primary tag&lt;/h2&gt;
-&lt;p&gt;Inside the Ghost editor, you can drag and drop tags into a specific order. The first tag in the list is always given the most importance, and some themes will only display the primary tag (the first tag in the list) by default. So you can add the most important tag which you want to show up in your theme, but also add a bunch of related tags which are less important.&lt;/p&gt;
-&lt;p&gt;&lt;mark&gt;&lt;strong&gt;News&lt;/strong&gt;, Cycling, Bart Stevens, Extreme Sports&lt;/mark&gt;&lt;/p&gt;
-&lt;p&gt;In this example, &lt;strong&gt;News&lt;/strong&gt; is the primary tag which will be displayed by the theme, but the post will also still receive all the other tags, and show up in their respective archives.&lt;/p&gt;
-&lt;h2 id=&quot;privatetags&quot;&gt;Private tags&lt;/h2&gt;
-&lt;p&gt;Sometimes you may want to assign a post a specific tag, but you don't necessarily want that tag appearing in the theme or creating an archive page. In Ghost, hashtags are private and can be used for special styling.&lt;/p&gt;
-&lt;p&gt;For example, if you sometimes publish posts with video content - you might want your theme to adapt and get rid of the sidebar for these posts, to give more space for an embedded video to fill the screen. In this case, you could use private tags to tell your theme what to do.&lt;/p&gt;
-&lt;p&gt;&lt;mark&gt;&lt;strong&gt;News&lt;/strong&gt;, Cycling, #video&lt;/mark&gt;&lt;/p&gt;
-&lt;p&gt;Here, the theme would assign the post publicly displayed tags of &lt;code&gt;News&lt;/code&gt;, and &lt;code&gt;Cycling&lt;/code&gt; - but it would also keep a private record of the post being tagged with &lt;code&gt;#video&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;In your theme, you could then look for private tags conditionally and give them special formatting:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;nohighlight&quot;&gt;
-    
-        ...markup for a nice big video post layout...
-    
-        ...regular markup for a post...
-    
-
-</description>
-        
-        <pubDate>Sat, 01 Sep 2012 10:00:00 +0000</pubDate>
-        <link>
-        //styles-showcase</link>
-        <guid isPermaLink="true">//styles-showcase</guid>
       </item>
       
     
