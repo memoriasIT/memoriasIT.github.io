@@ -1,26 +1,22 @@
 <h1 align="center">
-  <img src="https://github.com/memoriasIT/memoriasIT.github.io/blob/master/assets/images/favicon.png" width="250">
+  <a href="https://memoriasit.github.io/"><img src="https://github.com/memoriasIT/memoriasIT.github.io/blob/master/assets/images/favicon.png" width="250">
   <br>
   Personal Website
+  </a>
 </h1>
-https://memoriasit.github.io/
 
 
-Welcome to my github repo! <br>
-Here I am posting my notes and exercises I am doing in order to learn functional programming.
-<br>
-I want to thank [@nathanielrsuchy](https://twitter.com/nathanielrsuchy) and [@devonrevenge](https://twitter.com/devonrevenge) for introducing me into functional programming.
 
+I am a computer enthusiast based in Spain.
+Love breaking stuff apart and seeing how everything works, that's why I would say I relate a lot to the quote bellow:
 
-<h2>
-Table of Contents
-</h2>
-<h3>
- Haskell
-</h3>
-<ul style="list-style-type:disc">
- <li><b><a href="https://github.com/memoriasIT/Functional-Programming/tree/master/Notes">Notes:</a></b> Personal notes about several topics (recursion, libraries/modules, datastructures...)</li>
- <li><b><a href="https://github.com/memoriasIT/Functional-Programming/tree/master/Exercises">Exercises:</a></b> Starting with simple exercises and implementing simple datastructures</li>
-  <li><b><a href="https://github.com/memoriasIT/Functional-Programming/tree/master/LittleParserImplementation">Parser:</a></b> Little parser idea I got in order to practice a bit.</li>
-</ul>  
+> I wanted to be an engineer, but security got in my way.
 
+Mainly do programming in python, but I have projects with a wide variety of frameworks and languages.  
+
+If you are interested in my projects you can read the blog posts with the #projects tag or go to my github page at [github.com/memoriasIT](http://www.github.com/memoriasIT)
+
+I also produce videos in Spanish as tutorials which are computer related, you can check my channel here:  
+[Memorias de un Informatico](https://www.youtube.com/c/MemoriasdeunInformatico)
+
+Finally if you ever want to contact with me you can find me at twitter [@MemoriasIT](http://www.twitter.com/memoriasit)
