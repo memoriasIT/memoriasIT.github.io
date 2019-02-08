@@ -117,7 +117,8 @@ into the {body} of the default.hbs template -->
             <ul class="nav" role="menu">
     <li class="nav-home" role="menuitem"><a href="/">Home</a></li>
     <li class="nav-about" role="menuitem"><a href="/about/">About</a></li>
-    <li class="nav-getting-started" role="menuitem"><a href="/tag/projects/">Projects</a></li>
+    <li class="nav-getting-started" role="menuitem"><a href="/tag/project/">Projects</a></li>
+    <li class="nav-getting-started" role="menuitem"><a href="/tag/course/">Courses</a></li>
     <li class="nav-try-ghost" role="menuitem"><a href="http://africau.edu/images/default/sample.pdf">CV</a></li>
 </ul>
 
@@ -161,7 +162,11 @@ into the {body} of the default.hbs template -->
                             
                         
                             
-                               <a href='/tag/stars/'>STARS</a>
+                               <a href='/tag/stars/'>STARS</a>,
+                            
+                        
+                            
+                               <a href='/tag/project/'>PROJECT</a>
                             
                         
                     
@@ -179,10 +184,10 @@ into the {body} of the default.hbs template -->
                     <h2>The problem</h2>
 
 <p>
-If you are a someone who uses github stars a lot for getting inspiration or just stumble with a lot of interesting ideas you would probably have hundreds of stars.
+If you are a someone who uses <b>github stars</b>  a lot for getting inspiration or just stumble with a lot of interesting ideas you would probably have <b>hundreds of stars</b>.
 </p>
 
-<p>The first idea I had was to create a database and manage the stars with tags, however, I thought that someone would have already done that, and that's where my adventure starts.</p>
+<p>The first idea I had was to create a <b>database</b>  and manage the stars with tags, however, I thought that someone would have already done that, and that's where my adventure starts.</p>
 
 <h2>The Solution</h2>
 
@@ -196,8 +201,8 @@ There, you are able to use options such as search, tags...</p>
 
 <h2>But does it really do everything I wanted?</h2>
 
-<p>Not really... There is no share function, so what if we implement it ourselves? }:-)</p>
-<p>Astral let's you export your stars as a JSON, I thought that was great! Until I saw the format of the JSON</p>
+<p>Not really... There is no <b>share function</b>, so what if we implement it ourselves? }:-)</p>
+<p>Astral let's you <b>export your stars as a JSON</b>, I thought that was great! Until I saw the format of the JSON</p>
 
 <pre>
         
@@ -224,20 +229,20 @@ There, you are able to use options such as search, tags...</p>
 
 </pre>
 
-<p>Unless your friend has access to the github api and a lot of time to spare this is not a very convenient way to share your stars with your friends</p>
-<p>Let's fix that!</p>
+<p>Unless your friend has access to the github api and a lot of free time this is not a very convenient way to share your stars with your friends</p>
+<p><b>Let's fix that!</b> </p>
 
 <H2>Solution to the solution!</H2>
-<p>Let's use python to read the JSON file and parse it to human readable data. <br>
+<p>Let's use python to <b>read the JSON</b>  file and <b>parse</b>  it to human readable data. <br>
 We need to read the original astral JSON and get the repo name fore every repo id</p>
 <p>We are going to need:</p>
 <ul>
-<li>json   : to navigate and parse the data (Astral and github api)</li>
-<li>urllib : to make requests and parse them</li>
-<li>pprint : jsons with normal print look awfull</li>
+<li><b>json</b>    : to navigate and parse the data (Astral and github api)</li>
+<li><b>urllib</b>  : to make requests and parse them</li>
+<li><b>pprint</b>  : jsons with normal print look awfull</li>
 </ul>
 
-<p>First of all we need to read the file, so we use the open() and close() functions:</p>
+<p>First of all we need to read the file, so we use the <code>open()</code>  and <code>close()</code>  functions:</p>
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Read File </span>
 <span class="n">json_data</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
@@ -264,14 +269,14 @@ We need to read the original astral JSON and get the repo name fore every repo i
         
 <span class="nb">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></code></pre></figure>
 
-<p>First of all we create the file, then we do requests to the github api with the repo id. <br>
-As we can see the repo id was found in <code>astraljson -> x -> repo_id </code>. We also add a Oauth token for the github api because of api limitations (60 per day). </p>
+<p>First of all we <b>create the file</b> , then we do <b>requests</b>  to the github api with the repo id. <br>
+As we can see the repo id was found in <code>astraljson -> x -> repo_id </code>. We also add a <b>Oauth token</b>  for the github api because of api limitations (60 per day). </p>
 
 <P>You can get a oauth key here: <a href="https://github.com/settings/tokens">Github Tokens</a> </P>
 
-<p>After that we decode the json file to utf-8 replacing whatever error we find and create a variable <code>out</code> which holds the format for our output file.</p>
+<p>After that we decode the json file to <b> utf-8</b> replacing whatever error we find and create a variable <code>out</code> which holds the format for our output file.</p>
 
-<p>Finally we print the output to the terminal and to the file.</p>
+<p>Finally we <b>print the output</b>  to the terminal and to the file.</p>
 
 <h2>Taking it further</h2>
 
@@ -281,7 +286,7 @@ As we can see the repo id was found in <code>astraljson -> x -> repo_id </code>.
         <span class="k">if</span> <span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="s">"name"</span><span class="p">]</span> <span class="o">==</span> <span class="s">"unixporn"</span><span class="p">):</span>
             <span class="n">found</span> <span class="o">=</span> <span class="bp">True</span></code></pre></figure>
 
-<p>I created a boolean called <code>found</code> which is used later to determine if the current item needs to be printed or <br>
+<p>I created a <b>boolean</b>  called <code>found</code> which is used later to determine if the current item needs to be printed or not<br>
 The output looks something like this:</p>
 <pre>
     
@@ -301,7 +306,7 @@ The output looks something like this:</p>
     bin - gawlk/bin : :pineapple: List of scripts that make my life much easier (https://github.com/gawlk/bin)
 
 </pre>
-<p>If you want to see the full code you can check my github repo with the quick snippet! <br>
+<p>If you want to see the <b>full code</b>  you can check my github repo with the quick snippet! <br>
 <a href="https://github.com/memoriasIT/Astral-Github-Stars-Parser">Github repository link</a>
 </p>
                 </div>
@@ -380,33 +385,37 @@ The output looks something like this:</p>
                 
     <article class="post-card post-template">
         
-            <a class="post-card-image-link" href="/arm-intro">
-                <div class="post-card-image" style="background-image: url(/assets/images/arm.jpg)"></div>
+            <a class="post-card-image-link" href="/Ricing-Adventures">
+                <div class="post-card-image" style="background-image: url(/assets/images/ricing.jpg)"></div>
             </a>
         
         <div class="post-card-content">
-            <a class="post-card-content-link" href="/arm-intro">
+            <a class="post-card-content-link" href="/Ricing-Adventures">
                 <header class="post-card-header">
                     
                         
                             
-                               <span class="post-card-tags">Arm</span>
+                               <span class="post-card-tags">Unix</span>
                             
                         
                             
-                               <span class="post-card-tags">Assembly</span>
+                               <span class="post-card-tags">Ricing</span>
                             
                         
                             
-                                <span class="post-card-tags">Tutorial</span>
+                               <span class="post-card-tags">Project</span>
+                            
+                        
+                            
+                                <span class="post-card-tags">Customization</span>
                             
                         
                     
 
-                    <h2 class="post-card-title">Introduction to ARM</h2>
+                    <h2 class="post-card-title">Ricing Adventures</h2>
                 </header>
                 <section class="post-card-excerpt">
-                    <p>ARM is a RISC (Reduced Instruction Set Computing) architecture. It operates with registers with a few instructions for loading and saving data from/to memory. ARM in comparison to other architectures such as x86,</p>
+                    <p>Hello and welcome to my tales of how I riced my unix box! Also usually reffered to as how I spent days tweaking config files until I got frustrated! "Rice" is a word</p>
                 </section>
             </a>
             <footer class="post-card-meta">
@@ -481,10 +490,8 @@ The output looks something like this:</p>
         <!-- The footer at the very bottom of the screen -->
         <footer class="site-footer outer">
             <div class="site-footer-content inner">
-                <section class="copyright"><a href="/">memoriasIT</a> &copy; 2018</section>
-                <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> &
-                    <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> using
-                    <a href="https://github.com/jekyller/jasper2" target="_blank" rel="noopener">Jasper2</a></section>
+                <section class="copyright"><a href="/">memoriasIT</a> &copy; 2019</section>
+                
                 <nav class="site-footer-nav">
                     <a href="/">Latest Posts</a>
                     

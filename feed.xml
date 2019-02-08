@@ -1,62 +1,314 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.6.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2018-07-04T13:36:43+02:00</updated><id>/</id><title type="html">memoriasIT</title><subtitle>Memorias de un Informático</subtitle><entry><title type="html">Introduction to Machine Learning</title><link href="/intro-to-machine-learning" rel="alternate" type="text/html" title="Introduction to Machine Learning" /><published>2017-08-31T10:00:00+02:00</published><updated>2017-08-31T10:00:00+02:00</updated><id>/intro-to-machine-learning</id><content type="html" xml:base="/intro-to-machine-learning">&lt;p&gt;Machine learning has got a lot of popularity in our modern world due to the development
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.6.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2019-02-08T21:08:35+01:00</updated><id>/</id><title type="html">memoriasIT</title><subtitle>Memorias de un Informático</subtitle><entry><title type="html">Managing Github Stars</title><link href="/Github-Stars" rel="alternate" type="text/html" title="Managing Github Stars" /><published>2018-10-03T10:00:00+02:00</published><updated>2018-10-03T10:00:00+02:00</updated><id>/Github-Stars</id><content type="html" xml:base="/Github-Stars">&lt;h2&gt;The problem&lt;/h2&gt;
+
+&lt;p&gt;
+If you are a someone who uses &lt;b&gt;github stars&lt;/b&gt;  a lot for getting inspiration or just stumble with a lot of interesting ideas you would probably have &lt;b&gt;hundreds of stars&lt;/b&gt;.
+&lt;/p&gt;
+
+&lt;p&gt;The first idea I had was to create a &lt;b&gt;database&lt;/b&gt;  and manage the stars with tags, however, I thought that someone would have already done that, and that's where my adventure starts.&lt;/p&gt;
+
+&lt;h2&gt;The Solution&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://app.astralapp.com&quot;&gt;Astral&lt;/a&gt; is a free service that does basically what I just said, It syncs with your github account and is able to see your stars. &lt;br&gt;
+There, you are able to use options such as search, tags...&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/XQrUU6z.png&quot; alt=&quot;walking&quot;&gt;&lt;/p&gt;
+
+
+&lt;p&gt;As you can see the website is very appealing and does everything I wanted: You have tags &lt;code&gt;(1)&lt;/code&gt;, you can see the repos whitout tags &lt;code&gt;(2)&lt;/code&gt;, you can see the readme in case you forgot what that repo was &lt;code&gt;(3)&lt;/code&gt; and it has a search functionality &lt;code&gt;(4)&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2&gt;But does it really do everything I wanted?&lt;/h2&gt;
+
+&lt;p&gt;Not really... There is no &lt;b&gt;share function&lt;/b&gt;, so what if we implement it ourselves? }:-)&lt;/p&gt;
+&lt;p&gt;Astral let's you &lt;b&gt;export your stars as a JSON&lt;/b&gt;, I thought that was great! Until I saw the format of the JSON&lt;/p&gt;
+
+&lt;pre&gt;
+        
+&quot;2&quot;: {
+    &quot;id&quot;: 1039967,
+    &quot;user_id&quot;: 16684,
+    &quot;repo_id&quot;: 30003816,
+    &quot;notes&quot;: null,
+    &quot;created_at&quot;: &quot;2018-08-16 08:53:14&quot;,
+    &quot;updated_at&quot;: &quot;2018-08-16 08:53:14&quot;,
+    &quot;autotagged_by_topic&quot;: 0,
+    &quot;tags&quot;: [
+        {
+            &quot;id&quot;: 171370,
+            &quot;user_id&quot;: 16684,
+            &quot;name&quot;: &quot;unixporn&quot;,
+            &quot;sort_order&quot;: 0,
+            &quot;created_at&quot;: &quot;2018-08-16 08:53:00&quot;,
+            &quot;updated_at&quot;: &quot;2018-09-12 18:41:06&quot;,
+            &quot;slug&quot;: &quot;unixporn&quot;
+        }
+    ]
+},
+
+&lt;/pre&gt;
+
+&lt;p&gt;Unless your friend has access to the github api and a lot of free time this is not a very convenient way to share your stars with your friends&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Let's fix that!&lt;/b&gt; &lt;/p&gt;
+
+&lt;H2&gt;Solution to the solution!&lt;/H2&gt;
+&lt;p&gt;Let's use python to &lt;b&gt;read the JSON&lt;/b&gt;  file and &lt;b&gt;parse&lt;/b&gt;  it to human readable data. &lt;br&gt;
+We need to read the original astral JSON and get the repo name fore every repo id&lt;/p&gt;
+&lt;p&gt;We are going to need:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;b&gt;json&lt;/b&gt;    : to navigate and parse the data (Astral and github api)&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;urllib&lt;/b&gt;  : to make requests and parse them&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;pprint&lt;/b&gt;  : jsons with normal print look awfull&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;First of all we need to read the file, so we use the &lt;code&gt;open()&lt;/code&gt;  and &lt;code&gt;close()&lt;/code&gt;  functions:&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# Read File &lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;json_data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json_file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;json_data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;After that we need to create our output file and save our stars, we can easily do that with this little code:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'OUTPUT'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'w'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Request &lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'https://api.github.com/repositories/'&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;urllib&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;urlopen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;repo_id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;?access_token=&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Oauth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;JSON_object&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;decode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'utf-8'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;errors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'replace'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;JSON_object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot; - &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;JSON_object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;full_name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot; : &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; 
+        &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;JSON_object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;description&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;     (&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;JSON_object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;html_url&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;)&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;except&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;
+        
+&lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;First of all we &lt;b&gt;create the file&lt;/b&gt; , then we do &lt;b&gt;requests&lt;/b&gt;  to the github api with the repo id. &lt;br&gt;
+As we can see the repo id was found in &lt;code&gt;astraljson -&gt; x -&gt; repo_id &lt;/code&gt;. We also add a &lt;b&gt;Oauth token&lt;/b&gt;  for the github api because of api limitations (60 per day). &lt;/p&gt;
+
+&lt;P&gt;You can get a oauth key here: &lt;a href=&quot;https://github.com/settings/tokens&quot;&gt;Github Tokens&lt;/a&gt; &lt;/P&gt;
+
+&lt;p&gt;After that we decode the json file to &lt;b&gt; utf-8&lt;/b&gt; replacing whatever error we find and create a variable &lt;code&gt;out&lt;/code&gt; which holds the format for our output file.&lt;/p&gt;
+
+&lt;p&gt;Finally we &lt;b&gt;print the output&lt;/b&gt;  to the terminal and to the file.&lt;/p&gt;
+
+&lt;h2&gt;Taking it further&lt;/h2&gt;
+
+&lt;p&gt;I also wanted to print the stars tagged with the &quot;unixporn&quot; tag, so I added a couple of lines to check that:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;tags&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;unixporn&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;found&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;I created a &lt;b&gt;boolean&lt;/b&gt;  called &lt;code&gt;found&lt;/code&gt; which is used later to determine if the current item needs to be printed or not&lt;br&gt;
+The output looks something like this:&lt;/p&gt;
+&lt;pre&gt;
+    
+    vi3m - nejni-marji/vi3m :  A really basic tool to use vim-style chained keypresses in i3.     (https://github.com/nejni-marji/vi3m)
+    powerlevel9k - bhilburn/powerlevel9k : The most awesome Powerline theme for ZSH around!     (https://github.com/bhilburn/powerlevel9k)
+    dotfiles - SteffenC/dotfiles : None     (https://github.com/SteffenC/dotfiles)
+    dotfiles - djsavvy/dotfiles : None     (https://github.com/djsavvy/dotfiles)
+
+&lt;/pre&gt;
+
+&lt;p&gt;And we can run the sort command and have something like:&lt;/p&gt;
+
+&lt;pre&gt;
+    
+    art - gawlk/art : :art: A smart theme generator (https://github.com/gawlk/art)
+    autorice - UltraNyan/autorice : Graphical utility to edit and manage your config files. (https://github.com/UltraNyan/autorice)
+    bin - gawlk/bin : :pineapple: List of scripts that make my life much easier (https://github.com/gawlk/bin)
+
+&lt;/pre&gt;
+&lt;p&gt;If you want to see the &lt;b&gt;full code&lt;/b&gt;  you can check my github repo with the quick snippet! &lt;br&gt;
+&lt;a href=&quot;https://github.com/memoriasIT/Astral-Github-Stars-Parser&quot;&gt;Github repository link&lt;/a&gt;
+&lt;/p&gt;</content><author><name>memoriasIT</name></author><category term="github" /><category term="stars" /><category term="project" /><summary type="html">The problem</summary></entry><entry><title type="html">Ricing Adventures</title><link href="/Ricing-Adventures" rel="alternate" type="text/html" title="Ricing Adventures" /><published>2018-10-01T10:00:00+02:00</published><updated>2018-10-01T10:00:00+02:00</updated><id>/Ricing-Adventures</id><content type="html" xml:base="/Ricing-Adventures">&lt;p&gt;
+Hello and welcome to my tales of how I &lt;b&gt;riced my unix box!&lt;/b&gt;  &lt;br&gt;
+Also usually reffered to as how I spent days tweaking config files until I got frustrated!
+&lt;/p&gt;
+
+&lt;blockquote&gt;
+&quot;Rice&quot; is a word that is commonly used to refer to making visual improvements and customizations on one's desktop.&lt;/blockquote&gt;
+&lt;p&gt;&lt;i&gt;- The r/unixporn wiki
+&lt;/i&gt;&lt;/p&gt;
+
+&lt;h2&gt;The idea&lt;/h2&gt;
+&lt;p&gt;I had basically none lol. So if you are reading this and you are considering having one, I would advise you to &lt;b&gt;have some idea of what you want&lt;/b&gt; , else  you will be doing a lot of unnecesary tweaking.&lt;/p&gt;
+
+&lt;p&gt;If you need inspiration there are a lot of places where you can find resources for your rice.&lt;/p&gt;
+&lt;p&gt;First of all I wil present to you all the resources I have been saving along my journey, they can be found in this text document:&lt;/p&gt;
+
+&lt;a href=&quot;https://raw.githubusercontent.com/memoriasIT/Dotfiles-WIP/master/AlphabetizedOUTPUT.txt&quot;&gt;List of Resources&lt;/a&gt;
+
+&lt;p&gt;&lt;br&gt;The file should be more or less updated as I will be using &lt;a href=&quot;https://memoriasit.github.io/Github-Stars&quot;&gt;the parser we made the other day for the github stars.&lt;/a&gt; &lt;/p&gt; 
+
+&lt;h2&gt;My Setup&lt;/h2&gt;
+
+&lt;p&gt;I am basing my setup in &lt;code&gt;ubuntu&lt;/code&gt; for several reasons. First of all I was not sure if I would enjoy my experience with no mouse use at all. Then, it was a quick setup. And finally I really like my apt-get :)&lt;/p&gt;
+
+&lt;p&gt;My &lt;code&gt;window manager&lt;/code&gt; is &lt;a href=&quot;https://github.com/Airblader/i3&quot;&gt;i3-gaps.&lt;/a&gt; It is a fork of i3 which has extra features such as &quot;gaps&quot;. Gaps are basically spaces between windows.&lt;/p&gt;
+
+&lt;p&gt;I'm also using an &lt;code&gt;application launcher&lt;/code&gt; called &lt;a href=&quot;https://github.com/DaveDavenport/rofi&quot;&gt;rofi&lt;/a&gt;. It is very customizable and exactly what I was looking for.&lt;/p&gt;
+
+&lt;p&gt;For the &lt;code&gt;code editor&lt;/code&gt; I am basically using &lt;a href=&quot;https://github.com/neovim/neovim&quot;&gt;neovim&lt;/a&gt;. Which I have to admit it was a bit of pain to get used to and setup, but now I am in &lt;i&gt;LOVE&lt;/i&gt; with it! I now want vim shorcuts everywhere haha&lt;/p&gt;
+
+&lt;p&gt;I have also set up other editors like &lt;a href=&quot;https://github.com/hlissner/doom-emacs&quot;&gt;DOOM emacs&lt;/a&gt; (which is a fork of emacs); but in the end I basically stick to vim&lt;/p&gt; 
+
+&lt;p&gt;My &lt;code&gt;browser&lt;/code&gt; of choice is &lt;a href=&quot;https://www.mozilla.org/en-US/firefox/new/&quot;&gt;Firefox&lt;/a&gt;. It is basically what I am used to and allows a lot of customization with css and extensions.&lt;/p&gt;
+
+&lt;p&gt;I also wanted a &lt;code&gt;bar&lt;/code&gt; so I am using &lt;a href=&quot;https://github.com/jaagr/polybar&quot;&gt;polybar&lt;/a&gt;. It has a lot of community and it is very powerfull.&lt;/p&gt;
+
+&lt;h2&gt;Screenshots&lt;/h2&gt;
+
+&lt;img src=&quot;https://raw.githubusercontent.com/memoriasIT/Dotfiles-WIP/master/img/pcjpg.jpg&quot;&gt;
+&lt;img src=&quot;https://raw.githubusercontent.com/memoriasIT/Dotfiles-WIP/master/img/desktop.png&quot;&gt;
+
+&lt;h2&gt;Future Plans&lt;/h2&gt;
+
+&lt;ul&gt;
+    &lt;li&gt;Notifications via dunst - Set up notifications for processes with dunst.&lt;/li&gt;
+    &lt;li&gt;Spotify customization&lt;/li&gt;
+    &lt;li&gt;Custom bash interpreter&lt;/li&gt;
+    &lt;li&gt;Manage changes with GNU Stow&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>memoriasIT</name></author><category term="unix" /><category term="ricing" /><category term="project" /><category term="customization" /><summary type="html">Hello and welcome to my tales of how I riced my unix box! Also usually reffered to as how I spent days tweaking config files until I got frustrated!</summary></entry><entry><title type="html">Introduction to ARM</title><link href="/arm-intro" rel="alternate" type="text/html" title="Introduction to ARM" /><published>2018-09-25T10:00:00+02:00</published><updated>2018-09-25T10:00:00+02:00</updated><id>/arm-intro</id><content type="html" xml:base="/arm-intro">&lt;p&gt;&lt;h2 id=&quot;referencelists&quot;&gt;Introduction to ARM Assembly&lt;/h2&gt;&lt;/p&gt;
+&lt;p&gt;
+    ARM is a &lt;b&gt;RISC&lt;/b&gt;  (Reduced Instruction Set Computing) architecture.  &lt;br&gt;
+    It operates with &lt;b&gt;registers&lt;/b&gt;  with a few instructions for loading and saving data from/to memory. 
+&lt;/p&gt;
+&lt;p&gt;
+    ARM in comparison to other architectures such as x86, is &lt;b&gt;simpler&lt;/b&gt;  in general terms.&lt;br&gt;
+    It also has other advantages such as &lt;b&gt;better power consumption, more registers, and easier manufacture.&lt;/b&gt; &lt;br&gt;
+    &lt;br&gt;
+    All those advantages allow phone companies or similar use cases be interested in this architecture.
+    &lt;b&gt;Both OS X and Android run ARM.&lt;/b&gt; &lt;br&gt;
+&lt;/p&gt;
+&lt;p&gt;
+    I myself have created an &lt;b&gt;introductory course for ARM&lt;/b&gt; , as well as exercises for practicing.&lt;br&gt;
+    In this github repo you will find all my videos:&lt;br&gt;&lt;/p&gt;
+    &lt;a href=&quot;https://github.com/memoriasIT/ARM-VideoTutorials&quot;&gt;&lt;b&gt;ARM Videotutorials&lt;/b&gt;&lt;/a&gt;
+
+&lt;p&gt;
+    And here the exercises for you to practice:&lt;br&gt;&lt;/p&gt;
+    &lt;a href=&quot;https://github.com/memoriasIT/Assembly-Practice/tree/master/ARM%20Projects&quot;&gt;&lt;b&gt;ARM Exercises&lt;/b&gt; &lt;/a&gt;
+
+&lt;p&gt;
+    Most exercises have their own video and are explained, so if you go straight for them and don't understand the code just search for the corresponding video.
+    Here you have the first introductory video:
+&lt;/p&gt;
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/ZfWXKLYiDc4?rel=0&quot; frameborder=&quot;0&quot; allow=&quot;autoplay; encrypted-media&quot; allowfullscreen&gt;&lt;/iframe&gt;
+
+
+&lt;h2 id=&quot;creatingfootnotes&quot;&gt;Example code&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;
+        .data
+        dato1:  .word 2	@ First value
+        dato2:  .word 5	@ Second Value
+        sum:    .word 0 @ Result
+        
+        .text
+        .global main	        @ Set main as global so it can be called from outside
+        main:	ldr r0, =dato1	@ Load the direction of the first value in r0
+                ldr r1, [r0]	@ Load the first value in r1 (direction found in r0)
+                ldr r0, =dato2	@ Load the direction of the 2nd value in r0
+                ldr r2, [r0]	@ Load the second value in r2 (direction found in r0)
+                add r0, r1, r2	@ Sum both registers and save in r0
+                ldr r3, =sum	@ Load the direction of value in r3
+                str r0, [r3]	@ Store the result (r0) to sum (direction found in r3)
+        fin:	bx lr           @ End the program, go back to the code that called &quot;main&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you were able to follow with the comments you would see that all we are doing is calculating a sum in ARM.&lt;/p&gt;
+&lt;p&gt;The code isn't actually very hard, but you must visualize some concepts first such as registers and have very clear that the &lt;b&gt;VALUE&lt;/b&gt; is not the &lt;b&gt;DIRECTION&lt;/b&gt; of a variable.&lt;/p&gt;
+
+&lt;p&gt;You will be able to differentiate different parts in the code too: the &lt;code&gt;.data&lt;/code&gt;, and the &lt;code&gt;.text&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;All you find in the &lt;code&gt;.data&lt;/code&gt; is... well... basically data! They are the most similar concept to variables that we have in ARM.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Note:&lt;/b&gt; there are no variables as you know them from other languages, you have to work with registers&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#registers&quot; id=&quot;registers&quot;&gt;[1]&lt;/a&gt;&lt;/sup&gt;. Here they act like references in memmory.&lt;/p&gt;
+
+&lt;p&gt;On the other hand, there is the &lt;code&gt;.text&lt;/code&gt; part. There you will basically find the &quot;logic&quot; of the program. There are a lot of instructions but you always have the good old documentation to read what each one does. Here we don't do anything crazy, just:&lt;/p&gt;
+
+&lt;ul&gt;
+        &lt;li&gt;&lt;code&gt;ldr&lt;/code&gt;: LoaD Register --&gt; Loads from a register&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;add&lt;/code&gt;: ADDs two registers&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;str&lt;/code&gt;: SToRe --&gt; Stores a value in a register&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;bx&lt;/code&gt;: Branch and eXchange --&gt; Similar to a return in other languages&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Well I think that would be enough for a quick introduction. If you want to know more about it you can always check my course on YouTube where I teach you a lot of interesting advices and concepts starting from the basics.&lt;/p&gt;
+
+&lt;p&gt;Hope you enjoyed the post! :)&lt;/p&gt;
+
+&lt;hr class=&quot;footnotes-sep&quot;&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;ol class=&quot;footnotes-list&quot;&gt;
+&lt;li id=&quot;register&quot; class=&quot;footnote-item&quot;&gt;&lt;p&gt;You can imagine a register like box where you store data&lt;a href=&quot;#register&quot; class=&quot;footnote-backref&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;/ol&gt;</content><author><name>memoriasIT</name></author><category term="ARM" /><category term="course" /><category term="Assembly" /><category term="Tutorial" /><summary type="html">Introduction to ARM Assembly ARM is a RISC (Reduced Instruction Set Computing) architecture. It operates with registers with a few instructions for loading and saving data from/to memory. ARM in comparison to other architectures such as x86, is simpler in general terms. It also has other advantages such as better power consumption, more registers, and easier manufacture. All those advantages allow phone companies or similar use cases be interested in this architecture. Both OS X and Android run ARM. I myself have created an introductory course for ARM , as well as exercises for practicing. In this github repo you will find all my videos: ARM Videotutorials</summary></entry><entry><title type="html">Introduction to Machine Learning</title><link href="/intro-to-machine-learning" rel="alternate" type="text/html" title="Introduction to Machine Learning" /><published>2017-08-31T10:00:00+02:00</published><updated>2017-08-31T10:00:00+02:00</updated><id>/intro-to-machine-learning</id><content type="html" xml:base="/intro-to-machine-learning">&lt;p&gt;&lt;h2 id=&quot;referencelists&quot;&gt;In depth introduction to Machine Learning&lt;/h2&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;b&gt;Machine learning &lt;/b&gt; has got a lot of popularity in our modern world due to the development
     of the internet, the storage of large amounts of data, etc. Most of
     the nowadays technologies are more or less related to the automation
-    of learning, some examples could be spam detection, speech recognition,
-    image classifying, and so on.&lt;/p&gt;
+    of learning, some examples could be &lt;b&gt;spam detection&lt;/b&gt;, &lt;b&gt;speech recognition&lt;/b&gt;,
+    &lt;b&gt;image classifying&lt;/b&gt;, and so on.&lt;/p&gt;
     
     &lt;p&gt;Machine learning itself is a subfield of computer science which allows computers to
-    learn by themselves. The term was first coined in 1959 by IBM, however it never
+    learn by themselves. The term was first &lt;b&gt; coined in 1959&lt;/b&gt; by IBM, however it never
     gained as much popularity as it has today.&lt;/p&gt;
     
     &lt;p&gt;Machine learning has probably earned that much popularity due to the
-    fact that more data was created in the last 2 years than in the whole
-    history, and also, that as we can see in top500.org the computers are
+    fact that &lt;b&gt;more data was created in the last 2 years than in the whole
+        history&lt;/b&gt;, and also, that as we can see in top500.org the computers are
     exponentially getting better which allows us to execute more complex
     operations faster.&lt;/p&gt;
     
-    &lt;p&gt;It is strictly related to
-    several fields such as data analysis, data mining and maths. In order
+    &lt;p&gt;It is strictly &lt;b&gt;related&lt;/b&gt;  to several fields such as &lt;b&gt; data analysis, data mining and maths&lt;/b&gt;. In order
     to fully understand machine learning, a basis of algebra and statistics
-    is needed.
-    Here, you can find several resources for learning algebra;
-    https://my.mindnode.com/9GQnwWMBYXMe1XjUD8G21qpxiyz5B4MraPtL8xyy
-    And here, for statistics:
-    https://my.mindnode.com/7cSLjj5rauAnjWT1zHqEmqGkixvoVWaMz8C7Q2aW).&lt;/p&gt;
+    is needed.&lt;br&gt;
     
-    &lt;p&gt;&lt;img src=&quot;https://i.imgur.com/TV9nQwF.png&quot; alt=&quot;XVOEjvl.png&quot; /&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;img src=&quot;https://i.imgur.com/TV9nQwF.png&quot; alt=&quot;diagram01&quot; /&gt;&lt;/p&gt;
     
-    &lt;p&gt;In machine learning we can classify the tasks into three categories,
+    &lt;p&gt;In machine learning we can classify the tasks into &lt;b&gt;three categories,&lt;/b&gt; 
     we will see examples of each of them.&lt;/p&gt;
     
-    &lt;p&gt;Supervised learning: we provide some example inputs (called training data)
+    &lt;p&gt;&lt;b&gt;Supervised learning:&lt;/b&gt;  we provide some example inputs (called training data)
     and the desired outputs. The model has to make predictions while being
     trained and corrected if they are wrong. The training process will end
-    whenever the desired level of accuracy is achieved.
+    whenever the desired level of accuracy is achieved. &lt;br&gt;
     Some examples are Decision Trees and Logistic Regressions. Find more info
     about them here:
-    https://www.analyticsvidhya.com/blog/2016/04/complete-tutorial-tree-based-modeling-scratch-in-python/
-    https://en.wikipedia.org/wiki/Logistic_regression&lt;/p&gt;
+    &lt;/p&gt;
+    &lt;a href=&quot;https://www.analyticsvidhya.com/blog/2016/04/complete-tutorial-tree-based-modeling-scratch-in-python/&quot;&gt;Tree Based Modeling from Scratch in Python&lt;/a&gt;&lt;br&gt;
+    &lt;a href=&quot;https://en.wikipedia.org/wiki/Logistic_regression&quot;&gt;Wikipedia: logistic regression&lt;/a&gt;
+
     
-    &lt;p&gt;Unsupervised learning: we can’t make predictions as we don’t know the 
+    &lt;p&gt;&lt;br&gt;&lt;b&gt;Unsupervised learning:&lt;/b&gt;  we can’t make predictions as we don’t know the 
     result. We can get the model by deducing structures found in the input data 
     where some general rules could be found. Some examples are K-means and 
-    the Apriori algorithm. Find more info here:
-    https://en.coursera.org/learn/machine-learning/lecture/93VPG/k-means-algorithm
-    https://en.wikipedia.org/wiki/Apriori_algorithm&lt;/p&gt;
+    the Apriori algorithm. Find more info here: 
+    &lt;/p&gt;
+    &lt;a href=&quot;https://en.coursera.org/learn/machine-learning/lecture/93VPG/k-means-algorithm&quot;&gt;Coursera: K-Means Algorithm&lt;/a&gt;
+    &lt;a href=&quot;https://en.wikipedia.org/wiki/Apriori_algorithm&quot;&gt;Wikipedia: Apriori Algorithm&lt;/a&gt;
+
     
-    &lt;p&gt;Semi-supervised learning: as you can imagine it’s just the combination 
+    &lt;p&gt;&lt;br&gt;&lt;b&gt;Semi-supervised learning:&lt;/b&gt;  as you can imagine it’s just the combination 
     of supervised and unsupervised learning, you have a desired problem but
      the model has to learn the structures as well as making predictions. Some
      examples are classification and regression.
-    https://en.wikipedia.org/wiki/Classification
-    https://en.wikipedia.org/wiki/Regression_analysis&lt;/p&gt;
+    &lt;/p&gt;
+
+    &lt;a href=&quot;https://en.wikipedia.org/wiki/Classification&quot;&gt;Wikipedia: Classification&lt;/a&gt;
+    &lt;a href=&quot;https://en.wikipedia.org/wiki/Regression_analysis&quot;&gt;Wikipedia: Regression analysis&lt;/a&gt;
+    
     
     &lt;p&gt;&lt;img src=&quot;https://i.imgur.com/HKtMPm5.png&quot; alt=&quot;tQuwb4G.png&quot; /&gt;&lt;/p&gt;
     
-    &lt;p&gt;An algorithm is a sequence of actions that will be performed in order.
+    &lt;p&gt;An &lt;b&gt;algorithm&lt;/b&gt; is a sequence of actions that will be performed in order.
      They can be used for calculation, data processing and automated 
     reasoning.
-    For you to understand you can think of a recipe, you have several steps 
+    For you to understand you can think of a &lt;b&gt;recipe&lt;/b&gt;, you have several steps 
     that you have to complete in order.&lt;/p&gt;
     
     &lt;p&gt;When we get here things start to get a bit harder and if you want to 
@@ -64,21 +316,22 @@
     and statistics, however, if you just want to have a general knowledge 
     and understand the basics you will be fine with this tut.&lt;/p&gt;
     
-    &lt;p&gt;Algorithms can be divided by the learning style or the similarity in 
-    form/function. Here we will categorize them by similarity (how they 
+    &lt;p&gt;&lt;b&gt; Algorithms can be divided by the learning style or the similarity in 
+    form/function.&lt;/b&gt; Here we will categorize them by similarity (how they 
     work). I also have to say that this is a bit off sometimes as some 
     algorithms can be found in different categories depending on your source.&lt;/p&gt;
     
     &lt;p&gt;First of all I would like to show you a cheat sheet with the most 
     important algorithms that we will see:
     &lt;img src=&quot;http://i.imgur.com/v6zzgnT.png&quot; alt=&quot;v6zzgnT.png&quot; /&gt;
-    Source: https://machinelearningmastery.com&lt;/p&gt;
+    &lt;small&gt;Source: https://machinelearningmastery.com&lt;/small&gt;
+    &lt;/p&gt;
     
-    &lt;p&gt;Starting from the top we see the Deep Learning Algorithms, 
-    they are used to create complex neural networks, most of the methods 
-    are semi-supervised, large datasets are provided.
-    Some important algorithms are the Deep Boltzmann Machine (DBM),
-     the Deep Belief Networks (DBM), the Convolutional Neural Network (CNN) 
+    &lt;p&gt;Starting from the top we see the &lt;b&gt;Deep Learning Algorithms, &lt;/b&gt; 
+    they are used to create &lt;b&gt;complex neural networks,&lt;/b&gt;  most of the methods 
+    are &lt;b&gt;semi-supervised, large datasets&lt;/b&gt; are provided. &lt;br&gt;
+    Some important algorithms are the &lt;b&gt;Deep Boltzmann Machine (DBM),
+     the Deep Belief Networks (DBM), the Convolutional Neural Network (CNN)&lt;/b&gt;  
     and Stacked Auto-encoders.
     It is used a lot for computer vision and speech recognition, they excell
     in image, audio and text data. However, as they need a lot of data it is 
@@ -88,7 +341,8 @@
     the future if I manage to fight my laziness xD&lt;/p&gt;
     
     &lt;p&gt;&lt;img src=&quot;http://i.imgur.com/Trhb5Aq.png&quot; alt=&quot;Trhb5Aq.png&quot; /&gt;
-    Source: https://catalystsecure.com&lt;/p&gt;
+        &lt;small&gt;Source: https://catalystsecure.com&lt;/small&gt;
+    &lt;/p&gt;
     
     &lt;p&gt;Neural networks are inspired by the structure of biological neural 
     networks, they are usually used for regression and classification problems 
@@ -100,45 +354,54 @@
     Hopfield Network and the Radial Basis Function Network (RBFN).&lt;/p&gt;
     
     &lt;p&gt;&lt;img src=&quot;http://i.imgur.com/lBg3qko.png&quot; alt=&quot;lBg3qko.png&quot; /&gt;
-    Source: aircto.com&lt;/p&gt;
+        &lt;small&gt;Source: aircto.com&lt;/small&gt;
+    &lt;/p&gt;
     
-    &lt;p&gt;The next one that we find is Ensemble Methods (also known as 
+    &lt;p&gt;The next one that we find is &lt;b&gt;Ensemble Methods&lt;/b&gt;  (also known as 
     Classification Trees), classifiers are constructed and then new data 
-    points are classified by taking a weighted vote of their predictions. 
+    points are classified by taking a &lt;b&gt;weighted vote&lt;/b&gt;  of their predictions. 
     It’s like creating weaker models which are independently trained and 
     then combined together to make the final prediction.
     They perform well in practice, they are scalable and robust, they are 
     unlikely to overfit too (be trained too much). Some big algorithms are
-    Random Forests and Gradient Boosted Regression Trees (GBRT).&lt;/p&gt;
+    &lt;b&gt;Random Forests and Gradient Boosted Regression Trees (GBRT)&lt;/b&gt; .&lt;/p&gt;
     
     &lt;p&gt;&lt;img src=&quot;http://i.imgur.com/CdQMDvQ.png&quot; alt=&quot;CdQMDvQ.png&quot; /&gt;
-    Source: http://magizbox.com&lt;/p&gt;
+        &lt;small&gt;Source: http://magizbox.com&lt;/small&gt;
+    &lt;/p&gt;
     
-    &lt;p&gt;In Regression Algorithms a relationship between variables is
+    &lt;p&gt;In &lt;b&gt;Regression Algorithms&lt;/b&gt;  a relationship between variables is
     created and refined by measuring the error produced in the predictions 
-    of the model. Some important ones are Linear regression and Logistic 
-    Regression. You can find some examples of these types of regression here: 
-    http://magizbox.com/training/machinelearning/site/model_regression/&lt;/p&gt;
+    of the model. Some important ones are &lt;b&gt;Linear regression and Logistic 
+    Regression.&lt;/b&gt;  You can find some examples of these types of regression here: &lt;/p&gt;
+    &lt;a href=&quot;http://magizbox.com/training/machinelearning/site/model_regression/&quot;&gt;Model Regression&lt;/a&gt;
+    
     
     &lt;p&gt;&lt;img src=&quot;http://i.imgur.com/TIcU6nM.png&quot; alt=&quot;TIcU6nM.png&quot; /&gt;
-    Source: http://magizbox.com&lt;/p&gt;
+        &lt;small&gt;Source: http://magizbox.com&lt;/small&gt;
+    &lt;/p&gt;
     
-    &lt;p&gt;Regularization is just an extension to the regression methods, the only
+    &lt;p&gt;&lt;b&gt;Regularization&lt;/b&gt;  is just an extension to the regression methods, the only
      difference is that it penalizes the models based on their complexity 
     favoring simpler models. They are better at generalizing. They are
-    popular, powerful and simple. Some examples are Ridge Regression, 
+    popular, powerful and simple. Some examples are &lt;b&gt;Ridge Regression, 
     Least Absolute Shrinkage and Selection Operator (LASSO), Elastic Net 
-    and Least-Angle Regression (LARS).&lt;/p&gt;
+    and Least-Angle Regression (LARS).&lt;/b&gt; &lt;/p&gt;
     
-    &lt;p&gt;Clustering, like regression, describes the class of problem and class of methods.
-    A set of objects is grouped in groups called clusters. Some examples are k-Means,
-    k-Medians, Expectation Maximisation (EM) and Hierarchical Clustering.
-    Here you can see an example of clustering with K-means: http://magizbox.com/training/machinelearning/site/model_clustering/&lt;/p&gt;
+    &lt;p&gt;&lt;b&gt;Clustering&lt;/b&gt; , like regression, describes the class of problem and class of methods.
+    A set of objects is grouped in groups called clusters. Some examples are &lt;b&gt;k-Means,
+    k-Medians, Expectation Maximisation (EM) and Hierarchical Clustering.&lt;/b&gt; 
+    Here you can see an example of clustering with K-means: 
+    &lt;/p&gt;
+    &lt;a href=&quot;http://magizbox.com/training/machinelearning/site/model_clustering/&quot;&gt;Model Clustering&lt;/a&gt;
     
+    
+
     &lt;p&gt;&lt;img src=&quot;http://i.imgur.com/4MNW1BH.png&quot; alt=&quot;4MNW1BH.png&quot; /&gt;
-    Source: http://www.kdnuggets.com&lt;/p&gt;
+        &lt;small&gt;Source: http://www.kdnuggets.com&lt;/small&gt;
+    &lt;/p&gt;
     
-    &lt;p&gt;Dimensionally Reduction, like clustering methods, seeks and exploits
+    &lt;p&gt;&lt;b&gt; Dimensionally Reduction,&lt;/b&gt; like clustering methods, seeks and exploits
      the inherent structure in the data, however, this time it is unsupervised or 
     the data is described with less information. It is useful for visualizing data 
     or simplifying it (which can be later used in a supervised learning method). 
@@ -146,32 +409,35 @@
      Graph-based kernel PCA, Linear discriminant analysis (LDA) and Generalized 
     discriminant analysis (GDA).
     &lt;img src=&quot;http://i.imgur.com/wM6TLuh.png&quot; alt=&quot;wM6TLuh.png&quot; /&gt;
-    Source: http://www.bogotobogo.com&lt;/p&gt;
+    &lt;small&gt;Source: http://www.bogotobogo.com&lt;/small&gt;
+    &lt;/p&gt;
     
-    &lt;p&gt;Association Rule Learning Algorithms are kind of self-explanatory, 
+    &lt;p&gt;&lt;b&gt;Association Rule Learning Algorithms&lt;/b&gt;  are kind of self-explanatory, 
     they extract rules that best explain the relationship between variables in data. 
     These rules can discover important associations that can be exploited. There are 
     two very important algorithms in this category: The Apriori Algorithm and the Eclat 
     Algorithm.&lt;/p&gt;
     
-    &lt;p&gt;Bayesian Algorithms: they use the Bayes’ Theorem, it describes the probability
+    &lt;p&gt;&lt;b&gt;Bayesian Algorithms:&lt;/b&gt;  they use the Bayes’ Theorem, it describes the probability
      of an event based on prior knowledge of conditions related to the event. Some 
     examples are Naive Bayes, Gaussian Naive Bayes, Multinomial Naive Bayes, 
     Averaged One-Dependence Estimators (AODE), Bayesian Belief Network (BBN) and 
     Bayesian Network (BN).&lt;/p&gt;
     
     &lt;p&gt;&lt;img src=&quot;http://i.imgur.com/ojyQZKp.png&quot; alt=&quot;ojyQZKp.png&quot; /&gt;
-    Source: https://www.analyticsvidhya.com&lt;/p&gt;
+        &lt;small&gt;Source: https://www.analyticsvidhya.com&lt;/small&gt;
+    &lt;/p&gt;
     
-    &lt;p&gt;In Decision Tree Algorithms the model is constructed by the decisions 
+    &lt;p&gt;In &lt;b&gt;Decision Tree Algorithms&lt;/b&gt;  the model is constructed by the decisions 
     taken which are based on the values of attributes in the data. The model 
     resembles a tree and includes all possible outcomes, consequences, resource 
     costs and utility.&lt;/p&gt;
     
     &lt;p&gt;&lt;img src=&quot;https://i.imgur.com/omoPfYh.png&quot; alt=&quot;muAM0uE.png&quot; /&gt;
-    Source: http://www.kdnuggets.com/&lt;/p&gt;
+        &lt;small&gt;Source: http://www.kdnuggets.com/&lt;/small&gt;
+    &lt;/p&gt;
     
-    &lt;p&gt;Finally we find Instance Based Algorithms; this learning model is a 
+    &lt;p&gt;Finally we find &lt;b&gt;Instance Based Algorithms&lt;/b&gt; ; this learning model is a 
     decision problem with instances or examples of training data that are deemed 
     important or required to the model. They usually build up databases of example 
     data and then they are compared to new data using a similarity measure with 
@@ -185,8 +451,9 @@
     
     &lt;p&gt;Here you can download a pdf with most of the algorithms, it is pretty useful as
      it tells you the code in python and in R (however I know you guys and I’m sure 
-    you will go straight for the python code hehe :P ). Note that it doesn’t use Tensorflow.
-    https://discuss.analyticsvidhya.com/t/download-full-cheatsheet-on-machine-learning-algorithms/4063&lt;/p&gt;
+    you will go straight for the python code hehe :P ). Note that it doesn’t use Tensorflow.&lt;/p&gt;
+    &lt;a href=&quot;https://discuss.analyticsvidhya.com/t/download-full-cheatsheet-on-machine-learning-algorithms/4063&quot;&gt;Machine Learning Cheatsheet&lt;/a&gt;
+    
     
     &lt;p&gt;&lt;img src=&quot;https://i.imgur.com/GaclayZ.png&quot; alt=&quot;yizMpKj.png&quot; /&gt;&lt;/p&gt;
     
@@ -200,48 +467,60 @@
     however, here you can find more options for you to choose.&lt;/p&gt;
     
     &lt;p&gt;&lt;img src=&quot;http://i.imgur.com/YPxOIVr.png&quot; alt=&quot;YPxOIVr.png&quot; /&gt;
-    Tensorflow was developed by Google with its initial release in 2015. It is a very 
+    &lt;b&gt;Tensorflow&lt;/b&gt;  was developed by Google with its initial release in 2015. It is a very 
     powerful tool which has compatibility with most CPUs and GPUs. It supports
     python and C++.
     It is gaining a lot of popularity and the community is getting bigger and bigger everyday.
-    You can easilly install it here: https://www.tensorflow.org/install/
+    You can easilly install it here: &lt;/p&gt;
+    &lt;a href=&quot;https://www.tensorflow.org/install/&quot;&gt;Tensorflow download&lt;/a&gt;
+    &lt;p&gt;
     Here you can see the popularity that it has gained:
     &lt;img src=&quot;http://i.imgur.com/sg3pSH7.png&quot; alt=&quot;sg3pSH7.png&quot; /&gt;&lt;/p&gt;
     
     &lt;p&gt;&lt;img src=&quot;http://i.imgur.com/bjcOMEE.png&quot; alt=&quot;bjcOMEE.png&quot; /&gt;
-    Scikit-learn, another big framework doesn’t support GPUs and is not really suitable 
+    &lt;b&gt;Scikit-learn&lt;/b&gt; , another big framework doesn’t support GPUs and is not really suitable 
     for neural networks (also want to note that most of their features were implemented 
     into Tensorflow  ;) ). It is free and also works with python, you can get more info and 
-    installation instructions in their website: http://scikit-learn.org/stable/index.html&lt;/p&gt;
+    installation instructions in their website:&lt;/p&gt; 
+    &lt;a href=&quot;http://scikit-learn.org/stable/index.html&quot;&gt;Scikit Learn download&lt;/a&gt;
     
-    &lt;p&gt;Caffe
-    Caffe is a big machine learning framework too, it’s written in c++ with a python interface.
+    &lt;h2 class=&quot;referencelists&quot;&gt;Caffe&lt;/h2&gt;
+    &lt;p&gt;&lt;br&gt;&lt;b&gt;Caffe&lt;/b&gt;     is a big machine learning framework too, it’s written in c++ with a python interface.
      It is better suited for building applications (instead of Tensorflow which is developed for
      research and development). It’s not bad at all but I feel like Tensorflow is easier to use. This 
-    is their homepage: http://caffe.berkeleyvision.org/&lt;/p&gt;
+    is their homepage:&lt;/p&gt; 
+    &lt;a href=&quot;http://caffe.berkeleyvision.org/&quot;&gt;Caffe Download&lt;/a&gt;
+    
     
     &lt;p&gt;&lt;img src=&quot;https://i.imgur.com/jzV6oUh.png&quot; alt=&quot;qSafFW8.png&quot; /&gt;
-    Theano is one of the first frameworks created (it was created in 2007), it follows the 
+    &lt;b&gt;Theano&lt;/b&gt;  is one of the first frameworks created (it was created in 2007), it follows the 
     Tensorflow style, it does not support multi-GPU nor horizontal capabilities. It uses NumPy 
     to express computations. It is considered a low-end machine learnign frameworks but in 
     reality it’s is fast and flexible. Due to being old the docs are very well explained.
-    Check it out here: http://deeplearning.net/software/theano/&lt;/p&gt;
+    Check it out here:&lt;/p&gt; 
+    &lt;a href=&quot;http://deeplearning.net/software/theano/&quot;&gt;Theano Website&lt;/a&gt;
+    
     
     &lt;p&gt;&lt;img src=&quot;http://i.imgur.com/xiaZq9p.png&quot; alt=&quot;xiaZq9p.png&quot; /&gt;
-    Keras is object oriented and simple, it uses python and can be used with theano for best 
+    &lt;b&gt;Keras&lt;/b&gt;  is object oriented and simple, it uses python and can be used with theano for best 
     performance (can be used with Tensorflow too but it doesn’t work that good).
-    You can see a comparison of a sample of code of Keras with Tensorflow here:
-    https://gist.github.com/ricgu8086/0ba44ce3aab19ec50425383a4d778b50
+    You can see a comparison of a sample of code of Keras with Tensorflow here: &lt;br&gt;
+    &lt;a href=&quot;https://gist.github.com/ricgu8086/0ba44ce3aab19ec50425383a4d778b50&quot;&gt; Keras vs Tensroflow&lt;/a&gt;
+    &lt;br&gt;
     For simple building get Keras, if you want more tweaks go to Tensorflow.
-    Check it out here: https://keras.io/&lt;/p&gt;
+    Check it out here: &lt;/p&gt;
+    &lt;a href=&quot;https://keras.io/&quot;&gt;Keras Website&lt;/a&gt;
+    
     
     &lt;p&gt;&lt;img src=&quot;http://i.imgur.com/Uy00onV.png&quot; alt=&quot;Uy00onV.png&quot; /&gt;
-    Torch is very famous too, however, it uses Lua, if you are into that go for it (it just 
+    &lt;b&gt;Torch&lt;/b&gt;  is very famous too, however, it uses Lua, if you are into that go for it (it just 
     isn’t my case lol). It was used in facebook before they migrated to Tensorflow (if you 
     know what I mean).
-    This is their website: http://torch.ch/&lt;/p&gt;
+    This is their website: &lt;/p&gt;
+    &lt;a href=&quot;http://torch.ch/&quot;&gt;Torch Website&lt;/a&gt;
     
-    &lt;p&gt;As you can see Tensorflow is the leading software now, it is one of the most powerful
+    
+    &lt;p&gt;&lt;br&gt; As you can see Tensorflow is the leading software now, it is one of the most powerful
      ones and not hard to master when you get the hang of it. Another big software is Keras, 
     if you just want to play around with deep learning it’s probably your option.&lt;/p&gt;
     
@@ -254,568 +533,52 @@
     &lt;p&gt;First of all we can find a defcon 25 talk where they apply machine learning for hacking, 
     it’s pretty interesting, in the talk they don’t explain anything about coding our model but 
     it will help you imagine how machine learning works better.
-    https://www.youtube.com/watch?v=wbRx18VZlYA&lt;/p&gt;
+    &lt;/p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=wbRx18VZlYA&quot;&gt;DEF CON 25 (2017) - Weaponizing Machine Learning - Petro, Morris&lt;/a&gt;
     
-    &lt;p&gt;Here you can find a lot of resources, there are books, websites, videos, etc.
-    https://my.mindnode.com/k954FWFNztnkphWmNqqHz2dqQW41LeP1SLqkqqjs&lt;/p&gt;
-    
-    &lt;p&gt;I found out that a book that I am reading is free online, it’s not bad and it’s suitable 
+    &lt;p&gt;&lt;br&gt;I found out that a book that I am reading is free online, it’s not bad and it’s suitable 
     for university students. The online version is not exactly the same as the paper one, 
-    but it is very useful.
-    http://neuron.eng.wayne.edu/synapse2/tpage3.html&lt;/p&gt;
+    but it is very useful.&lt;/p&gt;
+    &lt;a href=&quot;http://neuron.eng.wayne.edu/synapse2/tpage3.html&quot;&gt;Fundamentals of Artificial Neural Networks
+        by Mohamad H. Hassoun&lt;/a&gt; 
     
-    &lt;p&gt;One of the most famous youtube channels about machine learning is Siraj Raval, he 
+    
+    &lt;p&gt;&lt;br&gt;One of the most famous youtube channels about machine learning is Siraj Raval, he 
     studied computer science and works with python and TensorFlow, it’s a must-watch.
-    https://www.youtube.com/channel/UCWN3xxRkmTPmbKwht9FuE5A&lt;/p&gt;
+    &lt;/p&gt;
+    &lt;a href=&quot;https://www.youtube.com/channel/UCWN3xxRkmTPmbKwht9FuE5A&quot;&gt;Siraj Raval Youtube Channel&lt;/a&gt;
     
-    &lt;p&gt;Sentdex is also a famous youtuber who makes coding videos, he also works with python,
+    &lt;p&gt;&lt;br&gt;Sentdex is also a famous youtuber who makes coding videos, he also works with python,
      he has a very interesting project in my opinion: he made a car which drives itself in gta v 
     with machine learning (and he’s planning on adding even more AI to GTA so stay tunned guys haha).
-    https://www.youtube.com/user/sentdex&lt;/p&gt;
+    &lt;/p&gt;
+    &lt;a href=&quot;https://www.youtube.com/user/sentdex&quot;&gt;Sentdex Youtube Channel&lt;/a&gt;
     
-    &lt;p&gt;This is one of my favourites youtubers, Carykh is a bit underrated and he should have way
+    &lt;p&gt;&lt;br&gt;This is one of my favourites youtubers, Carykh is a bit underrated and he should have way
      more subscribers in my opinion. Check him out and give it a follow, his videos are very 
     interesting and very well made :)
-    https://www.youtube.com/user/carykh&lt;/p&gt;
+    &lt;/p&gt;
+    &lt;a href=&quot;https://www.youtube.com/user/carykh&quot;&gt;Carykh Youtube Channel&lt;/a&gt;
     
-    &lt;p&gt;There are way more videos and youtubers online but I think that with these links you can
+    &lt;p&gt;&lt;br&gt;There are way more videos and youtubers online but I think that with these links you can
     already have some fun!
     Hope you liked the tutorial and have fun :)&lt;/p&gt;
     
     &lt;p&gt;&lt;img src=&quot;https://i.imgur.com/UBAPtJN.png&quot; alt=&quot;YjktbpY.png&quot; /&gt;&lt;/p&gt;
-    
-    &lt;p&gt;https://www.analyticsvidhya.com/blog/2015/08/common-machine-learning-algorithms/&lt;/p&gt;
-    
-    &lt;p&gt;https://machinelearningmastery.com/a-tour-of-machine-learning-algorithms/&lt;/p&gt;
-    
-    &lt;p&gt;https://en.wikipedia.org/wiki/Machine_learning&lt;/p&gt;
-    
-    &lt;p&gt;https://my.mindnode.com/k954FWFNztnkphWmNqqHz2dqQW41LeP1SLqkqqjs&lt;/p&gt;
-    
-    &lt;p&gt;https://www.codeproject.com/Articles/1104747/Introduction-to-Genetic-Algorithms-with-Python-Hel&lt;/p&gt;
-    
-    &lt;p&gt;https://www.analyticsvidhya.com/blog/2016/04/complete-tutorial-tree-based-modeling-scratch-in-python/&lt;/p&gt;
-    
-    &lt;p&gt;https://en.wikipedia.org/wiki/Logistic_regression&lt;/p&gt;
-    
-    &lt;p&gt;https://en.coursera.org/learn/machine-learning/lecture/93VPG/k-means-algorithm&lt;/p&gt;
-    
-    &lt;p&gt;https://en.wikipedia.org/wiki/Apriori_algorithm&lt;/p&gt;
-    
-    &lt;p&gt;https://en.wikipedia.org/wiki/Classification&lt;/p&gt;
-    
-    &lt;p&gt;https://en.wikipedia.org/wiki/Regression_analysis&lt;/p&gt;
-    
-    &lt;p&gt;http://bigdata-madesimple.com/top-10-machine-learning-frameworks/&lt;/p&gt;
-    
-    &lt;p&gt;https://catalystsecure.com/blog/2017/07/deep-learning-in-e-discovery-moving-past-the-hype/&lt;/p&gt;
-    
-    &lt;p&gt;https://aircto.com/blog/everything-you-need-to-know-about-artificial-neural-network-deep-learning-part-i/&lt;/p&gt;
-    
-    &lt;p&gt;http://magizbox.com/training/machinelearning/site/ensemble/&lt;/p&gt;
-    
-    &lt;p&gt;http://www.kdnuggets.com/2016/08/10-algorithms-machine-learning-engineers.html/2&lt;/p&gt;
-    
-    &lt;p&gt;https://elitedatascience.com/machine-learning-algorithms&lt;/p&gt;
-    
-    &lt;p&gt;https://www.analyticsvidhya.com/blog/2015/09/naive-bayes-explained/&lt;/p&gt;</content><author><name>memoriasIT</name></author><category term="Machine Learning" /><summary type="html">Machine learning has got a lot of popularity in our modern world due to the development of the internet, the storage of large amounts of data, etc. Most of the nowadays technologies are more or less related to the automation of learning, some examples could be spam detection, speech recognition, image classifying, and so on. Machine learning itself is a subfield of computer science which allows computers to learn by themselves. The term was first coined in 1959 by IBM, however it never gained as much popularity as it has today. Machine learning has probably earned that much popularity due to the fact that more data was created in the last 2 years than in the whole history, and also, that as we can see in top500.org the computers are exponentially getting better which allows us to execute more complex operations faster. It is strictly related to several fields such as data analysis, data mining and maths. In order to fully understand machine learning, a basis of algebra and statistics is needed. Here, you can find several resources for learning algebra; https://my.mindnode.com/9GQnwWMBYXMe1XjUD8G21qpxiyz5B4MraPtL8xyy And here, for statistics: https://my.mindnode.com/7cSLjj5rauAnjWT1zHqEmqGkixvoVWaMz8C7Q2aW). In machine learning we can classify the tasks into three categories, we will see examples of each of them. Supervised learning: we provide some example inputs (called training data) and the desired outputs. The model has to make predictions while being trained and corrected if they are wrong. The training process will end whenever the desired level of accuracy is achieved. Some examples are Decision Trees and Logistic Regressions. Find more info about them here: https://www.analyticsvidhya.com/blog/2016/04/complete-tutorial-tree-based-modeling-scratch-in-python/ https://en.wikipedia.org/wiki/Logistic_regression Unsupervised learning: we can’t make predictions as we don’t know the result. We can get the model by deducing structures found in the input data where some general rules could be found. Some examples are K-means and the Apriori algorithm. Find more info here: https://en.coursera.org/learn/machine-learning/lecture/93VPG/k-means-algorithm https://en.wikipedia.org/wiki/Apriori_algorithm Semi-supervised learning: as you can imagine it’s just the combination of supervised and unsupervised learning, you have a desired problem but the model has to learn the structures as well as making predictions. Some examples are classification and regression. https://en.wikipedia.org/wiki/Classification https://en.wikipedia.org/wiki/Regression_analysis An algorithm is a sequence of actions that will be performed in order. They can be used for calculation, data processing and automated reasoning. For you to understand you can think of a recipe, you have several steps that you have to complete in order. When we get here things start to get a bit harder and if you want to fully understand how everything works you will need to know algebra and statistics, however, if you just want to have a general knowledge and understand the basics you will be fine with this tut. Algorithms can be divided by the learning style or the similarity in form/function. Here we will categorize them by similarity (how they work). I also have to say that this is a bit off sometimes as some algorithms can be found in different categories depending on your source. First of all I would like to show you a cheat sheet with the most important algorithms that we will see: Source: https://machinelearningmastery.com Starting from the top we see the Deep Learning Algorithms, they are used to create complex neural networks, most of the methods are semi-supervised, large datasets are provided. Some important algorithms are the Deep Boltzmann Machine (DBM), the Deep Belief Networks (DBM), the Convolutional Neural Network (CNN) and Stacked Auto-encoders. It is used a lot for computer vision and speech recognition, they excell in image, audio and text data. However, as they need a lot of data it is not suitable for every possible scenario, they also require a lot of computer resources. This is one of my favourites so you will probably see some tutorials in the future if I manage to fight my laziness xD Source: https://catalystsecure.com Neural networks are inspired by the structure of biological neural networks, they are usually used for regression and classification problems but they can be used in a million case scenarios. Neural networks and Deep Learning are usually mixed up, if you want to take it easy you can imagine that Deep Neural Networks are a more “complex” Neural Network, they have more layers and it is more efficient than the “old-school” Neural Networks. Some important algorithms are Perceptron, Back-Propagation, The Hopfield Network and the Radial Basis Function Network (RBFN). Source: aircto.com The next one that we find is Ensemble Methods (also known as Classification Trees), classifiers are constructed and then new data points are classified by taking a weighted vote of their predictions. It’s like creating weaker models which are independently trained and then combined together to make the final prediction. They perform well in practice, they are scalable and robust, they are unlikely to overfit too (be trained too much). Some big algorithms are Random Forests and Gradient Boosted Regression Trees (GBRT). Source: http://magizbox.com In Regression Algorithms a relationship between variables is created and refined by measuring the error produced in the predictions of the model. Some important ones are Linear regression and Logistic Regression. You can find some examples of these types of regression here: http://magizbox.com/training/machinelearning/site/model_regression/ Source: http://magizbox.com Regularization is just an extension to the regression methods, the only difference is that it penalizes the models based on their complexity favoring simpler models. They are better at generalizing. They are popular, powerful and simple. Some examples are Ridge Regression, Least Absolute Shrinkage and Selection Operator (LASSO), Elastic Net and Least-Angle Regression (LARS). Clustering, like regression, describes the class of problem and class of methods. A set of objects is grouped in groups called clusters. Some examples are k-Means, k-Medians, Expectation Maximisation (EM) and Hierarchical Clustering. Here you can see an example of clustering with K-means: http://magizbox.com/training/machinelearning/site/model_clustering/ Source: http://www.kdnuggets.com Dimensionally Reduction, like clustering methods, seeks and exploits the inherent structure in the data, however, this time it is unsupervised or the data is described with less information. It is useful for visualizing data or simplifying it (which can be later used in a supervised learning method). Some examples are Principal component analysis (PCA), Kernel PCA, Graph-based kernel PCA, Linear discriminant analysis (LDA) and Generalized discriminant analysis (GDA). Source: http://www.bogotobogo.com Association Rule Learning Algorithms are kind of self-explanatory, they extract rules that best explain the relationship between variables in data. These rules can discover important associations that can be exploited. There are two very important algorithms in this category: The Apriori Algorithm and the Eclat Algorithm. Bayesian Algorithms: they use the Bayes’ Theorem, it describes the probability of an event based on prior knowledge of conditions related to the event. Some examples are Naive Bayes, Gaussian Naive Bayes, Multinomial Naive Bayes, Averaged One-Dependence Estimators (AODE), Bayesian Belief Network (BBN) and Bayesian Network (BN). Source: https://www.analyticsvidhya.com In Decision Tree Algorithms the model is constructed by the decisions taken which are based on the values of attributes in the data. The model resembles a tree and includes all possible outcomes, consequences, resource costs and utility. Source: http://www.kdnuggets.com/ Finally we find Instance Based Algorithms; this learning model is a decision problem with instances or examples of training data that are deemed important or required to the model. They usually build up databases of example data and then they are compared to new data using a similarity measure with the aim of creating the best match and in conclusion the best prediction. They are also called memory-based methods and winner-take-all methods. Some examples are k-Nearest Neighbor (kNN), Learning Vector Quantization (LVQ), Self-Organizing Map (SOM) and Locally Weighted Learning (LWL). In a future tutorial I will tell you a methodology for choosing the best algorithm for your problem, for now I would be happy if you understood everything. Here you can download a pdf with most of the algorithms, it is pretty useful as it tells you the code in python and in R (however I know you guys and I’m sure you will go straight for the python code hehe :P ). Note that it doesn’t use Tensorflow. https://discuss.analyticsvidhya.com/t/download-full-cheatsheet-on-machine-learning-algorithms/4063 Last of all, I would like to introduce you to some tools/frameworks. I have to say that machine learning is a field which is experiencing a lot of big changes lately, so please if you are reading this in the future bare with me and make a quick google search to make sure this is still valid. The best of all is that there are many open source software so you don’t have to worry about payments. In my opinion the best tool at the moment is Tensorflow, however, here you can find more options for you to choose. Tensorflow was developed by Google with its initial release in 2015. It is a very powerful tool which has compatibility with most CPUs and GPUs. It supports python and C++. It is gaining a lot of popularity and the community is getting bigger and bigger everyday. You can easilly install it here: https://www.tensorflow.org/install/ Here you can see the popularity that it has gained: Scikit-learn, another big framework doesn’t support GPUs and is not really suitable for neural networks (also want to note that most of their features were implemented into Tensorflow ;) ). It is free and also works with python, you can get more info and installation instructions in their website: http://scikit-learn.org/stable/index.html Caffe Caffe is a big machine learning framework too, it’s written in c++ with a python interface. It is better suited for building applications (instead of Tensorflow which is developed for research and development). It’s not bad at all but I feel like Tensorflow is easier to use. This is their homepage: http://caffe.berkeleyvision.org/ Theano is one of the first frameworks created (it was created in 2007), it follows the Tensorflow style, it does not support multi-GPU nor horizontal capabilities. It uses NumPy to express computations. It is considered a low-end machine learnign frameworks but in reality it’s is fast and flexible. Due to being old the docs are very well explained. Check it out here: http://deeplearning.net/software/theano/ Keras is object oriented and simple, it uses python and can be used with theano for best performance (can be used with Tensorflow too but it doesn’t work that good). You can see a comparison of a sample of code of Keras with Tensorflow here: https://gist.github.com/ricgu8086/0ba44ce3aab19ec50425383a4d778b50 For simple building get Keras, if you want more tweaks go to Tensorflow. Check it out here: https://keras.io/ Torch is very famous too, however, it uses Lua, if you are into that go for it (it just isn’t my case lol). It was used in facebook before they migrated to Tensorflow (if you know what I mean). This is their website: http://torch.ch/ As you can see Tensorflow is the leading software now, it is one of the most powerful ones and not hard to master when you get the hang of it. Another big software is Keras, if you just want to play around with deep learning it’s probably your option. Obviously this is just some theory; I plan on making more tutorials about machine learning with real examples. However, if you are impatient I will leave you some good links ;) First of all we can find a defcon 25 talk where they apply machine learning for hacking, it’s pretty interesting, in the talk they don’t explain anything about coding our model but it will help you imagine how machine learning works better. https://www.youtube.com/watch?v=wbRx18VZlYA Here you can find a lot of resources, there are books, websites, videos, etc. https://my.mindnode.com/k954FWFNztnkphWmNqqHz2dqQW41LeP1SLqkqqjs I found out that a book that I am reading is free online, it’s not bad and it’s suitable for university students. The online version is not exactly the same as the paper one, but it is very useful. http://neuron.eng.wayne.edu/synapse2/tpage3.html One of the most famous youtube channels about machine learning is Siraj Raval, he studied computer science and works with python and TensorFlow, it’s a must-watch. https://www.youtube.com/channel/UCWN3xxRkmTPmbKwht9FuE5A Sentdex is also a famous youtuber who makes coding videos, he also works with python, he has a very interesting project in my opinion: he made a car which drives itself in gta v with machine learning (and he’s planning on adding even more AI to GTA so stay tunned guys haha). https://www.youtube.com/user/sentdex This is one of my favourites youtubers, Carykh is a bit underrated and he should have way more subscribers in my opinion. Check him out and give it a follow, his videos are very interesting and very well made :) https://www.youtube.com/user/carykh There are way more videos and youtubers online but I think that with these links you can already have some fun! Hope you liked the tutorial and have fun :) https://www.analyticsvidhya.com/blog/2015/08/common-machine-learning-algorithms/ https://machinelearningmastery.com/a-tour-of-machine-learning-algorithms/ https://en.wikipedia.org/wiki/Machine_learning https://my.mindnode.com/k954FWFNztnkphWmNqqHz2dqQW41LeP1SLqkqqjs https://www.codeproject.com/Articles/1104747/Introduction-to-Genetic-Algorithms-with-Python-Hel https://www.analyticsvidhya.com/blog/2016/04/complete-tutorial-tree-based-modeling-scratch-in-python/ https://en.wikipedia.org/wiki/Logistic_regression https://en.coursera.org/learn/machine-learning/lecture/93VPG/k-means-algorithm https://en.wikipedia.org/wiki/Apriori_algorithm https://en.wikipedia.org/wiki/Classification https://en.wikipedia.org/wiki/Regression_analysis http://bigdata-madesimple.com/top-10-machine-learning-frameworks/ https://catalystsecure.com/blog/2017/07/deep-learning-in-e-discovery-moving-past-the-hype/ https://aircto.com/blog/everything-you-need-to-know-about-artificial-neural-network-deep-learning-part-i/ http://magizbox.com/training/machinelearning/site/ensemble/ http://www.kdnuggets.com/2016/08/10-algorithms-machine-learning-engineers.html/2 https://elitedatascience.com/machine-learning-algorithms https://www.analyticsvidhya.com/blog/2015/09/naive-bayes-explained/</summary></entry><entry><title type="html">Im using markdown</title><link href="/welcome2" rel="alternate" type="text/html" title="Im using markdown" /><published>2017-07-27T13:00:00+02:00</published><updated>2017-07-27T13:00:00+02:00</updated><id>/welcome2</id><content type="html" xml:base="/welcome2">&lt;p&gt;USING MARKDOWN LULZ
-&lt;strong&gt;Get marked DOWN&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;there-are-a-few-things-that-you-should-know-up-front&quot;&gt;There are a few things that you should know up-front:&lt;/h3&gt;
-&lt;ol&gt;
-  &lt;li&gt;first thing&lt;/li&gt;
-  &lt;li&gt;the &lt;strong&gt;second&lt;/strong&gt; lol&lt;/li&gt;
-  &lt;li&gt;or even third!&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;a href=&quot;google.com&quot;&gt;LINKZ&lt;/a&gt;&lt;/p&gt;</content><author><name>Lewis Carroll</name></author><category term="projects" /><category term="fables" /><summary type="html">USING MARKDOWN LULZ Get marked DOWN</summary></entry><entry><title type="html">Dummy Page</title><link href="/dummy-page" rel="alternate" type="text/html" title="Dummy Page" /><published>2017-07-27T11:00:00+02:00</published><updated>2017-07-27T11:00:00+02:00</updated><id>/dummy-page</id><content type="html" xml:base="/dummy-page">&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin non tortor dolor. Aliquam semper non est vel molestie. Donec urna tortor, tempus eget rhoncus vitae, luctus in lorem. Pellentesque vitae mi lectus. Mauris mattis 
-    feugiat justo, sit amet aliquet justo suscipit eget. Vestibulum nec condimentum justo. Etiam vel diam convallis 
-    lorem rhoncus finibus quis nec odio. Nullam a tortor sed turpis auctor tempor. Quisque in semper sem. Praesent ut velit ac tellus ullamcorper rhoncus. Sed dictum faucibus velit, eu cursus dui imperdiet ac. &lt;/p&gt;</content><author><name>Lewis Carroll</name></author><category term="DummyTag" /><summary type="html">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin non tortor dolor. Aliquam semper non est vel molestie. Donec urna tortor, tempus eget rhoncus vitae, luctus in lorem. Pellentesque vitae mi lectus. Mauris mattis feugiat justo, sit amet aliquet justo suscipit eget. Vestibulum nec condimentum justo. Etiam vel diam convallis lorem rhoncus finibus quis nec odio. Nullam a tortor sed turpis auctor tempor. Quisque in semper sem. Praesent ut velit ac tellus ullamcorper rhoncus. Sed dictum faucibus velit, eu cursus dui imperdiet ac.</summary></entry><entry><title type="html">Styles Showcase hehe xd</title><link href="/styles-showcase" rel="alternate" type="text/html" title="Styles Showcase hehe xd" /><published>2012-09-01T12:00:00+02:00</published><updated>2012-09-01T12:00:00+02:00</updated><id>/styles-showcase</id><content type="html" xml:base="/styles-showcase">&lt;p&gt;First p tag is a subheader so it is bigger hehe xd&lt;/p&gt;
-&lt;p&gt;This is a  &lt;a href=&quot;/the-editor/&quot;&gt;very beautiful link&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;specialformatting&quot;&gt;Special formatting id is big&lt;/h2&gt;
-&lt;p&gt;As well as bold and italics, you can also use some other special formatting in Markdown when the need arises, for example:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;s&gt;strike through&lt;/s&gt;&lt;/li&gt;
-&lt;li&gt;&lt;mark&gt;highlight&lt;/mark&gt;&lt;/li&gt;
-&lt;li&gt;*escaped characters*&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;writingcodeblocks&quot;&gt;Writing code blocks&lt;/h2&gt;
-&lt;p&gt;There are two types of code elements which can be inserted in Markdown, the first is inline, and the other is block. Inline code is formatted by wrapping any word or words in back-ticks, &lt;code&gt;like this&lt;/code&gt;. Larger snippets of code can be displayed across multiple lines using triple back ticks:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;.my-link {
-    text-decoration: underline;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;If you want to get really fancy, you can even add syntax highlighting using &lt;a href=&quot;http://prismjs.com/&quot;&gt;Prism.js&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;fullbleedimages&quot;&gt;Full bleed images&lt;/h2&gt;
-&lt;p&gt;One neat trick which you can use in Markdown to distinguish between different types of images is to add a &lt;code&gt;#hash&lt;/code&gt; value to the end of the source URL, and then target images containing the hash with special styling. For example:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://casper.ghost.org/v1.0.0/images/walking.jpg#full&quot; alt=&quot;walking&quot;&gt;&lt;/p&gt;
-&lt;p&gt;which is styled with...&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;img[src$=&amp;quot;#full&amp;quot;] {
-    max-width: 100vw;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This creates full-bleed images in the Casper theme, which stretch beyond their usual boundaries right up to the edge of the window. Every theme handles these types of things slightly differently, but it's a great trick to play with if you want to have a variety of image sizes and styles.&lt;/p&gt;
-&lt;h2 id=&quot;referencelists&quot;&gt;Reference lists&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;The quick brown &lt;a href=&quot;https://en.wikipedia.org/wiki/Fox&quot; title=&quot;Wikipedia: Fox&quot;&gt;fox&lt;/a&gt;, jumped over the lazy &lt;a href=&quot;https://en.wikipedia.org/wiki/Dog&quot; title=&quot;Wikipedia: Dog&quot;&gt;dog&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Another way to insert links in markdown is using reference lists. You might want to use this style of linking to cite reference material in a Wikipedia-style. All of the links are listed at the end of the document, so you can maintain full separation between content and its source or reference.&lt;/p&gt;
-&lt;h2 id=&quot;creatingfootnotes&quot;&gt;Creating footnotes&lt;/h2&gt;
-&lt;p&gt;The quick brown fox&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn1&quot; id=&quot;fnref1&quot;&gt;[1]&lt;/a&gt;&lt;/sup&gt; jumped over the lazy dog&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn2&quot; id=&quot;fnref2&quot;&gt;[2]&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
-&lt;p&gt;Footnotes are a great way to add additional contextual details when appropriate. Ghost will automatically add footnote content to the very end of your post.&lt;/p&gt;
-&lt;h2 id=&quot;fullhtml&quot;&gt;Full HTML&lt;/h2&gt;
-&lt;p&gt;Perhaps the best part of Markdown is that you're never limited to just Markdown. You can write HTML directly in the Ghost editor and it will just work as HTML usually does. No limits! Here's a standard YouTube embed code as an example:&lt;/p&gt;
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/Cniqsc9QfDo?rel=0&amp;amp;showinfo=0&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
-&lt;hr class=&quot;footnotes-sep&quot;&gt;
-&lt;section class=&quot;footnotes&quot;&gt;
-&lt;ol class=&quot;footnotes-list&quot;&gt;
-&lt;li id=&quot;fn1&quot; class=&quot;footnote-item&quot;&gt;&lt;p&gt;Foxes are red &lt;a href=&quot;#fnref1&quot; class=&quot;footnote-backref&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li id=&quot;fn2&quot; class=&quot;footnote-item&quot;&gt;&lt;p&gt;Dogs are usually not red &lt;a href=&quot;#fnref2&quot; class=&quot;footnote-backref&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Ghost has a single, powerful organisational taxonomy, called tags.&lt;/p&gt;
-&lt;p&gt;It doesn't matter whether you want to call them categories, tags, boxes, or anything else. You can think of Ghost tags a lot like Gmail labels. By tagging posts with one or more keyword, you can organise articles into buckets of related content.&lt;/p&gt;
-&lt;h2 id=&quot;basictagging&quot;&gt;Basic tagging&lt;/h2&gt;
-&lt;p&gt;When you write a post, you can assign tags to help differentiate between categories of content. For example, you might tag some posts with &lt;code&gt;News&lt;/code&gt; and other posts with &lt;code&gt;Cycling&lt;/code&gt;, which would create two distinct categories of content listed on &lt;code&gt;/tag/news/&lt;/code&gt; and &lt;code&gt;/tag/cycling/&lt;/code&gt;, respectively.&lt;/p&gt;
-&lt;p&gt;If you tag a post with both &lt;code&gt;News&lt;/code&gt; &lt;em&gt;and&lt;/em&gt; &lt;code&gt;Cycling&lt;/code&gt; - then it appears in both sections.&lt;/p&gt;
-&lt;p&gt;Tag archives are like dedicated home-pages for each category of content that you have. They have their own pages, their own RSS feeds, and can support their own cover images and meta data.&lt;/p&gt;
-&lt;h2 id=&quot;theprimarytag&quot;&gt;The primary tag&lt;/h2&gt;
-&lt;p&gt;Inside the Ghost editor, you can drag and drop tags into a specific order. The first tag in the list is always given the most importance, and some themes will only display the primary tag (the first tag in the list) by default. So you can add the most important tag which you want to show up in your theme, but also add a bunch of related tags which are less important.&lt;/p&gt;
-&lt;p&gt;&lt;mark&gt;&lt;strong&gt;News&lt;/strong&gt;, Cycling, Bart Stevens, Extreme Sports&lt;/mark&gt;&lt;/p&gt;
-&lt;p&gt;In this example, &lt;strong&gt;News&lt;/strong&gt; is the primary tag which will be displayed by the theme, but the post will also still receive all the other tags, and show up in their respective archives.&lt;/p&gt;
-&lt;h2 id=&quot;privatetags&quot;&gt;Private tags&lt;/h2&gt;
-&lt;p&gt;Sometimes you may want to assign a post a specific tag, but you don't necessarily want that tag appearing in the theme or creating an archive page. In Ghost, hashtags are private and can be used for special styling.&lt;/p&gt;
-&lt;p&gt;For example, if you sometimes publish posts with video content - you might want your theme to adapt and get rid of the sidebar for these posts, to give more space for an embedded video to fill the screen. In this case, you could use private tags to tell your theme what to do.&lt;/p&gt;
-&lt;p&gt;&lt;mark&gt;&lt;strong&gt;News&lt;/strong&gt;, Cycling, #video&lt;/mark&gt;&lt;/p&gt;
-&lt;p&gt;Here, the theme would assign the post publicly displayed tags of &lt;code&gt;News&lt;/code&gt;, and &lt;code&gt;Cycling&lt;/code&gt; - but it would also keep a private record of the post being tagged with &lt;code&gt;#video&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;In your theme, you could then look for private tags conditionally and give them special formatting:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;nohighlight&quot;&gt;
-    
-        ...markup for a nice big video post layout...
-    
-        ...regular markup for a post...
-    
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;You can find documentation for theme development techniques like this and many more over on Ghost's extensive &lt;a href=&quot;https://themes.ghost.org/&quot;&gt;theme documentation&lt;/a&gt;.&lt;/p&gt;
-
-
-&lt;p&gt;Below is just about everything you’ll need to style in the theme. Check the source code to see the many embedded elements within paragraphs.&lt;/p&gt;
-
-
-&lt;hr /&gt;
-
-&lt;h1 id=&quot;heading1&quot;&gt;Heading 1&lt;/h1&gt;
-
-&lt;h2 id=&quot;heading2&quot;&gt;Heading 2&lt;/h2&gt;
-
-&lt;h3 id=&quot;heading3&quot;&gt;Heading 3&lt;/h3&gt;
-
-&lt;h4 id=&quot;heading4&quot;&gt;Heading 4&lt;/h4&gt;
-
-&lt;h5 id=&quot;heading5&quot;&gt;Heading 5&lt;/h5&gt;
-
-&lt;h6 id=&quot;heading6&quot;&gt;Heading 6&lt;/h6&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;Lorem ipsum dolor sit amet, &lt;a title=&quot;test link&quot; href=&quot;#&quot;&gt;test link&lt;/a&gt; adipiscing elit. &lt;strong&gt;This is strong.&lt;/strong&gt; Nullam dignissim convallis est. Quisque aliquam. &lt;em&gt;This is emphasized.&lt;/em&gt; Donec faucibus. Nunc iaculis suscipit dui. 5&lt;sup&gt;3&lt;/sup&gt; = 125. Water is H&lt;sub&gt;2&lt;/sub&gt;O. Nam sit amet sem. Aliquam libero nisi, imperdiet at, tincidunt nec, gravida vehicula, nisl. &lt;cite&gt;The New York Times&lt;/cite&gt; (That’s a citation). &lt;span style=&quot;text-decoration:underline;&quot;&gt;Underline.&lt;/span&gt; Maecenas ornare tortor. Donec sed tellus eget sapien fringilla nonummy. Mauris a ante. Suspendisse quam sem, consequat at, commodo vitae, feugiat in, nunc. Morbi imperdiet augue quis tellus.&lt;/p&gt;
-
-&lt;p&gt;&lt;abbr title=&quot;Hyper Text Markup Language&quot;&gt;HTML&lt;/abbr&gt; and &lt;abbr title=&quot;Cascading Style Sheets&quot;&gt;CSS&lt;/abbr&gt; are our tools. Mauris a ante. Suspendisse quam sem, consequat at, commodo vitae, feugiat in, nunc. Morbi imperdiet augue quis tellus.  Praesent mattis, massa quis luctus fermentum, turpis mi volutpat justo, eu volutpat enim diam eget metus. To copy a file type &lt;code&gt;COPY &lt;var&gt;filename&lt;/var&gt;&lt;/code&gt;. &lt;del&gt;Dinner’s at 5:00.&lt;/del&gt; &lt;ins&gt;Let’s make that 7.&lt;/ins&gt; This &lt;span style=&quot;text-decoration:line-through;&quot;&gt;text&lt;/span&gt; has been struck.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;media&quot;&gt;Media&lt;/h2&gt;
-
-&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.&lt;/p&gt;
-
-&lt;h3 id=&quot;bigimage&quot;&gt;Big Image&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://demo.ghost.io/content/images/2014/09/testimg1.jpeg&quot; alt=&quot;Test Image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.&lt;/p&gt;
-
-&lt;h3 id=&quot;smallimage&quot;&gt;Small Image&lt;/h3&gt;
-
-&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://demo.ghost.io/content/images/2014/09/testimg2.jpg&quot; alt=&quot;Small Test Image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Labore et dolore.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;listtypes&quot;&gt;List Types&lt;/h2&gt;
-
-&lt;h3 id=&quot;definitionlist&quot;&gt;Definition List&lt;/h3&gt;
-
-&lt;dl&gt;
-&lt;dt&gt;Definition List Title&lt;/dt&gt;
-&lt;dd&gt;This is a definition list division.&lt;/dd&gt;
-&lt;dt&gt;Definition&lt;/dt&gt;
-&lt;dd&gt;An exact statement or description of the nature, scope, or meaning of something: &lt;em&gt;our definition of what constitutes poetry.&lt;/em&gt;&lt;/dd&gt;
-&lt;/dl&gt;
-
-&lt;h3 id=&quot;orderedlist&quot;&gt;Ordered List&lt;/h3&gt;
-
-&lt;ol&gt;
-&lt;li&gt;List Item 1  &lt;/li&gt;
-&lt;li&gt;List Item 2 &lt;br /&gt;
-&lt;ol&gt;&lt;li&gt;Nested list item A&lt;/li&gt;
-&lt;li&gt;Nested list item B&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;
-&lt;li&gt;List Item 3&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;unorderedlist&quot;&gt;Unordered List&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;List Item 1&lt;/li&gt;
-&lt;li&gt;List Item 2
-&lt;ul&gt;&lt;li&gt;Nested list item A&lt;/li&gt;
-&lt;li&gt;Nested list item B&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;List Item 3&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;table&quot;&gt;Table&lt;/h2&gt;
-
-&lt;table&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;th&gt;Table Header 1&lt;/th&gt;
-&lt;th&gt;Table Header 2&lt;/th&gt;
-&lt;th&gt;Table Header 3&lt;/th&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Division 1&lt;/td&gt;
-&lt;td&gt;Division 2&lt;/td&gt;
-&lt;td&gt;Division 3&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&quot;even&quot;&gt;
-&lt;td&gt;Division 1&lt;/td&gt;
-&lt;td&gt;Division 2&lt;/td&gt;
-&lt;td&gt;Division 3&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Division 1&lt;/td&gt;
-&lt;td&gt;Division 2&lt;/td&gt;
-&lt;td&gt;Division 3&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;preformattedtext&quot;&gt;Preformatted Text&lt;/h2&gt;
-
-&lt;p&gt;Typographically, preformatted text is not the same thing as code. Sometimes, a faithful execution of the text requires preformatted text that may not have anything to do with code. Most browsers use Courier and that’s a good default — with one slight adjustment, Courier 10 Pitch over regular Courier for Linux users.&lt;/p&gt;
-
-&lt;h3 id=&quot;code&quot;&gt;Code&lt;/h3&gt;
-
-&lt;p&gt;Code can be presented inline, like &lt;code&gt;&amp;lt;?php bloginfo('stylesheet_url'); ?&amp;gt;&lt;/code&gt;, or within a &lt;code&gt;&amp;lt;pre&amp;gt;&lt;/code&gt; block. Because we have more specific typographic needs for code, we’ll specify Consolas and Monaco ahead of the browser-defined monospace font.&lt;/p&gt;
-
-&lt;p&gt;Code blocks can also be inserted with the highlight tag as below:&lt;/p&gt;
-&lt;pre&gt;
-    
-    {% highlight language-x %}
-    # some code
-    {% endhighlight %}
-    
-&lt;/pre&gt;
-
-&lt;p&gt;More information about code highlighting in jekyll can be found  &lt;a href=&quot;https://jekyllrb.com/docs/templates/#code-snippet-highlighting&quot;&gt;in Jekyll documentation&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;These area a couple of examples showing the resulting highlighted code:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;c&quot;&gt;/* css code sample */&lt;/span&gt;
-&lt;span class=&quot;nf&quot;&gt;#container&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;margin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;-240px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;c1&quot;&gt;// javascript code sample&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ajax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'POST'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'backend.php'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;q=&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;myform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;serialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;success&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// on success use return data here&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xhr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;exception&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// if ajax fails display error alert&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ajax error response type &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Now you can also use &lt;a href=&quot;https://highlightjs.org/&quot;&gt;highlight.js&lt;/a&gt;.
-For more on how to use it and on the available styles check their
-&lt;a href=&quot;https://highlightjs.org/static/demo/&quot;&gt;demo&lt;/a&gt; and
-&lt;a href=&quot;http://highlightjs.readthedocs.org/en/latest/&quot;&gt;documentation&lt;/a&gt; pages.&lt;/p&gt;
-
-&lt;div class=&quot;system&quot;&gt;
-&lt;pre&gt;&lt;code class=&quot;swift&quot;&gt;// Swift code sample
-import Foundation
-
-@objc class Person: Entity {
-  var name: String!
-  var age:  Int!
-
-  init(name: String, age: Int) {
-    /* /* ... */ */
-  }
-
-  // Return a descriptive string for this person
-  func description(offset: Int = 0) -&gt; String {
-    return &quot;\(name) is \(age + offset) years old&quot;
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;blockquotes&quot;&gt;Blockquotes&lt;/h2&gt;
-
-&lt;p&gt;Let’s keep it simple. Italics are good to help set it off from the body text. Be sure to style the citation.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Good afternoon, gentlemen. I am a HAL 9000 computer. I became operational at the H.A.L. plant in Urbana, Illinois on the 12th of January 1992. My instructor was Mr. Langley, and he taught me to sing a song. If you’d like to hear it I can sing it for you. &lt;cite&gt;— &lt;a href=&quot;http://en.wikipedia.org/wiki/HAL_9000&quot;&gt;HAL 9000&lt;/a&gt;&lt;/cite&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;And here’s a bit of trailing text.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;textlevelsemantics&quot;&gt;Text-level semantics&lt;/h2&gt;
-
-&lt;p&gt;The &lt;a href=&quot;#&quot;&gt;a element&lt;/a&gt; example &lt;br /&gt;
-The &lt;abbr&gt;abbr element&lt;/abbr&gt; and &lt;abbr title=&quot;Title text&quot;&gt;abbr element with title&lt;/abbr&gt; examples &lt;br /&gt;
-The &lt;b&gt;b element&lt;/b&gt; example &lt;br /&gt;
-The &lt;cite&gt;cite element&lt;/cite&gt; example &lt;br /&gt;
-The &lt;code&gt;code element&lt;/code&gt; example &lt;br /&gt;
-The &lt;del&gt;del element&lt;/del&gt; example &lt;br /&gt;
-The &lt;dfn&gt;dfn element&lt;/dfn&gt; and &lt;dfn title=&quot;Title text&quot;&gt;dfn element with title&lt;/dfn&gt; examples &lt;br /&gt;
-The &lt;em&gt;em element&lt;/em&gt; example &lt;br /&gt;
-The &lt;i&gt;i element&lt;/i&gt; example &lt;br /&gt;
-The &lt;ins&gt;ins element&lt;/ins&gt; example &lt;br /&gt;
-The &lt;kbd&gt;kbd element&lt;/kbd&gt; example &lt;br /&gt;
-The &lt;mark&gt;mark element&lt;/mark&gt; example &lt;br /&gt;
-The &lt;q&gt;q element &lt;q&gt;inside&lt;/q&gt; a q element&lt;/q&gt; example &lt;br /&gt;
-The &lt;s&gt;s element&lt;/s&gt; example &lt;br /&gt;
-The &lt;samp&gt;samp element&lt;/samp&gt; example &lt;br /&gt;
-The &lt;small&gt;small element&lt;/small&gt; example &lt;br /&gt;
-The &lt;span&gt;span element&lt;/span&gt; example &lt;br /&gt;
-The &lt;strong&gt;strong element&lt;/strong&gt; example &lt;br /&gt;
-The &lt;sub&gt;sub element&lt;/sub&gt; example &lt;br /&gt;
-The &lt;sup&gt;sup element&lt;/sup&gt; example &lt;br /&gt;
-The &lt;var&gt;var element&lt;/var&gt; example &lt;br /&gt;
-The &lt;u&gt;u element&lt;/u&gt; example&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;forms&quot;&gt;Forms&lt;/h2&gt;
-
-&lt;form&gt;
-&lt;fieldset&gt;
-&lt;legend&gt;Inputs as descendents of labels (form legend)&lt;/legend&gt;
-&lt;label&gt;
-&lt;b&gt;Text input&lt;/b&gt;
-&lt;input type=&quot;text&quot; value=&quot;default value&quot;&gt;
-&lt;/label&gt;
-&lt;label&gt;
-&lt;b&gt;Email input&lt;/b&gt;
-&lt;input type=&quot;email&quot;&gt;
-&lt;/label&gt;
-&lt;label&gt;
-&lt;b&gt;Search input&lt;/b&gt;
-&lt;input type=&quot;search&quot;&gt;
-&lt;/label&gt;
-&lt;label&gt;
-&lt;b&gt;Tel input&lt;/b&gt;
-&lt;input type=&quot;tel&quot;&gt;
-&lt;/label&gt;
-&lt;label&gt;
-&lt;b&gt;URL input&lt;/b&gt;
-&lt;input type=&quot;url&quot; placeholder=&quot;http://&quot;&gt;
-&lt;/label&gt;
-&lt;label&gt;
-&lt;b&gt;Password input&lt;/b&gt;
-&lt;input type=&quot;password&quot; value=&quot;password&quot;&gt;
-&lt;/label&gt;
-&lt;label&gt;
-&lt;b&gt;File input&lt;/b&gt;
-&lt;input type=&quot;file&quot;&gt;
-&lt;/label&gt;
-&lt;label&gt;
-&lt;b&gt;Radio input&lt;/b&gt;
-&lt;input type=&quot;radio&quot; name=&quot;rad&quot;&gt;
-&lt;/label&gt;
-&lt;label&gt;
-&lt;b&gt;Checkbox input&lt;/b&gt;
-&lt;input type=&quot;checkbox&quot;&gt;
-&lt;/label&gt;
-&lt;label&gt;
-&lt;input type=&quot;radio&quot; name=&quot;rad&quot;&gt; Radio input
-&lt;/label&gt;
-&lt;label&gt;
-&lt;input type=&quot;checkbox&quot;&gt; Checkbox input
-&lt;/label&gt;
-&lt;label&gt;
-&lt;b&gt;Select field&lt;/b&gt;
-&lt;select&gt;
-&lt;option&gt;Option 01&lt;/option&gt;
-&lt;option&gt;Option 02&lt;/option&gt;
-&lt;/select&gt;
-&lt;/label&gt;
-&lt;label&gt;
-&lt;b&gt;Textarea&lt;/b&gt;
-&lt;textarea cols=&quot;30&quot; rows=&quot;5&quot; &gt;Textarea text&lt;/textarea&gt;
-&lt;/label&gt;
-&lt;/fieldset&gt;
-
-&lt;fieldset&gt;
-&lt;legend&gt;Clickable inputs and buttons&lt;/legend&gt;
-&lt;input type=&quot;image&quot; src=&quot;http://placekitten.com/90/24&quot; alt=&quot;Image (input)&quot;&gt;
-&lt;input type=&quot;reset&quot; value=&quot;Reset (input)&quot;&gt;
-&lt;input type=&quot;button&quot; value=&quot;Button (input)&quot;&gt;
-&lt;input type=&quot;submit&quot; value=&quot;Submit (input)&quot;&gt;
-&lt;button type=&quot;reset&quot;&gt;Reset (button)&lt;/button&gt;
-&lt;button type=&quot;button&quot;&gt;Button (button)&lt;/button&gt;
-&lt;button type=&quot;submit&quot;&gt;Submit (button)&lt;/button&gt;
-&lt;/fieldset&gt;
-
-&lt;fieldset id=&quot;boxsize&quot;&gt;
-&lt;legend&gt;box-sizing tests&lt;/legend&gt;
-&lt;div&gt;&lt;input type=&quot;text&quot; value=&quot;text&quot;&gt;&lt;/div&gt;
-&lt;div&gt;&lt;input type=&quot;email&quot; value=&quot;email&quot;&gt;&lt;/div&gt;
-&lt;div&gt;&lt;input type=&quot;search&quot; value=&quot;search&quot;&gt;&lt;/div&gt;
-&lt;div&gt;&lt;input type=&quot;url&quot; value=&quot;http://example.com&quot;&gt;&lt;/div&gt;
-&lt;div&gt;&lt;input type=&quot;password&quot; value=&quot;password&quot;&gt;&lt;/div&gt;
-
-&lt;div&gt;&lt;input type=&quot;color&quot; value=&quot;#000000&quot;&gt;&lt;/div&gt;
-&lt;div&gt;&lt;input type=&quot;number&quot; value=&quot;5&quot;&gt;&lt;/div&gt;
-&lt;div&gt;&lt;input type=&quot;range&quot; value=&quot;10&quot;&gt;&lt;/div&gt;
-&lt;div&gt;&lt;input type=&quot;date&quot; value=&quot;1970-01-01&quot;&gt;&lt;/div&gt;
-&lt;div&gt;&lt;input type=&quot;month&quot; value=&quot;1970-01&quot;&gt;&lt;/div&gt;
-&lt;div&gt;&lt;input type=&quot;week&quot; value=&quot;1970-W01&quot;&gt;&lt;/div&gt;
-&lt;div&gt;&lt;input type=&quot;time&quot; value=&quot;18:23&quot;&gt;&lt;/div&gt;
-&lt;div&gt;&lt;input type=&quot;datetime&quot; value=&quot;1970-01-01T00:00:00Z&quot;&gt;&lt;/div&gt;
-&lt;div&gt;&lt;input type=&quot;datetime-local&quot; value=&quot;1970-01-01T00:00&quot;&gt;&lt;/div&gt;
-
-&lt;div&gt;&lt;input type=&quot;radio&quot;&gt;&lt;/div&gt;
-&lt;div&gt;&lt;input type=&quot;checkbox&quot;&gt;&lt;/div&gt;
-
-&lt;div&gt;&lt;select&gt;&lt;option&gt;Option 01&lt;/option&gt;&lt;option&gt;Option 02&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;
-&lt;div&gt;&lt;textarea cols=&quot;30&quot; rows=&quot;5&quot; &gt;Textarea text&lt;/textarea&gt;&lt;/div&gt;
-
-&lt;div&gt;&lt;input type=&quot;image&quot; src=&quot;http://placekitten.com/90/24&quot; alt=&quot;Image (input)&quot;&gt;&lt;/div&gt;
-&lt;div&gt;&lt;input type=&quot;reset&quot; value=&quot;Reset (input)&quot;&gt;&lt;/div&gt;
-&lt;div&gt;&lt;input type=&quot;button&quot; value=&quot;Button (input)&quot;&gt;&lt;/div&gt;
-&lt;div&gt;&lt;input type=&quot;submit&quot; value=&quot;Submit (input)&quot;&gt;&lt;/div&gt;
-
-&lt;div&gt;&lt;button type=&quot;reset&quot;&gt;Reset (button)&lt;/button&gt;&lt;/div&gt;
-&lt;div&gt;&lt;button type=&quot;button&quot;&gt;Button (button)&lt;/button&gt;&lt;/div&gt;
-&lt;div&gt;&lt;button type=&quot;submit&quot;&gt;Submit (button)&lt;/button&gt;&lt;/div&gt;
-&lt;/fieldset&gt;
-&lt;/form&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;embeds&quot;&gt;Embeds&lt;/h2&gt;
-
-&lt;p&gt;Sometimes all you want to do is embed a little love from another location and set your post alive.&lt;/p&gt;
-
-&lt;h3 id=&quot;video&quot;&gt;Video&lt;/h3&gt;
-
-&lt;p&gt;Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&lt;/p&gt;
-
-&lt;iframe src=&quot;//player.vimeo.com/video/103224792?title=0&amp;amp;byline=0&amp;amp;portrait=0&quot; width=&quot;600&quot; height=&quot;338&quot; frameborder=&quot;0&quot; webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;
-
-&lt;p&gt;Culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;
-
-&lt;h3 id=&quot;slides&quot;&gt;Slides&lt;/h3&gt;
-
-&lt;p&gt;Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&lt;/p&gt;
-
-&lt;script async class=&quot;speakerdeck-embed&quot; data-id=&quot;34d2856027ce01316b5d621ab8e7d421&quot; data-ratio=&quot;1.33333333333333&quot; src=&quot;//speakerdeck.com/assets/embed.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;
-
-&lt;h3 id=&quot;audio&quot;&gt;Audio&lt;/h3&gt;
-
-&lt;p&gt;Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&lt;/p&gt;
-
-&lt;iframe width=&quot;100%&quot; height=&quot;450&quot; scrolling=&quot;no&quot; frameborder=&quot;no&quot; src=&quot;https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/169381837&amp;amp;auto_play=false&amp;amp;hide_related=false&amp;amp;show_comments=true&amp;amp;show_user=true&amp;amp;show_reposts=false&amp;amp;visual=true&quot;&gt;&lt;/iframe&gt;
-
-&lt;p&gt;Culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;
-
-&lt;h3 id=&quot;code&quot;&gt;Code&lt;/h3&gt;
-
-&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.&lt;/p&gt;
-
-&lt;p&gt;&lt;div data-height=&quot;268&quot; data-theme-id=&quot;0&quot; data-slug-hash=&quot;bcqhe&quot; data-default-tab=&quot;js&quot; data-user=&quot;rglazebrook&quot; class='codepen'&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;var c = new Sketch.create({autoclear: false}),
-    bigCircle = 50,
-    littleCircle = 5,
-    // The velocity value determines how much to move the spinner head (in radians).
-    velocity = 0.105,
-    hue = 0,
-    // The alpha value below determines the length of the spinner&amp;#39;s tail.
-    bg = &amp;#39;rgba(40,40,40,.075)&amp;#39;;
-    Spinner = function() {};
-
-Spinner.prototype.setup = function() {
-  this.x = c.width / 2;
-  this.y = c.height / 2 - bigCircle;
-  this.rotation = 0;
-}
-Spinner.prototype.update = function() {
-  this.rotation += velocity;
-  this.rotation = this.rotation % TWO_PI;
-  this.x = c.width /2 + cos(this.rotation) * bigCircle;
-  this.y = c.height / 2 + sin(this.rotation) * bigCircle;
-}
-Spinner.prototype.draw = function() {
-  c.fillStyle = &amp;#39;hsl(&amp;#39;+hue+&amp;#39;,50%,50%)&amp;#39;;
-  c.beginPath();
-  c.arc(this.x, this.y, littleCircle, 0, TWO_PI);
-  c.fill();
-  c.closePath();
-}
-c.setup = function() {
-  spinner = new Spinner();
-  spinner.setup();
-}
-c.update = function() {
-  spinner.update();
-  hue = ++hue % 360;
-}
-c.draw = function() {
-  spinner.draw();
-  c.fillStyle = bg;
-  c.fillRect(0,0,c.width,c.height);
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;See the Pen &lt;a href='http://codepen.io/rglazebrook/pen/bcqhe/'&gt;Simple Rotating Spinner&lt;/a&gt; by Rob Glazebrook (&lt;a href='http://codepen.io/rglazebrook'&gt;@rglazebrook&lt;/a&gt;) on &lt;a href='http://codepen.io'&gt;CodePen&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;/div&gt;&lt;script async src=&quot;//codepen.io/assets/embed/ei.js&quot;&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;Isn't it beautiful?&lt;/p&gt;</content><author><name>Lewis Carroll</name></author><category term="projects" /><summary type="html">First p tag is a subheader so it is bigger hehe xd This is a very beautiful link Special formatting id is big As well as bold and italics, you can also use some other special formatting in Markdown when the need arises, for example: strike through highlight *escaped characters* Writing code blocks There are two types of code elements which can be inserted in Markdown, the first is inline, and the other is block. Inline code is formatted by wrapping any word or words in back-ticks, like this. Larger snippets of code can be displayed across multiple lines using triple back ticks: .my-link { text-decoration: underline; } If you want to get really fancy, you can even add syntax highlighting using Prism.js. Full bleed images One neat trick which you can use in Markdown to distinguish between different types of images is to add a #hash value to the end of the source URL, and then target images containing the hash with special styling. For example: which is styled with... img[src$=&amp;quot;#full&amp;quot;] { max-width: 100vw; } This creates full-bleed images in the Casper theme, which stretch beyond their usual boundaries right up to the edge of the window. Every theme handles these types of things slightly differently, but it's a great trick to play with if you want to have a variety of image sizes and styles. Reference lists The quick brown fox, jumped over the lazy dog. Another way to insert links in markdown is using reference lists. You might want to use this style of linking to cite reference material in a Wikipedia-style. All of the links are listed at the end of the document, so you can maintain full separation between content and its source or reference. Creating footnotes The quick brown fox[1] jumped over the lazy dog[2]. Footnotes are a great way to add additional contextual details when appropriate. Ghost will automatically add footnote content to the very end of your post. Full HTML Perhaps the best part of Markdown is that you're never limited to just Markdown. You can write HTML directly in the Ghost editor and it will just work as HTML usually does. No limits! Here's a standard YouTube embed code as an example: Foxes are red ↩︎ Dogs are usually not red ↩︎ Ghost has a single, powerful organisational taxonomy, called tags. It doesn't matter whether you want to call them categories, tags, boxes, or anything else. You can think of Ghost tags a lot like Gmail labels. By tagging posts with one or more keyword, you can organise articles into buckets of related content. Basic tagging When you write a post, you can assign tags to help differentiate between categories of content. For example, you might tag some posts with News and other posts with Cycling, which would create two distinct categories of content listed on /tag/news/ and /tag/cycling/, respectively. If you tag a post with both News and Cycling - then it appears in both sections. Tag archives are like dedicated home-pages for each category of content that you have. They have their own pages, their own RSS feeds, and can support their own cover images and meta data. The primary tag Inside the Ghost editor, you can drag and drop tags into a specific order. The first tag in the list is always given the most importance, and some themes will only display the primary tag (the first tag in the list) by default. So you can add the most important tag which you want to show up in your theme, but also add a bunch of related tags which are less important. News, Cycling, Bart Stevens, Extreme Sports In this example, News is the primary tag which will be displayed by the theme, but the post will also still receive all the other tags, and show up in their respective archives. Private tags Sometimes you may want to assign a post a specific tag, but you don't necessarily want that tag appearing in the theme or creating an archive page. In Ghost, hashtags are private and can be used for special styling. For example, if you sometimes publish posts with video content - you might want your theme to adapt and get rid of the sidebar for these posts, to give more space for an embedded video to fill the screen. In this case, you could use private tags to tell your theme what to do. News, Cycling, #video Here, the theme would assign the post publicly displayed tags of News, and Cycling - but it would also keep a private record of the post being tagged with #video. In your theme, you could then look for private tags conditionally and give them special formatting: ...markup for a nice big video post layout... ...regular markup for a post...</summary></entry></feed>
+    &lt;ol&gt;
+        &lt;li&gt;&lt;a href=&quot;https://www.analyticsvidhya.com/blog/2015/08/common-machine-learning-algorithms/&quot;&gt;Essentials of Machine Learning Algorithms (with Python and R Codes)&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;https://machinelearningmastery.com/a-tour-of-machine-learning-algorithms/&quot;&gt;A Tour of Machine Learning Algorithms&lt;/a&gt;&lt;br /&gt;
+        &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Machine_learning&quot;&gt;Wikipedia: Machine Learning&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;https://www.codeproject.com/Articles/1104747/Introduction-to-Genetic-Algorithms-with-Python-Hel&quot;&gt;Introduction to Genetic Algorithms with Python &lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;https://www.analyticsvidhya.com/blog/2016/04/complete-tutorial-tree-based-modeling-scratch-in-python/&quot;&gt;A Complete Tutorial on Tree Based Modeling from Scratch&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Logistic_regression&quot;&gt;Wikipedia: Logistic Regression&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;https://en.coursera.org/learn/machine-learning/lecture/93VPG/k-means-algorithm&quot;&gt;Coursera: K-means algorithm&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Apriori_algorithm&quot;&gt;Apriori Algorithm&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Classification&quot;&gt;Wikipedia:Classification&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Regression_analysis&quot;&gt;Wikipedia: Regression Analysis&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;https://catalystsecure.com/blog/2017/07/deep-learning-in-e-discovery-moving-past-the-hype/&quot;&gt;Deep Learning in E-Discovery: Moving Past the Hype&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;https://aircto.com/blog/everything-you-need-to-know-about-artificial-neural-network-deep-learning-part-i/&quot;&gt;Everything you need to know about Artificial Neural Network &amp; Deep Learning&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;http://www.kdnuggets.com/2016/08/10-algorithms-machine-learning-engineers.html/2&quot;&gt;The 10 Algorithms Machine Learning Engineers Need to Know&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;https://elitedatascience.com/machine-learning-algorithms&quot;&gt;Modern Machine Learning Algorithms: Strengths and Weaknesses&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;https://www.analyticsvidhya.com/blog/2015/09/naive-bayes-explained/&quot;&gt;6 Easy Steps to Learn Naive Bayes Algorithm&lt;/a&gt;&lt;/li&gt;
+
+    &lt;/ol&gt;</content><author><name>memoriasIT</name></author><category term="Machine Learning" /><category term="course" /><summary type="html">In depth introduction to Machine Learning</summary></entry></feed>
