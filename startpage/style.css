@@ -228,3 +228,19 @@ div {
 #searchbox:focus {
   color: black;
 }
+
+
+@media (max-height: 720px) {
+  .wrap {
+    display: none;
+  }
+
+  .header-img {
+    display: none;
+  }
+
+  .links {
+    margin-top: 20%;
+    margin-bottom: 20%;
+  }
+}
