@@ -221,3 +221,6 @@ div {
   font-size: 20px;
 }
 
+#searchbox:focus {
+  color: black;
+}
