@@ -187,7 +187,8 @@ div {
 
 .search {
   width: 100%;
-  position: relative
+  position: relative;
+  padding-left: 0;
 }
 
 .searchTerm {
