@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu+Mono">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"> 
+      </head>
+  <body>
+    <h1> 
+      <div class="header-img">
+        <img src="header.png">
+      </div>
+  </h1>
+  <div class="wrap">
+   <div class="search">
+     <form id="search" method="get" action="http://duckduckgo.com">
+      <input type="text" id="searchbox" class="searchTerm" placeholder="What are you looking for?">
+      <button id="searchbutton" type="submit" class="searchButton">
+        <i class="fa fa-search"></i>
+     </button>
+     </form>
+   </div>
+   </div> 
+    <div class="links">
+      <ul>
+        <li>prog</li>
+
+        <a href="https://github.com/">github</a>
+        <a href="https://github.com/memoriasit">profile</a>
+        <a href="http://localhost">localhost</a>
+      </ul>
+      <ul>
+        <li>reddit</li>
+
+        <a href="https://www.reddit.com/r/unixporn/">unixporn</a>
+        <a href="https://www.reddit.com/">main</a>
+      </ul>
+      <ul>
+        <li>docs</li> 
+        <a href="https://docs.oracle.com/javase/8/docs/api/">java</a>
+        <a href="http://infocenter.arm.com/help/index.jsp">arm</a>
+        <a href="http://devdocs.io/cpp/">cpp</a>
+        <a href="https://docs.python.org/3/">python</a>
+      </ul>
+      <ul>
+        <li>fun</li>
+
+        <a href="https://youtube.com/">yt</a>
+        <a href="https://youtube.com/c/memoriasdeuninformatico">channel</a>
+        <a href="http://greysec.net">greysec</a>
+      </ul>
+
+      <ul>
+        <li>misc</li>
+
+        <a href="http://memoriasit.github.io">blog</a>
+        <a href="https://calendar.google.com">calendar</a>
+        <a href="https://mail.google.com/mail/">gmail</a>
+      </ul>
+    </div>
+  </body>
+  <footer>
+<script>
+    var a = document.getElementById('search');
+    a.addEventListener('submit',function(e) {
+        e.preventDefault();
+        console.log("Test");
+        var b = document.getElementById('searchbox').value;
+        window.location.href = 'http://duckduckgo.com/'+b;
+
+    });
+
+</script>
+  
+  </footer>
+</html>
