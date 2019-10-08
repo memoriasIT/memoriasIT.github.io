@@ -168,6 +168,9 @@ div {
 
 .header-img {
   margin-top: 115px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
 }
 
 .links {
