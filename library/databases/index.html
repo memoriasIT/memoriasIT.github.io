@@ -167,12 +167,13 @@ Constraints are also hard to create and changes in the system required very dras
 There are a lot of models and they are just put here to stimulate the curiosity of the reader.</p>
 <p>By contrast, we are going to see three possible perspective that were stated in a report in1975 by ANSI. 
 In 1975, <strong>ANSI-SPARC</strong> declared 3 possible perspectives that conform the <strong>three level architecture</strong>.</p>
+<p>Its main objectives is to simplify the database management from the user by separating the main database from what the user actually sees, each one having a custom view of the data different from the other users and allowing the hardware to be changed without altering the user's view.</p>
 <div class="row">
   <div class="col-md-8" markdown="1">
     <h4>External level</h4>
-    <p>It is a high-level description of the data. It usually includes the main concepts and main relationships among them.  </p> 
-    <h4 class="logical level">Logical/Conceptual level</h4>
-    <p>Describes the semantics. It consists of descriptions of tables and columns, object oriented classes, etc.It does not care about how the data is actually stored.</p>
+    <p>This is the level that the user actually sees, showing the most important data for each user and excluding the data that is not as important as the others. </p> 
+    <h4>Logical/Conceptual level</h4>
+    <p>This is the intermediate level, which describes the way parts of the database are connected and how they interact with each other and also describing which data is stored where. </p>
     <h4>Physical/Internal level</h4>
     <p>It is the lowest level, it describes the physical means by which the data are stored (partitions, CPUs, tablespaces, etc.).
 It might also include the discussion of compression and encryption techniques.</p>
@@ -357,5 +358,5 @@ In the past, this was totally unimaginable as the costs were very high.</p>
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2019-10-11 15:12:46
+Build Date UTC : 2019-10-11 15:23:02
 -->
