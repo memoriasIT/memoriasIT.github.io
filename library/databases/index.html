@@ -11,7 +11,7 @@
     <link rel="img/favicon.ico">
 
     
-    <title>Databases Notes - Databases</title>
+    <title>Introduction to Databases - Databases</title>
     
 
     <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
@@ -50,6 +50,14 @@
 
         <!-- Collapsed navigation -->
         <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
 
             <!-- Main title -->
 
@@ -58,11 +66,37 @@
 
         <!-- Expanded navigation -->
         <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li class="active">
+                        <a href=".">Introduction to Databases</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="T2/">Database Design</a>
+                    </li>
+                
+                
+                </ul>
 
             <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
                             <i class="fas fa-search"></i> Search
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a rel="prev" >
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="T2/">
+                            Next <i class="fas fa-arrow-right"></i>
                         </a>
                     </li>
             </ul>
@@ -75,27 +109,31 @@
         
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="first-level active"><a href="#databases-notes">Databases Notes</a></li>
+        <li class="first-level active"><a href="#introduction-to-databases">Introduction to Databases</a></li>
             <li class="second-level"><a href="#introduction">Introduction</a></li>
                 
             <li class="second-level"><a href="#file-based-aproach">File based aproach</a></li>
                 
             <li class="second-level"><a href="#concepts">Concepts</a></li>
                 
+                <li class="third-level"><a href="#data-distribution-and-access">Data distribution and access</a></li>
                 <li class="third-level"><a href="#data-model">Data Model</a></li>
                 <li class="third-level"><a href="#dbms">DBMS</a></li>
+                <li class="third-level"><a href="#schema">Schema</a></li>
                 <li class="third-level"><a href="#db-users">DB users</a></li>
                 <li class="third-level"><a href="#dba">DBA</a></li>
-                <li class="third-level"><a href="#acid-vs-base">ACID vs BASE</a></li>
                 <li class="third-level"><a href="#relational-database">Relational database</a></li>
                 <li class="third-level"><a href="#integrity">Integrity</a></li>
-                <li class="third-level"><a href="#schema">Schema</a></li>
-                <li class="third-level"><a href="#data-distribution-and-access">Data distribution and access</a></li>
+                <li class="third-level"><a href="#acid-vs-base">ACID vs BASE</a></li>
+                <li class="third-level"><a href="#metadata">Metadata</a></li>
+                <li class="third-level"><a href="#on-line-transaction-processing-oltp">On-Line Transaction Processing (OLTP)</a></li>
+                <li class="third-level"><a href="#data-warehousing">Data Warehousing</a></li>
+                <li class="third-level"><a href="#in-memory-databases">In-memory databases</a></li>
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="databases-notes">Databases Notes</h1>
+<h1 id="introduction-to-databases">Introduction to Databases</h1>
 <h2 id="introduction">Introduction</h2>
 <p>All databases should have several characteristics in common:</p>
 <ul>
@@ -108,15 +146,27 @@
 <p>In the past, files were used to store data. However, it lacks a lot of important characteristics that databases provide us.</p>
 <p>A <strong>multiuser environment</strong> is hard to implement. Using users in a machine is not the best option in practice.
 A multiuser environment allows us to have a <strong>security policy</strong> as well as <strong>sharing data</strong> among users/apps.
-Constraints are also hard to create and changes in the system required very drastic changeswhich is not ideal.</p>
-<p>In order to paliate these problems, usually an application was developed, but it required constant development and management; and most of the responsability was given to the developers.</p>
+Constraints are also hard to create and changes in the system required very drastic changes, which is not ideal.</p>
+<p>In order to palliate these problems, usually an application was developed, but it required constant development and management; and most of the responsibility was given to the developers.</p>
 <h2 id="concepts">Concepts</h2>
 <p>When talking about databases there are several important concepts that we should be familiarized with.</p>
+<h3 id="data-distribution-and-access">Data distribution and access</h3>
+<p>According to where the database can be accessed, several types can be found:</p>
+<h4 id="local">Local</h4>
+<p>Applications do not require data from other sites.</p>
+<h4 id="centralized">Centralized</h4>
+<p>Applications that require data from other sites</p>
+<h4 id="distributed">Distributed</h4>
+<h5 id="homogeneuos">Homogeneuos</h5>
+<p>Has identical software and hardware running all database instances, and may appear through a single interface as if it were a single database. </p>
+<h5 id="heterogeneous">Heterogeneous</h5>
+<p>They may have different hardware, operating systems, database management systems, and even data models for different databases. </p>
 <h3 id="data-model">Data Model</h3>
-<p>A data model explicitly determines the structure, manipulation and integrity aspects of the data stored in the data mangagement systems (e.g. relational databases).</p>
-<p>There are several kinds of database models. Some of them are the flat model, the hierarchical model, the network model or the relational model. There are a lot of models and they are just put here to stimulate the curiosity of the reader.</p>
+<p>A <em>data model</em> explicitly determines the <em>structure</em>, <em>manipulation</em> and <em>integrity</em> aspects of the data stored in the data management systems (e.g. relational databases).</p>
+<p>There are several kinds of database models. Some of them are the flat model, the hierarchical model, the network model or the relational model. 
+There are a lot of models and they are just put here to stimulate the curiosity of the reader.</p>
 <p>By contrast, we are going to see three possible perspective that were stated in a report in1975 by ANSI. 
-In 1975, ANSI-SPARC declared 3 possible perspectives that conform the three level architecture.</p>
+In 1975, <strong>ANSI-SPARC</strong> declared 3 possible perspectives that conform the <strong>three level architecture</strong>.</p>
 <div class="row">
   <div class="col-md-8" markdown="1">
     <h4>External level</h4>
@@ -125,7 +175,7 @@ In 1975, ANSI-SPARC declared 3 possible perspectives that conform the three leve
     <p>Describes the semantics. It consists of descriptions of tables and columns, object oriented classes, etc.It does not care about how the data is actually stored.</p>
     <h4>Physical/Internal level</h4>
     <p>It is the lowest level, it describes the physical means by which the data are stored (partitions, CPUs, tablespaces, etc.).
-It might also include the discussion of compression and encyrption techniques.</p>
+It might also include the discussion of compression and encryption techniques.</p>
   </div>
   <div class="col-md-4" markdown="1">
     <img  class="center-block" src="images/1.jpg">
@@ -133,16 +183,22 @@ It might also include the discussion of compression and encyrption techniques.</
 </div>
 
 <h3 id="dbms">DBMS</h3>
-<p>The goal is to create and manage database elements from a software/manager.
-This software should be in charge of data manipulation, recovery routines, security and inttegrity constraints.</p>
+<p>The goal is to create and <em>manage database elements</em> from a <em>software/manager</em>.
+This software should be in charge of data <em>manipulation</em>, <em>recovery routines</em>, <em>security</em> and <em>integrity constraints</em>.</p>
 <p>A DBMS provides an extra layer of security, as it makes the access to the database impossible without it.
 So, if we were to try to access the database directly from a programming language (like accessing a file) we would fail.</p>
+<p>Some examples might be: protecting the money in a system failure of a banking system or making sure that the data is not lost or stolen in a reservation.</p>
+<h3 id="schema">Schema</h3>
+<p>The database schema is its <em>structure</em> described in a formal language (the one supported by the DBMS).
+Integrity constraints are stated here.</p>
+<p>In a relational database a schema can define the tables, fields, relationships, etc.
+Schemas are usually stored in a data dictionary.</p>
 <h3 id="db-users">DB users</h3>
 <p>According to what/how the users require of the database there are several types.</p>
 <h4 id="application-programmers">Application programmers</h4>
-<p>Interact with the database by using DML queries in whatever programming language they are using.. The queries are converted into object code which interacts with the databasse.</p>
+<p>Interact with the database by using <em>DML queries</em> in whatever programming language they are using. The queries are converted into object code which interacts with the database.</p>
 <h4 id="sophisticated-users">Sophisticated users</h4>
-<p>Database developers in charge of writing SQL queries to select/insert/delete/update data. They interact with the database directly with SQL and DBMS.</p>
+<p>Database developers in charge of writing <em>SQL queries</em> to select/insert/delete/update data. They interact with the database directly with SQL and DBMS.</p>
 <h4 id="specializad-users">Specializad users</h4>
 <p>Sophisticated users in charge of writing special database application programs.</p>
 <h4 id="stand-alone-users">Stand-alone users</h4>
@@ -150,47 +206,66 @@ So, if we were to try to access the database directly from a programming languag
 <h4 id="native-users">Native users</h4>
 <p>Use an application to interact with the database. They might even not be aware that they are using a database (or what is a database).</p>
 <h3 id="dba">DBA</h3>
-<p>DBA or Database administrators are in charge of a lot of responsabilities.
+<p>DBA or Database administrators are in charge of a lot of responsibilities.
 Some of them are installing/upgrading the DBMS servers, design and implement the databases,migrate or recover them and making sure that the security and performance are in good shape.</p>
+<h3 id="relational-database">Relational database</h3>
+<p>A relational database is a database based on a <em>relational model</em> of data. They usually use <em>SQL</em> for querying and maintaining the database.</p>
+<p>In the relational model the data is organized into one or more tables. They have columns and rows with unique keys (used for identification). Each table usually represents one entity type and the rows represents an entity.</p>
+<h3 id="integrity">Integrity</h3>
+<p>Data integrity ensures overall <em>completeness</em>, <em>accuracy</em> and <em>consistency</em> of data. It is imposed by the means of <em>error-checking</em> methods and validation procedures that are usually discussed in the database design phase.</p>
+<p>There are several types of integrities according to what it concerns: entity, referential and domain integrity.</p>
+<p>All the <em>data must be connected</em> to other data and have the possibility of being traced. This allows that everything is recoverable and searchable.</p>
 <h3 id="acid-vs-base">ACID vs BASE</h3>
 <p><strong>ACID</strong> and <strong>BASE</strong> are both sets of properties for database transactions.
 They are meant to ensure validity even if errors occur.</p>
 <p><strong>ACID</strong> stands for <strong>Atomicity</strong>, <strong>Consistency</strong>, <strong>Isolation</strong> and <strong>Durability</strong>.</p>
 <p>Just like UNIX commands, an ACID transaction might be composed of several pieces but will be treated as a single one.
-If one piece fails/crashes, the entire transaction will become invalid.</p>
-<p><strong>Consistency</strong> will guarantee that the database is only in a valid state. In other words, prevents that the database gets corrupted by an illegal transacion.</p>
-<p>Due to concurrency, several transactions might be being processed at the moment. <strong>Isolation</strong> allows us to have some concurrency control and withdraw any effects from other transactions.</p>
+If one piece fails/crashes, the entire transaction will become invalid, this phenomenon is called <strong>atomicity</strong>.</p>
+<p><strong>Consistency</strong> will guarantee that the database is only in a valid state. In other words, prevents that the database gets corrupted by an illegal transaction.
+In order to achieve this, the database has to fulfill a set of defined rules.</p>
+<p>Due to concurrency, several transactions might be being processed at the moment. <strong>Isolation</strong> allows us to have some concurrency control and withdraw any effects from other transactions (have independence).</p>
 <p>Finally <strong>Durability</strong> assures that if a transaction was successfully committed, it will stay like that even if a crash is produced.</p>
 <hr />
 <p>On the other hand <strong>BASE</strong> stands for <strong>Basically Available</strong>, <strong>Soft state</strong>, <strong>Eventually consistent</strong>.</p>
-<p><strong>Basically Available</strong> means that the system is available for querying by all users (no isolation is present). The database is only available "most of the time".</p>
-<p>The data is not inmediately added to all nodes, it happens gradually, as it propagates acrosss all nodes. This is called <strong>eventually consistent</strong>.</p>
-<p>Because of the "eventual consistency model" the values in the system might change, and not all replicas are consistent, therefore the <strong>soft state</strong>.</p>
-<h3 id="relational-database">Relational database</h3>
-<p>A relational database is a database based on a relational model of data. They usually use SQL for querying and maintaining the database.</p>
-<p>In the relational model the data is organized into one or more tables. They have columns and rows with unique keys (used for identification). Each table usually represents one entity type and the rows represents an entity.</p>
-<h3 id="integrity">Integrity</h3>
-<p>Data integrity ensures overall completeness, accuracy and consistency of data. It is imposed by the means of error-checking methods and validation procedures that are usually discussed in the database design phase.</p>
-<p>There are several types of integrities according to what it concerns: entity, referential and domain integrity.</p>
-<p>All the data must be connected to other dat and have the posibility of being traced. This allows that everything is recoverable and searchable.</p>
-<h3 id="schema">Schema</h3>
-<p>The database schema is its structure described in a formal language (the one supported by the DBMS).
-Integrity constraints are stated here.</p>
-<p>In a relational database a schema can define the tables, fields, relationships, etc.
-Schemas are usually stored in a data dictionary.</p>
+<p><strong>Basically Available</strong> means that the system is available for querying by all users (no isolation is present). The database is only available "most of the time".
+A response will always be generated, but there is a possibility of it being a failure.</p>
+<p>The data is not immediately added to all nodes, it happens gradually, as it propagates across all nodes. This is called <strong>eventually consistent</strong>.</p>
+<p>Because of the "eventual consistency model" the values in the system might change (even when no transaction is made), and not all replicas are consistent, therefore the <strong>soft state</strong>.</p>
+<pre><code class="text">Despite ACID systems being the standard for most of database history, BASE systems may start to rise in use due to the amount of cost eventual consistency saves in comparison to having every transaction be checked individually.
+</code></pre>
+
+<h3 id="metadata">Metadata</h3>
+<p>Metadata is "data information that provides information about other data”. Another way of thinking of metadata is as a short explanation or summary of what a data is.</p>
+<p>There are several types of metadata, which are:  descriptive, structural, administrative, reference and statistical metadata.</p>
 <ul>
-<li>Metadata</li>
-<li>On-Line Transaction Processing (OLTP)</li>
-<li>Data Warehousing</li>
-<li>In-memory</li>
-<li>Clusters</li>
+<li><strong>Descriptive metadata</strong> - describes information such as who made a file, where was it taken and how big the file is so it is used for discovery and identification</li>
+<li><strong>Structural metadata</strong> - describes the structure of database objects such as tables, columns, keys and indexes - how the components of an object are organized</li>
+<li><strong>Administrative metadata</strong> - information to help manage a resource, resource type, permissions</li>
+<li><strong>Reference metadata</strong> - information about the contents and quality of statistical data.</li>
+<li><strong>Statistical metadata</strong> - describe processes that collect, process, or produce statistical data</li>
 </ul>
-<h3 id="data-distribution-and-access">Data distribution and access</h3>
-<h4 id="local">Local</h4>
-<h4 id="centralized">Centralized</h4>
-<h4 id="distributed">Distributed</h4>
-<h5 id="homogeneuos">Homogeneuos</h5>
-<h5 id="heterogeneous">Heterogeneous</h5></div>
+<p>For example, an image may include metadata that describes how large the picture is, the color depth, the image resolution and when the image was created. Author, date created, date modified and file size are examples of very basic document metadata. </p>
+<p>There are several uses of metadata:</p>
+<p>The most frequent application is the refinement of the queries on the search engines, because thanks to the additional information of metadata they are faster and more accurate so the user can avoid manual filters.</p>
+<p>Additionally, exists the problem that the user and the PC don't understand each other because the last one cannot interpret the meaning of data. Metadata can solve this explaining how related the data is.</p>
+<p>Finally, make data compression more efficient and the presentation of variable data, for instance, a video software can distinguish the first plane and the background and a mobile phone can recognize what is a person or not at the moment of taking a photograph.</p>
+<h3 id="on-line-transaction-processing-oltp">On-Line Transaction Processing (OLTP)</h3>
+<p>It is a kind of system that is thoroughly used all over the world nowadays, and I dare say, is the most popular type of online systems (such as most of the web CRUD applications). </p>
+<p>Examples of such systems are ATMs, any type of online bank transaction, shopping on amazon, or even adding a book review on goodreads.</p>
+<p>OLTP is primarily backed by a database server that must meet a few crucial criteria. 
+Transaction in the name stands for the fact that updates to the database need to be executed "atomically" which means that database must have consistent state to any user that will try to access it at a given point in time, thus the session is executed within a context of "transaction" between a user and a DB server.</p>
+<p>The criteria that DB must meet are most importantly: atomicity, concurrent access by many users at once, and integrity. 
+Big concern of OLTP systems is concurrent access and its security, since DB should not be accessed by 2 users at the same time trying to modify the same data. Due to that fact, serious security checks need to be implemented.</p>
+<p>In a nutshell, OLTP is the idea that we all have in mind when whe think of a database.</p>
+<h3 id="data-warehousing">Data Warehousing</h3>
+<p>A data warehouse is a system used for reporting and data analysis.
+Data Warehouses store current and historical data. The data may pass through a data cleasing and other operations which ensure data quality for reporting.</p>
+<h3 id="in-memory-databases">In-memory databases</h3>
+<p>An in-memory database relies on main memory for computer data storage.
+In-memory databases achieve much better speeds as accessing the memory is much faster than using a disk.</p>
+<p>These kinds of databases are used for applications where the response time is critical.
+In the past, this was totally unimaginable as the costs were very high.</p>
+<p>However, not everything is advantages, RAM is volatile, and in an event of a power loss, the data stored is lost.</p></div>
         
         
     </div>
@@ -282,5 +357,5 @@ Schemas are usually stored in a data dictionary.</p>
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2019-10-10 18:53:28
+Build Date UTC : 2019-10-11 15:12:46
 -->
