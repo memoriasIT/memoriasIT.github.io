@@ -1,0 +1,45 @@
+I don't really understand your question, why windows 7? And what are you reffering to with "procs related to those" ?
+
+Maybe for some inspiration you could check other malwares such as Zeus/Zbot which injects code in processes like winlogon, explorer, csrss or smss.
+
+The main functions you want to use are:
+
+CreateRemoteThread() or whatever other API function to start the execution in the remote process.
+WriteProcessMemory()
+SetWindowsHookEX()
+
+GetProcAddress()a
+LoadLibraryA()
+VirtualAllockEx()
+
+These seem to be more or less the standard, however I have seen other implementations/methods like the one that zerosum0x0 did usign SetThreadContext() and NtContinue().
+https://zerosum0x0.blogspot.com/2017/07/threadcontinue-reflective-injection.html
+
+As always github has a lot of implementations and good explanations like this one:
+https://github.com/stephenfewer/ReflectiveDLLInjection
+
+For what I know, usually what is done is review the memory sections that are marked as Page_Execute_ReadWrite (or RWX) and try to parse out the memory for injected code.
+Here you have a open source tool that basically does what I said, you can try to see the code and reverse engineer the behaviour:
+http://hooked-on-mnemonics.blogspot.com/p/injdmp.html
+
+For game hacking, where dlls are used too people use "manual mapping", also refered as "manual dll injection". You can check a YouTube channel called "Guided Hacking" which is a  lot of fun and very informative. As I said, he is more related to hacking games but I suppose that it could help for your project too.
+
+Most detectproof cheats use virtual machines that interact with the process from the outside or hide in ring 0 and create a debugger that interacts with the process. In conclussion all you want is to avoid the detection of your hooks.
+
+DEFCON has a lot of good talks about code injection, this one is about reflective dll injection which I suppose that is what you are trying to achieve.
+https://www.defcon.org/images/defcon-20/dc-20-presentations/King/DEFCON-20-King-Reflective-Injection-Detection.pdf
+And the tool he mentions can be found here:
+https://github.com/aking1012/dc20
+
+DLLs are tracked in three different doubly-linked lists for each process. What you want to achieve is to unlink the loaded DLLs from these lists. This is a representation of how it more or less looks like:
+[image]https://www.aldeid.com/w/images/3/3c/EPROCESS.png
+source: https://www.aldeid.com/wiki/EPROCESS
+
+I found an article which looks pretty good:
+http://jumpdollar.blogspot.com/2014/09/windbg-walking-windows-linked-lists.html
+
+The detection of injected processes are also achieved by enumerating DLLs injected by the OS via registry key. You want to use AppInitDLLs or AppCertDLL.
+
+Redacting more about kernel manipulation you can look more about DKOM (which stands for Direct Kernel Object Manipulation) and can help you hiding processes, adding priviledges, etc.
+
+Good luck my friend, and hope to see your code up soon ;)

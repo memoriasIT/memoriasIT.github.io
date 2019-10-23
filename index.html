@@ -1,447 +1,401 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-    <!-- Document Settings -->
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-    <!-- Base Meta -->
-    <!-- dynamically fixing the title for tag/author pages -->
-
-
-
-    <title>memoriasIT</title>
-    <meta name="HandheldFriendly" content="True" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Styles'n'Scripts -->
-    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/built/screen.edited.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/built/syntax.css" />
-    <!-- highlight.js -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
-    <style>.hljs { background: none; }</style>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Index</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
 
 
-    <!-- Font Awesome -->
-    <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"> -->
+    <style>
+        .h1, h2, h3, h4 {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        }
 
-    <!-- This tag outputs SEO meta+structured data and other important settings -->
-    <meta name="description" content="Memorias de un Informático" />
-    <link rel="shortcut icon" href="/assets/images/favicon.png" type="image/png" />
-    <link rel="canonical" href="/" />
-    <meta name="referrer" content="no-referrer-when-downgrade" />
+        .site-header {
+            position: relative;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            color: #fff;
+            background: color(var(--darkgrey) l(-5%)) no-repeat center center;
+            background-size: cover;
+        }
 
-     <!--title below is coming from _includes/dynamic_title-->
-    <meta property="og:site_name" content="memoriasIT" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="memoriasIT" />
-    <meta property="og:description" content="Memorias de un Informático" />
-    <meta property="og:url" content="/" />
-    <meta property="og:image" content="/assets/images/blog-cover.jpg" />
-    <meta property="article:publisher" content="https://www.github.com/memoriasIT" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="memoriasIT" />
-    <meta name="twitter:description" content="Memorias de un Informático" />
-    <meta name="twitter:url" content="/" />
-    <meta name="twitter:image" content="/assets/images/blog-cover.jpg" />
-    <meta name="twitter:label1" content="Written by" />
-    <meta name="twitter:data1" content="memoriasIT" />
-    <meta name="twitter:site" content="@memoriasIT" />
-    <meta name="twitter:creator" content="@memoriasIT" />
-    <meta property="og:image:width" content="2000" />
-    <meta property="og:image:height" content="666" />
+        .site-header:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            display: block;
+            background: rgba(0,0,0,0.18);
+        }
 
-    <script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "Website",
-    "publisher": {
-        "@type": "Organization",
-        "name": "memoriasIT",
-        "logo": "/assets/images/blog-icon.png"
-    },
-    "url": "/",
-    "image": {
-        "@type": "ImageObject",
-        "url": "/assets/images/blog-cover.jpg",
-        "width": 2000,
-        "height": 666
-    },
-    "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "/"
-    },
-    "description": "Memorias de un Informático"
-}
-    </script>
+        .site-header:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: auto;
+            left: 0;
+            z-index: 10;
+            display: block;
+            height: 80px;
+            background: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0));
+        }
 
-    <!-- <script type="text/javascript" src="https://demo.ghost.io/public/ghost-sdk.min.js?v=724281a32e"></script>
-    <script type="text/javascript">
-    ghost.init({
-    	clientId: "ghost-frontend",
-    	clientSecret: "f84a07a72b17"
-    });
-    </script> -->
+        .site-header.no-cover:before,
+        .site-header.no-cover:after {
+            display: none;
+        }
 
-    <meta name="generator" content="Jekyll 3.6.2" />
-    <link rel="alternate" type="application/rss+xml" title="memoriasIT" href="/feed.xml" />
+        .site-header-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10vw 4vw;
+            min-height: 200px;
+            max-height: 450px;
+            text-align: center;
+        }
+
+        .inner {
+            margin: 0 auto;
+            max-width: 1040px;
+            width: 100%;
+        }
+
+        .headercontent {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10vw 4vw;
+            max-height: 10vh;
+            min-height: 30vh;
+            margin-top: 10vh;
+            text-align: center;
+        }
+    
+        .img {
+            vertical-align: middle;
+        }
+
+        .site-description {
+            z-index: 10;
+            margin: 0;
+            margin-top: -10vh;
+            padding: 5px 0;
+            font-size: 2.2rem;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            opacity: 0.8;
+            color: white;
+        }
+
+        .site-title {
+            z-index: 10;
+        }
+
+
+        .nav {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            list-style: none;
+        }
+
+        .nav li {
+            display: block;
+            margin: 0;
+            padding: 0;
+            text-transform: uppercase;
+        }
+
+        .nav li a {
+            display: block;
+            margin: 0;
+            padding: 10px 12px;
+            color: #fff;
+            opacity: 0.8;
+        }
+
+        .nav li a:hover {
+            text-decoration: none;
+            opacity: 1;
+        }
+
+        .site-footer {
+            padding-top: 20px;
+            /* padding-bottom: 50px; */
+            color: #fff;
+            background: #000;
+            clear: both;
+            position: relative;
+            bottom: 0;
+        }
+
+        .site-footer-content {
+            color: hsla(0,0%,100%,.7);
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            -ms-flex-align: center;
+            align-items: center;
+            font-size: 0.9rem;
+            padding-inline: 4vh;
+        }
+
+        .site-footer-nav a {
+            position: relative;
+            margin-left: 20px;
+        }
+
+        .site-footer-nav a::before {
+            content: "";
+            position: absolute;
+            top: 11px;
+            left: -11px;
+            display: block;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 100%;
+        }
+        .site-footer-nav a:first-of-type:before {
+            display: none;
+        }
+
+        @media (max-width: 650px) {
+            .site-footer-content {
+                flex-direction: column;
+            }
+            .site-footer-nav a:first-child {
+                margin-left: 0;
+            }
+        }
+
+
+        a {
+            text-decoration: none;
+            color: hsla(0,0%,100%,.7);
+        }
+
+        a,body, .easteregg, div,footer, form, h1, h2, h3, h4, h5, h6, header, html, img,  li,menu, nav, p, span, strike, strong, table, tbody, td, tfoot, th, thead, time, tr, tt, ul, var, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font: inherit;
+            font-size: inherit;
+            font-size: 100%;
+            vertical-align: baseline;
+        }
+
+        .easteregg, body, footer {
+            color: #3c484e;
+            font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif;
+            font-size: 1.5rem;
+            line-height: 1.6em;
+            font-weight: 400;
+            font-style: normal;
+            letter-spacing: 0;
+            text-rendering: optimizeLegibility;
+            -moz-font-feature-settings: "liga" on;
+        }
+
+        .nav-general {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: -10vh;
+        }
+
+        .nav-social {
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-img {
+            height: 23px;
+            filter: brightness(0) invert(1);
+        }
+
+        .social-img:hover {
+            display: inline-block;
+            vertical-align: middle;
+            -webkit-transform: perspective(1px) translateZ(0);
+            transform: perspective(1px) translateZ(0);
+            box-shadow: 0 0 1px rgba(168, 129, 129, 0);
+        }
+
+        .logomem {
+            height: 60%;
+        }
+
+        @media (max-width: 4000px) {
+            .nav-general {
+                margin-top: -15vh;
+            }
+            
+        }
+
+        @media (max-width: 1200px) {
+            .nav-general {
+                margin-top: -10vh;
+            }
+            
+        }
+
+        
+        @media (max-width: 801px) {
+            .logomem {
+                padding-top: 0px;
+                margin-bottom: 5vh;
+            }
+
+            .nav-general{
+                margin-top: 2vh;
+            }
+
+            .site-nav {
+                position: relative;
+                top: -70px;
+            }
+
+            
+            .site-header {
+                padding-right: 0;
+                padding-left: 0;
+            }
+            .site-nav-left {
+                margin-right: 0;
+                padding-left: 4vw;
+            }
+            .site-nav-right {
+                display: none;
+            }
+        }
+
+
+        @media (max-width: 500px) {
+            .site-title {
+                font-size: 3rem;
+                padding-top: 15vh;
+            }
+
+            .logomem {
+                margin-top:6vh;
+                height: 40%;
+            }
+            .site-description {
+                font-size: 1.8rem;
+                margin-top: -16vh;
+                padding-inline: 4vh;
+                position: relative;
+
+            }
+
+            .headercontent {
+                margin-top: 7vh;
+            }
+
+            .site-footer-nav {
+                margin-top: -15px;
+                
+            }
+
+            .nav {
+                display: inline;
+
+            }
+
+            .nav li{
+                text-align:center;
+                margin: -20px;
+            }
+
+            .nav-general {
+                margin-top: 10vh;
+            }
+
+            .nav-social {
+                margin-top: 3vh;
+            }
+
+            .nav-social img, .nav-social svg {
+                height: 30px;
+            }
+        }
+
+        .box {
+            display: flex;
+            flex-flow: column;
+            height: 100vh;
+        }
+
+        .row {
+            flex: 1 1 auto;
+        }
+
+    </style>
 
 
 </head>
-<body class="home-template">
-
-    <div class="site-wrapper">
-        <!-- All the main content gets inserted here, index.hbs, post.hbs, etc -->
-        <!-- < default -->
-<!-- The tag above means: insert everything in this file
-into the {body} of the default.hbs template -->
-
-<!-- The big featured header, it uses blog cover image as a BG if available -->
-<header class="site-header outer " style="background-image:  url(/assets/images/blog-cover.jpg) ">
-    <div class="inner">
-        <div class="site-header-content">
-            <h1 class="site-title">
-                
-                    <img style="max-width: 50%; padding-bottom: 10px" src="/assets/images/blog-icon.png" alt="memoriasIT"/>
-                
-            </h1>
-            <h2 class="site-description">Memorias de un Informático</h2>
-        </div>
-        <nav class="site-nav">
-    <div class="site-nav-left">
-        
-        
-            <ul class="nav" role="menu">
-    <li class="nav-home" role="menuitem"><a href="/">Home</a></li>
-    <li class="nav-about" role="menuitem"><a href="/about/">About</a></li>
-    <li class="nav-getting-started" role="menuitem"><a href="/tag/project/">Projects</a></li>
-    <li class="nav-getting-started" role="menuitem"><a href="/tag/course/">Courses</a></li>
-    <li class="nav-try-ghost" role="menuitem"><a href="http://africau.edu/images/default/sample.pdf">CV</a></li>
-</ul>
-
-        
-    </div>
-    <div class="site-nav-right">
-        <div class="social-links">
-            
-                <a class="social-link" href="https://github.com/memoriasIT"><img src="https://i.imgur.com/f2POCJJ.png" height="23px" alt="" srcset=""></a>
-            
-            
-                <a class="social-link social-link-tw" href="https://twitter.com/memoriasIT" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
-</a>
-            
-        </div>
-        
-            <a class="subscribe-button" href="#subscribe">Subscribe</a>
-        
-    </div>
-</nav>
-
-    </div>
-</header>
-
-<!-- The main content area -->
-<main id="site-main" class="site-main outer" role="main">
-    <div class="inner">
-
-        <div class="post-feed">
-            <!-- The tag below includes the markup for each post - partials/post-card.hbs -->
-            
-    <article class="post-card home-template">
-        
-            <a class="post-card-image-link" href="/Github-Stars">
-                <div class="post-card-image" style="background-image: url(/assets/images/githubbanner.png)"></div>
-            </a>
-        
-        <div class="post-card-content">
-            <a class="post-card-content-link" href="/Github-Stars">
-                <header class="post-card-header">
-                    
-                        
-                            
-                               <span class="post-card-tags">Github</span>
-                            
-                        
-                            
-                               <span class="post-card-tags">Stars</span>
-                            
-                        
-                            
-                                <span class="post-card-tags">Project</span>
-                            
-                        
-                    
-
-                    <h2 class="post-card-title">Managing Github Stars</h2>
-                </header>
-                <section class="post-card-excerpt">
-                    <p>The problem If you are a someone who uses github stars a lot for getting inspiration or just stumble with a lot of interesting ideas you would probably have hundreds of stars. The</p>
-                </section>
-            </a>
-            <footer class="post-card-meta">
-                
-                    
-                        
-                        <img class="author-profile-image" src="/assets/images/memoriasIT.png" alt="memoriasIT" />
-                        
-                        <span class="post-card-author">
-                            <a href="/author/memoriasIT/">memoriasIT</a>
-                        </span>
-                    
-                
-                    
-                
-            </footer>
-        </div>
-    </article>
-
-    <article class="post-card home-template">
-        
-            <a class="post-card-image-link" href="/Ricing-Adventures">
-                <div class="post-card-image" style="background-image: url(/assets/images/ricing.jpg)"></div>
-            </a>
-        
-        <div class="post-card-content">
-            <a class="post-card-content-link" href="/Ricing-Adventures">
-                <header class="post-card-header">
-                    
-                        
-                            
-                               <span class="post-card-tags">Unix</span>
-                            
-                        
-                            
-                               <span class="post-card-tags">Ricing</span>
-                            
-                        
-                            
-                               <span class="post-card-tags">Project</span>
-                            
-                        
-                            
-                                <span class="post-card-tags">Customization</span>
-                            
-                        
-                    
-
-                    <h2 class="post-card-title">Ricing Adventures</h2>
-                </header>
-                <section class="post-card-excerpt">
-                    <p>Hello and welcome to my tales of how I riced my unix box! Also usually reffered to as how I spent days tweaking config files until I got frustrated! "Rice" is a word</p>
-                </section>
-            </a>
-            <footer class="post-card-meta">
-                
-                    
-                        
-                        <img class="author-profile-image" src="/assets/images/memoriasIT.png" alt="memoriasIT" />
-                        
-                        <span class="post-card-author">
-                            <a href="/author/memoriasIT/">memoriasIT</a>
-                        </span>
-                    
-                
-                    
-                
-            </footer>
-        </div>
-    </article>
-
-    <article class="post-card home-template">
-        
-            <a class="post-card-image-link" href="/arm-intro">
-                <div class="post-card-image" style="background-image: url(/assets/images/arm.jpg)"></div>
-            </a>
-        
-        <div class="post-card-content">
-            <a class="post-card-content-link" href="/arm-intro">
-                <header class="post-card-header">
-                    
-                        
-                            
-                               <span class="post-card-tags">Arm</span>
-                            
-                        
-                            
-                               <span class="post-card-tags">Course</span>
-                            
-                        
-                            
-                               <span class="post-card-tags">Assembly</span>
-                            
-                        
-                            
-                                <span class="post-card-tags">Tutorial</span>
-                            
-                        
-                    
-
-                    <h2 class="post-card-title">Introduction to ARM</h2>
-                </header>
-                <section class="post-card-excerpt">
-                    <p>Introduction to ARM Assembly ARM is a RISC (Reduced Instruction Set Computing) architecture. It operates with registers with a few instructions for loading and saving data from/to memory. ARM in comparison to other</p>
-                </section>
-            </a>
-            <footer class="post-card-meta">
-                
-                    
-                        
-                        <img class="author-profile-image" src="/assets/images/memoriasIT.png" alt="memoriasIT" />
-                        
-                        <span class="post-card-author">
-                            <a href="/author/memoriasIT/">memoriasIT</a>
-                        </span>
-                    
-                
-                    
-                
-            </footer>
-        </div>
-    </article>
-
-    <article class="post-card home-template">
-        
-            <a class="post-card-image-link" href="/intro-to-machine-learning">
-                <div class="post-card-image" style="background-image: url(/assets/images/machinelearning.png)"></div>
-            </a>
-        
-        <div class="post-card-content">
-            <a class="post-card-content-link" href="/intro-to-machine-learning">
-                <header class="post-card-header">
-                    
-                        
-                            
-                               <span class="post-card-tags">Machine learning</span>
-                            
-                        
-                            
-                                <span class="post-card-tags">Course</span>
-                            
-                        
-                    
-
-                    <h2 class="post-card-title">Introduction to Machine Learning</h2>
-                </header>
-                <section class="post-card-excerpt">
-                    <p>In depth introduction to Machine Learning Machine learning has got a lot of popularity in our modern world due to the development of the internet, the storage of large amounts of data, etc.</p>
-                </section>
-            </a>
-            <footer class="post-card-meta">
-                
-                    
-                        
-                        <img class="author-profile-image" src="/assets/images/memoriasIT.png" alt="memoriasIT" />
-                        
-                        <span class="post-card-author">
-                            <a href="/author/memoriasIT/">memoriasIT</a>
-                        </span>
-                    
-                
-                    
-                
-            </footer>
-        </div>
-    </article>
 
 
-        </div>
-
-    </div>
-</main>
-
-
-        <!-- Previous/next page links - displayed on every page -->
-        
-
-        <!-- The footer at the very bottom of the screen -->
-        <footer class="site-footer outer">
-            <div class="site-footer-content inner">
-                <section class="copyright"><a href="/">memoriasIT</a> &copy; 2019</section>
-                
-                <nav class="site-footer-nav">
-                    <a href="/">Latest Posts</a>
-                    
-                    <a href="https://twitter.com/memoriasIT" target="_blank" rel="noopener">Twitter</a>
-                    <a href="https://github.com/memoriasIT" target="_blank" rel="noopener">Github</a>
+<body>
+    <!-- Hello sir, I hope you have a great  -->
+    <div class="box">
+        <div class="site-header bgimage easteregg row" style="margin-top: -10vh; background-image: url(/assets/images/blog-cover.jpg); height: 88vh; background-position: center; background-repeat: no-repeat;">
+            <div class="inner">
+                <div class="headercontent" style="">
+                    <div class="site-title">
+                            <img class="logomem" src="/assets/images/blog-icon.png" alt="memoriasIT">
+                    </div>
+                    <h3 class="site-description">Memorias de un Informático</h2>
+                </div>
+    
+                <nav class ="nav-general">
+                    <ul class="nav" role="menu">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about/">About</a></li>
+                        <li><a href="/tag/project/">Projects</a></li>
+                        <li><a href="/tag/course/">Courses</a></li>
+                        <li><a href="http://africau.edu/images/default/sample.pdf">CV</a></li>
+                    </ul>
+                    <div class="nav-social">
+                        <div class="social-links">
+                            <a class="" href="https://github.com/memoriasIT"><img class ="social-img" src="https://i.imgur.com/f2POCJJ.png" ></a>
+                            <a class="" href="https://twitter.com/memoriasIT" target="_blank" rel="noopener"><svg class="social-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"></path></svg></a>
+                            <a class="" href="https://www.youtube.com/c/MemoriasdeunInformatico"><img class ="social-img" src="https://maxcdn.icons8.com/Share/icon/p1em/Logos/youtube1600.png" ></a>
+                        </div>
+                    </div>
                 </nav>
             </div>
-        </footer>
-
-    </div>
-
-    <!-- The big email subscribe modal content -->
-    
-        <div id="subscribe" class="subscribe-overlay">
-            <a class="subscribe-overlay-close" href="#"></a>
-            <div class="subscribe-overlay-content">
-                
-                    <img class="subscribe-overlay-logo" src="/assets/images/blog-icon.png" alt="memoriasIT" />
-                
-                <h1 class="subscribe-overlay-title">Subscribe to memoriasIT</h1>
-                <p class="subscribe-overlay-description">Stay up to date! Get all the latest &amp; greatest posts delivered straight to your inbox</p>
-                <form method="post" action="/subscribe/" class="">
-    <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
-
-    <div class="form-group">
-        <input class="subscribe-email" type="email" name="email"  placeholder="youremail@example.com" />
-    </div>
-    <button class="" type="submit" disabled><span>Subscribe</span></button>
-    <script type="text/javascript">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>
-</form>
-
-            </div>
         </div>
     
-
-    <!-- highlight.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.10.0/components/prism-abap.min.js"></script>
-    <script>$(document).ready(function() {
-      $('pre code').each(function(i, block) {
-        hljs.highlightBlock(block);
-      });
-    });</script>
-
-    <!-- jQuery + Fitvids, which makes all video embeds responsive -->
-    <script
-        src="https://code.jquery.com/jquery-3.2.1.min.js"
-        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-        crossorigin="anonymous">
-    </script>
-    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
-    <script type="text/javascript" src="https://demo.ghost.io/assets/js/jquery.fitvids.js?v=724281a32e"></script>
-
-
-    <!-- Paginator increased to "infinit" in _config.yml -->
-    <!-- if paginator.posts  -->
-    <!-- <script>
-        var maxPages = parseInt('1');
-    </script>
-    <script src="/assets/js/infinitescroll.js"></script> -->
-    <!-- /endif -->
-
+        <footer class="site-footer row">
+                <div class="site-footer-content">
+                    <section class="copyright"><a href="http://localhost:4000/">memoriasIT</a> © 2019</section>
+                    
+                    <nav class="site-footer-nav">
+                        <a href="/">Latest Posts</a>
+                        
+                        <a href="https://twitter.com/memoriasIT" target="_blank" rel="noopener">Twitter</a>
+                        <a href="https://github.com/memoriasIT" target="_blank" rel="noopener">Github</a>
+                    </nav>
+                </div>
+            </footer>
+    </div>
     
-
-
-    <!-- Add Google Analytics  -->
-    <!-- Google Analytics Tracking code -->
- <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-69281367-1', 'auto');
-  ga('send', 'pageview');
-
- </script>
-
-
-    <!-- The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in post.hbs, but it needs to be included down here, after jQuery has already loaded. -->
-    
-
-    <!-- Ghost outputs important scripts and data with this tag - it should always be the very last thing before the closing body tag -->
-    <!-- ghost_foot -->
-
 </body>
+
 </html>

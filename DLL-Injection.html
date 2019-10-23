@@ -1,0 +1,60 @@
+----{ dll injection }----
+
+The main functions used are
+CreateRemoteThread() or whatever other API function to start the execution in the remote process.
+
+WriteProcessMemory()
+
+SetWindowsHookEx()
+
+GetProcAddress
+LoadLibraryA()
+VirtualAllockEx()
+
+However There are many other methods like
+https://zerosum0x0.blogspot.com/2017/07/threadcontinue-reflective-injection.html
+
+Here you can see other implementations
+https://github.com/stephenfewer/ReflectiveDLLInjection
+
+
+----{ Detection }----
+review memory sections marked as Page_Execute_ReadWrite (or RWX) with no memory-mapped file present and try to parse out the memory for injected code.
+Here I found a tool which does basically what I said, and it is open source so you can try to download the code and see how it works: http://hooked-on-mnemonics.blogspot.com/p/injdmp.html
+
+for processs hollowing the process image is not backed with file on disk
+
+for games I know that you want to use manual mapping or manual dll injection there is a channel on youtube called guided hacking which is very informative. As I said, more related to games but might work for your purpose
+
+The main logic behind this is emulating the behaviour of LoadLibrary but without putting the DLL into the process module list.
+
+In games, one of the bests options for avoiding detection might be using virtual machines that interact with the process form outside of the virtual machine. Else you could try to hide in ring 0 and create a debugger that interacts with the process. In conclussion all you want to do is avoid the detection of your hooks.
+
+Reflecting detection talk in DEFCON 20:
+https://www.defcon.org/images/defcon-20/dc-20-presentations/King/DEFCON-20-King-Reflective-Injection-Detection.pdf
+And the tool he mentions can be found here:
+https://github.com/aking1012/dc20
+
+---{ Processes }---
+Zeus/Zbot
+	winlogon.exe
+	explorer.exe
+	csrss
+	smss
+
+---{ Tracking }---
+
+DLLs are tracked in three different doubly-linked lists for each process. However, stealthy malwares can unlink loaded DLLs from theses lists
+[image]https://www.aldeid.com/w/images/3/3c/EPROCESS.png
+source: https://www.aldeid.com/wiki/EPROCESS
+
+
+WinDbg : Walking Windows Linked Lists (LIST_ENTRY) 
+http://jumpdollar.blogspot.com/2014/09/windbg-walking-windows-linked-lists.html
+
+To detect injected processes you could for example enumerate DLLs that are injected by the OS via registry key. Some keys used are AppCertDLL and AppInitDLLs
+
+Hiding techniques, the article is old but gold. Maybe more related to rootkits but might still help you.
+DKOM stands for Direct Kernel Object Manipulation and can help you hiding processes, adding priveleges to tokens, hiding ports...
+https://davidechiappetta.wordpress.com/2012/09/29/hiding-with-dkom/
+
