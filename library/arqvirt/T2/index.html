@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="../img/favicon.ico">
+
+    
+    <title>Virtualización de los recursos HW - Arquitecturas Virtuales</title>
+    
+
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../css/base.min.css" rel="stylesheet">
+    <link href="../css/cinder.min.css" rel="stylesheet">
+    <link href="../css/highlight.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="//ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+
+     
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            <a class="navbar-brand" href="..">Arquitecturas Virtuales</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Introducción a la virtualización</a>
+                    </li>
+                
+                
+                
+                    <li class="active">
+                        <a href="./">Virtualización de los recursos HW</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../T3/">Virtualización en el x86</a>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <i class="fas fa-search"></i> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="..">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="../T3/">
+                            Next <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="first-level active"><a href="#virtualizacion-de-los-recursos-hw">Virtualización de los recursos HW</a></li>
+            <li class="second-level"><a href="#implementacion-de-la-cpu-con-el-hipervisor">Implementación de la CPU con el hipervisor</a></li>
+                
+                <li class="third-level"><a href="#emulacion-cpu-real-y-virtual-distintas">Emulación (CPU real y virtual distintas)</a></li>
+                <li class="third-level"><a href="#virtualizacion-nativa-cpu-real-y-virtual-identicas-o-con-el-mismo-conjunto-de-instrucciones">Virtualización nativa (CPU real y virtual idénticas, o con el mismo conjunto de instrucciones)</a></li>
+        <li class="first-level "><a href="#implementacion-de-los-recursos-hardware-virtuales">Implementación de los recursos hardware virtuales</a></li>
+            <li class="second-level"><a href="#virtualizacion-de-la-cpu">Virtualización de la CPU</a></li>
+                
+                <li class="third-level"><a href="#multiplexacion-de-la-cpu-entre-mvs">Multiplexación de la CPU entre MVs</a></li>
+            <li class="second-level"><a href="#virtualizacion-de-la-ram">Virtualización de la RAM</a></li>
+                
+            <li class="second-level"><a href="#paginacion-virtual">Paginación virtual</a></li>
+                
+                <li class="third-level"><a href="#simulacion-software-shadow-page-tables">Simulación Software (Shadow Page Tables)</a></li>
+                <li class="third-level"><a href="#soporte-hardware-nested-pagingextended-page-table">Soporte Hardware (Nested paging/Extended page table)</a></li>
+            <li class="second-level"><a href="#multiplexacion-e-la-ram-del-hipervisor-entre-mvs">Multiplexación e la RAM del hipervisor entre MVs</a></li>
+                
+            <li class="second-level"><a href="#virtualizacion-de-discos">Virtualización de Discos</a></li>
+                
+            <li class="second-level"><a href="#rendimiento-de-los-discos">Rendimiento de los discos</a></li>
+                
+            <li class="second-level"><a href="#snapshots">Snapshots</a></li>
+                
+                <li class="third-level"><a href="#snapshots-de-disco">Snapshots de disco</a></li>
+                <li class="third-level"><a href="#snapshots-de-una-mv">Snapshots de una MV</a></li>
+            <li class="second-level"><a href="#eliminacion-de-snapshots">Eliminación de Snapshots</a></li>
+                
+            <li class="second-level"><a href="#clones">Clones</a></li>
+                
+                <li class="third-level"><a href="#full-clones">Full clones</a></li>
+                <li class="third-level"><a href="#linked-clones">Linked Clones</a></li>
+                <li class="third-level"><a href="#uso-de-los-linked-clones">Uso de los linked-clones</a></li>
+            <li class="second-level"><a href="#virtualizacion-de-la-red">Virtualización de la red</a></li>
+                
+                <li class="third-level"><a href="#nics-virtuales">NICs virtuales</a></li>
+                <li class="third-level"><a href="#lans-virtuales-en-desktops">LANs Virtuales en desktops</a></li>
+                <li class="third-level"><a href="#lans-virtuales-en-servidores">LANs virtuales en servidores</a></li>
+                <li class="third-level"><a href="#implementacion-de-las-lans">Implementación de las LANs</a></li>
+            <li class="second-level"><a href="#avances-en-el-soporte-de-virtualizacion-de-las-cpus">Avances en el soporte de virtualización de las CPUs</a></li>
+                
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<h1 id="virtualizacion-de-los-recursos-hw">Virtualización de los recursos HW</h1>
+<h2 id="implementacion-de-la-cpu-con-el-hipervisor">Implementación de la CPU con el hipervisor</h2>
+<p>Todas las implementaciones que se mencionan a continuación son transparentes. Existen otras formas de conseguir virtualización, como puede ser la paravirtualización, pero no cumplen el hecho de ser transparentes pues se necesita el código fuente.</p>
+<h3 id="emulacion-cpu-real-y-virtual-distintas">Emulación (CPU real y virtual distintas)</h3>
+<p>Un CPU es un sistema del cual conocemos su máquina de estados (sabemos tal y como se comporta), por tanto sabemos como emularlo.</p>
+<p>Por ejemplo, podemos emular una CPU basada en RISC con una máquina de intel.
+Quizás el tiempo de ejecución puede ser peor, pero nos permite tener algo funcional (en el campo profesional es posible realizar emulación a nivel de transistor).</p>
+<h3 id="virtualizacion-nativa-cpu-real-y-virtual-identicas-o-con-el-mismo-conjunto-de-instrucciones">Virtualización nativa (CPU real y virtual idénticas, o con el mismo conjunto de instrucciones)</h3>
+<p>Es mejor caso que en la emulación, pues es posible que no todas las instrucciones tengan que ser emuladas, sino que deberían de ser mapeadas.</p>
+<h4 id="traduccion-binaria">Traducción Binaria</h4>
+<p>Se realiza la traducción en tiempo de ejecución.
+Las instrucciones de la CPU se analizan y precompilan para traducirse a un código que sea seguro para la CPU real sin instrucciones privilegiadas y que incluye código de emulación por software del hardware de E/S virtual.</p>
+<p>A pesar de que la traducción puede llevar cierto tiempo adicional, el código traducido puede ejecutarse indefinidamente.</p>
+<div class="row">
+  <div class="col-md-8" markdown="1">
+    <h4>Trap & Emulate</h4>
+    <p>Los principios son los mismos que en el paper de Popek y Goldberg.
+Se deja ejecutar a la CPU real el código de la CPU virtual pero en modo no privilegiado.
+Cuando utiliza instrucciones privilegiadas, genera excepciones en la CPU real que debe emular por software.
+
+<br><br>
+El modo privilegiado de la CPU virtual es emulado por software para que el kernel virtual no tenga privilegios sobre el hardware real.
+
+<br><br>
+El sistema guest posee una tabla de interrupciones tal y como el sistema operativo host, pero no es "real", decimos que son estructuras "shadow".
+El sistema operativo host, conoce esta tabla pues cuando se quiere generar necesita de modo privilegiado, haciendo pues saber al hipervisor de esta estructura.de esta estructura.
+</p>
+  </div>
+  <div class="col-md-4" markdown="1">
+    <img  class="center-block" height="250vh" src="/images/T2/2.png">
+  </div>
+</div>
+
+<hr />
+<p>Es posible que no sea virtualizable en el sentido clásico (ej. Intel x86), pues puede tener efectos distintos entre el modo usuario y el supervisor., pues puede tener efectos distintos entre el modo usuario y el supervisor.</p>
+<p>Además tantas traps producen mucho overhead. Y el hipervisor debe emular por software gran cantidad de estructuras shadow.</p>
+<p>Para intentar paliar este overhead, se crea un modo pseudo-supervisor que simula la CPU virtual en modo privilegiado pero sin privilegios sobre el hardware real.</p>
+<p><img  class="center-block" width="500vh" src="/images/T2/1.png"></p>
+<div class="row">
+  <div class="col-md-8" markdown="1">
+    <h4>Runtime Binary Translation</h4>
+    <p>
+Se posee el código binario, se localizan las instrucciones críticas y se sustituyen por alguna rutina que el hipervisor controle.
+
+Un ejemplo puede ser la instrucción HALT. Este sería cambiado por una rutina que se ejecutará en modo no privilegiado pero que simulará el modo privilegiado de la CPU virtual.
+
+Esto no es siempre posible puesto que algunos códigos que se auto-modifican o se auto-referencian (cargan datos de la zona de código) hacen muy dificil su traducción.
+En general, esto no suele ser posible, pues es un gran problema para la seguridad.
+
+La traducción se produce al tener una interrupción, concretamente con las interrupciones de página.
+
+</p>
+  </div>
+  <div class="col-md-4" markdown="1">
+    <img  class="center-block" height="250vh" src="/images/T2/3.png">
+  </div>
+</div>
+
+<p><br>
+<img alt="Diagrama - Diapo 7" src="/images/T2/4.png" /></p>
+<h1 id="implementacion-de-los-recursos-hardware-virtuales">Implementación de los recursos hardware virtuales</h1>
+<h2 id="virtualizacion-de-la-cpu">Virtualización de la CPU</h2>
+<p>Se realiza una simulación de la CPU virtual mediante técnicas software o soporte hardware. Es decir, con las técnicas vistas anteriormente.
+En todos los casos se debe simular un modo privilegiado para la MV y otro modo para el hipervisor.</p>
+<p>Para poder realizar esta virtualización es común el uso de <code>shadow registers</code>.
+Estas son estructuras de control para ocultar los reales.</p>
+<h3 id="multiplexacion-de-la-cpu-entre-mvs">Multiplexación de la CPU entre MVs</h3>
+<p>Puesto que muchos servidores están inactivos casi todo el tiempo, se realiza una planificación de la CPU de tipo round-robin.</p>
+<p>Eso, con las máquinas virtuales se traduce a:</p>
+<ul>
+<li>El S.O. invitado detiene la CPU cuando no está en uso.</li>
+<li>El hipervisor detecta la instrucción HALT y aprovecha para pasar el control a otra MV.</li>
+<li>Si una MV no bloquea la CPU en un lapso de tiempo, se producirá una interrupción de su ejecución para pasar el control a otra máquina.</li>
+</ul>
+<p>Además, el hipervisor puede tener políticas para controlar el reparto del tiempo de CPU entre máquinas virtuales.
+Esto puede generar tiempos de espera "inexplicables" cuando el hipervisor planifica otra máquina virtual.</p>
+<h2 id="virtualizacion-de-la-ram">Virtualización de la RAM</h2>
+<p><a href="">! TODO Diagrama 18</a></p>
+<p>Para el manejo de la RAM la máquina virtual debe de simular dos recursos hardware: el espacio físico de memoria y la unidad de gestion de memoria (MMU) del procesador.</p>
+<p>Además se debe de controlar el uso de la memoria física por parte de las máquinas virtuales.
+Es decir, controlar el acceso (permisos, validez, presencia, swapping) y la traducción por páginas (se posee libertad para asignar memoria no continua a cada máquina virtual y no asignar las páginas no usadas).</p>
+<p>Por tanto existiran dos MMUs: una para cada máquina virtual y otra real en el hipervisor.</p>
+<h2 id="paginacion-virtual">Paginación virtual</h2>
+<p>Se pueden distinguir dos niveles de traducción.</p>
+<ul>
+<li>Dentro de la máquina virtual: Del <code>Espacio Logico Virtual (ELV)</code> → <code>Espacio Fisico Virtual (EFV) (S.O. Invitado)</code>.</li>
+<li>En el hipervisor: Del <code>Espacio Fisico Virtual (EFV)</code> → <code>Espacio Fisico REal (EFR) (Hipervisor)</code></li>
+</ul>
+<p>La MMU (Memory Management Unit) se puede implementar con simulacion por software o con soporte hardware.</p>
+<h3 id="simulacion-software-shadow-page-tables">Simulación Software (Shadow Page Tables)</h3>
+<p>Las instrucciones que programan las MMU virtual son interceptadas y se programa la MMU física con la traducción directa ELV → EFR.</p>
+<p>Se requiere interceptar todo el acceso del S.O. invitado a la MMU emulada y guardar dos versiones de la TP (la del S.O. invitado, para su gestion, y la del hipervisor).</p>
+<p>Este segundo set esta oculto (shadow) para las MVs. Se deberá detectar todo tipo de cambios, tales como modificaciones del PTBR (context switch), invalidaciones de la TLB, creación de páginas, modificaciones de las TP, etc.</p>
+<p>Esto supone un overhead de memoria y proceso.</p>
+<p><img alt="TODO Diagrama pagina 21" src="" /></p>
+<h3 id="soporte-hardware-nested-pagingextended-page-table">Soporte Hardware (Nested paging/Extended page table)</h3>
+<p>La MMU se encargar de traducir de ELV a EFV.</p>
+<p>Existe un segundo nivel de hardware de la MMU que traduce las referencias de EFV a EFR.</p>
+<p>El S.O. invitado programa las tablas del primer nivel. El hipervisor gestiona las tablas del segundo nivel de traducción.</p>
+<p>La TLB se encarga de hacer caching de la traducción final de ELV a EFR.</p>
+<p><img alt="TODO diagrama pagina 23" src="" /></p>
+<h2 id="multiplexacion-e-la-ram-del-hipervisor-entre-mvs">Multiplexación e la RAM del hipervisor entre MVs</h2>
+<p>Debido a la localidad, muchos sistemas solo acceden a una parte de su memorias RAM durante un periodo de tiempo.</p>
+<p>El hipervisor controla la memoria en uso (accedida) dentro de cada máquina.</p>
+<p>Inicialmente la máquina va creciendo conforme usa su memoria RAM de sus bancos de RAM (asignación bajo demanda).</p>
+<p>El hipervisor controla qué memoria continua usándose al cabo de un rato dentro de la MV ("working set" de la MV).</p>
+<p>Es por ello que la suma de la RAM en uso de todas las MVs puede exceder la RAM del sistema físico (overcommiting).</p>
+<p>Si se agotara la RAM libre del hipervisor se puede liberar memoria no usada de una máquina para concederla a otra.</p>
+<p>El contenido de una página ya en uso se guarda en un fichero swap privado para cada MV.</p>
+<p>El swap del hipervisor es invisible al S.O. invitado (puesto que sigue creyendo que sus páginas estan en RAM).</p>
+<p>El hipervisor tambien permite definir políticas para controlar el reparto de la RAM entre máquinas virtuales.</p>
+<h2 id="virtualizacion-de-discos">Virtualización de Discos</h2>
+<p>La unidad de simulacion es el volumen virtual de disco (SCSI LUN).
+El volumen es un conjunto de bloques de tamaño uniforme (direccionamiento LBA).</p>
+<p>Cada volumen virtual se puede implementar de forma transparente ya sea sobre un volumen físico real (by-pass) o con un fichero en un sistema de ficheros del hipervisor.</p>
+<p>En todos los casos se ofrece el mismo modelo de controlador al sistema virtual:
+* Independencia de la implementación
+* El mismo driver en el S.O. virtual para todas las implementaciones</p>
+<h2 id="rendimiento-de-los-discos">Rendimiento de los discos</h2>
+<p>Como es de esperar, en los volúmenes físicos (con by-pass) existe menos retardo adicional en las operaciones de acceso, así como una menor portabilidad (pues necesitan un volumen real). Esto provoca que sea usado para aplicaciones críticas o para migrar MV existentes.</p>
+<p>En los discos virtuales implementados sobre ficheros existe mayor latencia pero permite una gran portabiliad y flexibilidad. Pues es posible mover la ubicacion del volumen a un nuevo almacenamiento sin ni siquiera modificar la MV.</p>
+<p>Es posible no asignar el espacio libre del volúmen, lo que supone una ventaja y riesgo al mismo tiempo. Puede provocar una fragmentación e inanición por falta de disco real.</p>
+<h2 id="snapshots">Snapshots</h2>
+<p>Son estados "congelados" de un sistema informático y preservados en el tiepo para permitir una "vuelta atrás" desde un estado posterior del sistema.</p>
+<p>Es osible congelar dispositvios de almacenamiento o la máquina virtual completa (checkpoint).</p>
+<h3 id="snapshots-de-disco">Snapshots de disco</h3>
+<p>Permtie preservar el estaod de un dsico virtual en un punto del tiempo.</p>
+<p>Se puede implentar bloqueando el acceso de escritura al disco (solo permitiendo lecturas).
+Se crea otro "volumen de snapshot" vacío qeu solo guarda los bloques modificados. En este si se permite la lectura y escritura.</p>
+<p>Por tanto se realizan escrituras en el "volumen de snapshot" y las lecturas primero en el "volumen de snapshot" y si no se encuentra el bloque se lee del volumen original.</p>
+<p>Esto disminuye la eficiencia pues es necesario gestionar la asignación de espacio para las modificiaciones, así como consultar el índice de bloques modificados que contiene el snapshot</p>
+<p>Esto disminuye la eficiencia pues es necesario gestionar la asignación de espacio para las modificiaciones, así como consultar el índice de bloques modificados que contiene el snapshot.</p>
+<h3 id="snapshots-de-una-mv">Snapshots de una MV</h3>
+<p>Recuerda el estado de una máquina completa (es decir, sus discos, contenido en RAM, configuración hardware, etc.).</p>
+<p>Permite recuperar desastres de forma instantanea, pues permite volver instantáneamente a un estado estable.</p>
+<p>Se implementa guardando el estado de la RAM si está encendida y guardando un snapshot de disco.</p>
+<h2 id="eliminacion-de-snapshots">Eliminación de Snapshots</h2>
+<p>Existen dos modos de eliminar snapshots:</p>
+<ul>
+<li>Deshacer (rollback): se vuelve al estado anterior. Es rápido. Se carga el estado de RAM guardado como RAM actual de la MV. Se elimina el archivo de snapshot y se reanuda el acceso en escritura al disco original.</li>
+<li>Consolidar (commit): se continua en el estado actual pero funcionando sin el snapshot, se elimina el estado de RAM guardado y se graban los bloques modificados sobre el disco original, finalmente se elimina el fichero de snapshot. El tiempo necesario depende de la cantidad de información a consolidar.</li>
+</ul>
+<h2 id="clones">Clones</h2>
+<p>Son copias de máquinas virtuales ya existentes.
+Ahorran el tiempo de instalación y configuran una nueva instancia de un S.O.
+Los prototipos se pueden "bloquear" para convertirlos en máquinas prefabricadas con un estado conocido del cual partir: el concepto se suele denominar comercialmente "plantilla".</p>
+<h3 id="full-clones">Full clones</h3>
+<p>Copia convencional de una máquina virtual.
+Se crea un nuevo disco virtual mediante una copia completa del original.</p>
+<h3 id="linked-clones">Linked Clones</h3>
+<p>Es una máquina cuyo estado está almacenado mediante técnicas "diferenciales". Es decir, se guardan solo los cambios respecto a la plantilla.</p>
+<p>Se crea un nuevo disco virtual mediante un "snapshot" del disco de la plantilla. El snapshot solo almacena las escrituras o modificacines que realiza la máquina "clon" durante su ejecución.</p>
+<h4 id="ventajas-y-desventajas">Ventajas y Desventajas</h4>
+<p>La creación de clones es casi instantánea al no copiar el almacenamiento.</p>
+<p>Reduce espacio de dsico ocupado por cada nueva máquina.</p>
+<p>Mejora la concurrencia de E/S a disco si el hipervisor implementa una cache de disco par alos bloques de los discos virtuales:
+    * Reuso de las lecturas físicas entre máquinas virtuales.
+    * Aumenta el hit-ratio de la caché de disco del hipervisor al acceder al mismo bloque en varias máquinas.</p>
+<p>Si varios clones arrancan a la vez, el uso de disco no se multiplica por el número de máquinas virtuales.</p>
+<p>No se puede actualizar la plantilla ya que habría que destruir los clones.</p>
+<h3 id="uso-de-los-linked-clones">Uso de los linked-clones</h3>
+<p>Son muy útiles para escritorios virtuales.
+Puesto que existen numerosas instancias idénticas a partir de una misma plantilla.
+Además la vida de una máquina virtual es breve (horas/días).
+Los clones se destruyen cuando el usuario sale de la sesión.
+En cada nueva sesión se usa una máquina virtual recién clonada.</p>
+<p>Para poder llevar esto a cabo se necesita una infraestructura de software (broker de MVs) que genere los clones bajo demanda.</p>
+<h2 id="virtualizacion-de-la-red">Virtualización de la red</h2>
+<p>Es necesario simular una o más interfaces de red (NIC) en cada máquina virtual y una o más LANs virtuales (switches Ethernet) simulando el trasporte de los paquetes; bien entre máquinas virtuales o entre la LAN real y las LANs virtuales con los NICs reales del sistema host.</p>
+<h3 id="nics-virtuales">NICs virtuales</h3>
+<p>Cada NIC simula una interfaz de red con su propia MAC única.
+Para cada NIC virtual el administrador especifica a qué LAN virtual se conecta.
+Se simula el interfaz de control (mediante registros de control y estado) de NICs populares para que el sistema operativo pueda usar drivers estándar.</p>
+<p>Algunos hipervisores simulan NICs virtuales optimizadas para rendimiento en una MV, pero requieren de drivers especiales.</p>
+<h3 id="lans-virtuales-en-desktops">LANs Virtuales en desktops</h3>
+<p>El hipervisor se encarga de simular 1 o más LANs virtuales.
+Cada LAN virtual puede estar asociada a un NIC real del host de diversas formas:</p>
+<ul>
+<li>Bridged: el NIC funciona como un bridge Ethernet (nivel 2) entre la LAN virtual y la LAN externa.</li>
+<li>NAT: se interpone un router IP con NAT entre la LAN virtual y la LAN externa usando como dirección la IP del host real. Las MVs tienen visibilidad a nivel IP de la LAN externa con las limitaciones inherentes de la NAT.</li>
+<li>Host-Only: La LAN no está asociada a ningún NIC (se encuentra aislada del exterior). Se utiliza para comunicar MVs entre si.</li>
+</ul>
+<h3 id="lans-virtuales-en-servidores">LANs virtuales en servidores</h3>
+<p>Se simulan uno o más switches virtuales Ethernet.
+Un vSwitch tiene asociados a su vez 0 o más NICs reales.
+Si tiene 0 se encuentra aislado del exterior. Si posee más de 1 se pueden usar políticas de balanceo de carga o de fail-over.</p>
+<p>Cada NIC real aparenta un enlace Ethernet punto a punto entre el switch virtual y un switch externo.</p>
+<p>Dentro de cada vSwitch se definen 1 o más VLANs (grupos de puertos).
+Una MV puede tener 1 o más NICs virtuales conectadas a distintos grupos de puertos.
+A cada grupo de puertos se le asocia un tag de VLAN 802.1q.</p>
+<p>Los NICs reales multiplexan el enlace trabajando en modo trunk 802.1q (identificando la VLAN o grupos de cada paquete mediante el identificador o tag 802.1q en la cabecera del pquete).</p>
+<p>Los switches externos deben soportar también la multiplexación IEEE802.1q en los puertos a los que están conectados los NICs reales del hipervisor.</p>
+<h3 id="implementacion-de-las-lans">Implementación de las LANs</h3>
+<p>El paso de paquetes Ethernet entre NICs de máquinas virtuales conectadas al mismo switch virtual se hace mediante buffers de memoria del hipervisor.</p>
+<p>Esto permite que la velocidad de paso de datos sea muy elevada.</p>
+<p>Las comunicaciones con el switch exterior se hacen compartiendo el NIC exterior.
+Cada MV usa su propia MAC para emitir. La recepción se hace en modo promiscuo. Los paquetes recibidos se entregan a NIC con la MAC correspondiente.</p>
+<p><img alt="TODO Diapo 41" src="" /></p>
+<h2 id="avances-en-el-soporte-de-virtualizacion-de-las-cpus">Avances en el soporte de virtualización de las CPUs</h2>
+<p>El soporte básico ayuda con la simulación del comportamiento y registros de la CPU de la MV en modo pseudo-supervisor.</p>
+<p>La traducción de la MMU se puede hacer programando hábilmente el hardware de paginación, pero existen problemas de seguridad.
+Las CPUs actuales también aportan un modo virtual para que el hardware de paginación que no posee permisos pueda acceder fuera de la memoria de la MV.</p>
+<p>El acceso a los dispotivios PCI se hace interceptando las instrucciones de acceso a los registros de control (IN/OUT).
+Algunas CPUs recientes incorporan dispositivos PCI virtuales que pueden ser simulación por software o bien una acceso controlado a un dispositivo PCI verdadero.</p></div>
+        
+        
+    </div>
+
+    <footer class="col-md-12 text-center">
+        
+        <hr>
+        <p>
+        <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
+
+        
+        
+    </footer>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>var base_url = ".."</script>
+    
+    <script src="../js/base.js"></script>
+    <script src="../search/main.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

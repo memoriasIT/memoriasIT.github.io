@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="../img/favicon.ico">
+
+    
+    <title>Virtualización en el x86 - Arquitecturas Virtuales</title>
+    
+
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../css/base.min.css" rel="stylesheet">
+    <link href="../css/cinder.min.css" rel="stylesheet">
+    <link href="../css/highlight.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="//ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+
+     
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            <a class="navbar-brand" href="..">Arquitecturas Virtuales</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Introducción a la virtualización</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../T2/">Virtualización de los recursos HW</a>
+                    </li>
+                
+                
+                
+                    <li class="active">
+                        <a href="./">Virtualización en el x86</a>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <i class="fas fa-search"></i> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../T2/">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a rel="next" >
+                            Next <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="first-level active"><a href="#virtualizacion-en-el-x86">Virtualización en el x86</a></li>
+            <li class="second-level"><a href="#modos-de-ejecucion-ia-32">Modos de ejecución IA-32</a></li>
+                
+            <li class="second-level"><a href="#virtualizacion-estricta">Virtualización estricta</a></li>
+                
+            <li class="second-level"><a href="#soporte-hw-intel-vt-x">Soporte HW: Intel VT-x</a></li>
+                
+            <li class="second-level"><a href="#mv-context-switch">MV (context) switch</a></li>
+                
+            <li class="second-level"><a href="#vt-x-system-state-management">VT-x: System State Management</a></li>
+                
+            <li class="second-level"><a href="#virtualizadores-para-plataformas-x86">Virtualizadores para plataformas x86</a></li>
+                
+            <li class="second-level"><a href="#containers">Containers</a></li>
+                
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<h1 id="virtualizacion-en-el-x86">Virtualización en el x86</h1>
+<p>Realizado con la mentalidad de aprovechar al máximo los transistores. Por ello, es muy irregular.</p>
+<p>La arquitectura x86 fue predominante desde los años 90.
+A día de hoy sigue siéndolo, excepto en dispositivos móviles o plataformas donde el bajo consumo es importante.</p>
+<p>A pesar de que la virtualización existía implementada (con máquinas como la IBM VM/370), no fue hasta finales de los 90 que compañias como VMware comienzan a virtualizar las plataformas basadas en x86.
+Además, comienzan a existir equipos baratos que podían emular servidores de más coste; lo cual provoca un gran interés en la virtualización. </p>
+<h2 id="modos-de-ejecucion-ia-32">Modos de ejecución IA-32</h2>
+<p>Existe un modo de arranque denominado <code>modo real</code>.
+En este modo se ejecuta la rutina de arranque del fabricante. En este modo trabajamos en 16 bits.</p>
+<p>Posteriormente, pasamos a un <code>modo protegido</code>.
+En este tenemos un funcionamiento normal del procesador. Es aquí cuando se comienza a ejecutar el sistema operativo.</p>
+<p>En este modo, intel introdujo <code>4 niveles de privilegio</code>. Su finalidad fue facilitar la vida a los desarrolladores de drivers, proporcionando ciertos privilegios sin llegar a tener modo kernel.</p>
+<p>Además, podemos encontrar un <code>modo virtual</code>, que fue usado en su día por microsoft para el sitema de ventanas de ms-dos.
+Este modo aún se ejecutaba en 16 bits, por tanto existía virtualización para poder llevar esto a cabo.</p>
+<h2 id="virtualizacion-estricta">Virtualización estricta</h2>
+<p>En la estructura x86, existen instrucciones "malas", pues ciertas instrucciones <em>se comportan de forma distinta según si se encuentra en modo kernel o modo usuario</em>.</p>
+<p>Esto provoca que no sea <code>estrictamente virtualizable</code> (segun Popek y Goldberg).</p>
+<p>Sería posible implementar un hipervisor con el modo "traza" del CPU. Esto provoca una interrupción entre cada instrucción. Lo cual tiene como consecuencia un gran golpe en rendimiento.</p>
+<h2 id="soporte-hw-intel-vt-x">Soporte HW: Intel VT-x</h2>
+<p>Para solventar los problemas se introdujo un nuevo modo de operación, que se implementó con el uso de un solo bit (principalmente, existen más cambios).</p>
+<p>Diagrama (más arriba → menos privilegio):</p>
+<pre><code class="txt">ring3 | ring2 | ring1 | ring0           → Non-root (nuevo modo)
+ring3 | ring2 | ring1 | ring0           → root mode
+(user)                  (kernel)
+</code></pre>
+
+<ul>
+<li><strong>Modo root:</strong> Todas las instrucciones en este modo no son diferentes a las de la arquitectura tradicional. El software antiguo (legacy) debería ejecutarse correctamente en este modo. El hipervisor debe correr en modo privilegiado para tener control de todos los recursos.</li>
+<li><strong>Modo non-root:</strong> Pensado para las máquinas virtuales. Se rediseñan todas las instrucciones críticas (sensitive). Las instrucciones críticas provocan un <code>trap</code> que pasa la CPU a modo root. El sistema operativo guest debe ejecutarse en modo non-root pudiendo ser emulado completamente con el concepto <code>"trap and emulate"</code>.</li>
+</ul>
+<p>La idea es que el sistema operativo host se ejecute en el modo root con kernel 0 con los programas de usuario en el anillo 3. 
+Los del sistema operativo guest en el nivel non-root, con su kernel en el respectivo ring 0 y sus programas de usuario en su ring 3.</p>
+<p>Si ahora se provocara una interrupción en el nivel non-root(vm) saltaría una interrupción con su tabla shadow. La máquina virtual "vive" en sus anillos y es solamente cuando surge una interrupción que salta de su modo del hipervisor.</p>
+<p>De este modo, la máquina virtual no puede distinguir que se encuentra en una máquina virtual.</p>
+<p><img alt="TODO: Compresión de anillos diapo 8" src="" /></p>
+<p>El ring -1 es una metáfora.</p>
+<h2 id="mv-context-switch">MV (context) switch</h2>
+<p>Realmente realizar un cambio a una MV es muy parecido a un cambio de contexto.
+Es necesario realizar cambios en las instrucciones, por ejemplo introducir instrucciones para entrar/salir de los modos Non-root/Root.</p>
+<p>Si una máquina realizara un Halt, se deberá transformar a un exit, pues esa MV queda inutil. </p>
+<p>Formalmente se conocen varias instrucciones:</p>
+<ul>
+<li><strong>VMXON/VMXOFF:</strong> Usadas para encender o apagar el modo root de la CPU.</li>
+<li><strong>VM Entry:</strong> usada al VMLAUNCH/VMRESUME, cambia de modo root de la cpu a non-root mode.</li>
+<li><strong>VM Exit:</strong> Usada por interrupts de hardware or ejecución sensitiva. También para pasar de modo non-root a modo root.</li>
+</ul>
+<h2 id="vt-x-system-state-management">VT-x: System State Management</h2>
+<p>Intel posee ciertos manejadores de tareas.
+A nivel de modo Non-root, proporciona estructuras de datos a nivel hardware en la CPU. 
+Se proporcionan, obviamente, también instrucciones para manejar estas estructuras.</p>
+<p>Esto Intel lo llamó <code>VMCS (Virtual Machine Control Structure)</code>, que nos permite obtener información de:</p>
+<ul>
+<li><strong>State Area:</strong> estado del sistema Host/Guest OS cuando se produce VM-entry/exit.</li>
+<li><strong>Control Area:</strong> controla el comportamiento de las instrucciones en modo non-root; así como controlar el proceso de VM-Entry y VM-Exit.</li>
+<li><strong>Exit Information:</strong> Proporciona información sobre la razon de la VM-Exit y más información de hardware.</li>
+</ul>
+<h2 id="virtualizadores-para-plataformas-x86">Virtualizadores para plataformas x86</h2>
+<p>Existen diversas soluciones. Las más famosas son:</p>
+<ul>
+<li><strong>VMWare:</strong> Con hipervisores tipo 2 (vmware workstation) y 1 (ESXi). </li>
+<li><strong>KVM:</strong> kernel-based virtual machine. Open source con linux como hipervisor. Formado por módulos de kernel.</li>
+<li><strong>Qemu:</strong> quick emulator. Permite emular gran cantidad de plataformas y formatos.</li>
+<li><strong>Oracle:</strong> productos como virtualbox (es un hosted hypervisor).</li>
+<li><strong>Microsoft:</strong> Hiper-V, orientado a servidores con un hipervisor en bare metal. O con virtual PC (hipervisor tipo 2).</li>
+<li><strong>Xen:</strong>  hipervisor baremetal con máquina privilegiada.</li>
+</ul>
+<h2 id="containers">Containers</h2>
+<p>Se basa en MVs ligeras (que permite arranque rápido, clonado eficiente y una mínima instalación). Se busca una aproximación lo más próximo posible a los 3 principios de Popek y Goldberg. Esto permite una estandarización y portabilidad.</p>
+<p>Es virtualización a nivel de SO, pero no es una MV.
+Utiliza el kernel del host. No puede arrancar un kernel propio (o diferente). No posee sus drivers. No necesita algunos daemons o servicios ni un proceso PID 1 (init).</p>
+<p>Un container es un conjunto de procesos visibles al host pero con cierto aislamiento entre ellos.
+En la comunidad se dice que un container es un chroot con esteroides. Se basa en sandboxing con chroot, el mapeo de identificadores con namespaces y el control de recursos con cgroups.</p>
+<p>Los container se han hecho muy populares en los últimos años y han surgido incluso softwares para la gestión y control del ciclo de vida de ellos en grandes infraestructuras.</p></div>
+        
+        
+    </div>
+
+    <footer class="col-md-12 text-center">
+        
+        <hr>
+        <p>
+        <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
+
+        
+        
+    </footer>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>var base_url = ".."</script>
+    
+    <script src="../js/base.js"></script>
+    <script src="../search/main.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>

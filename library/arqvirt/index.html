@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="img/favicon.ico">
+
+    
+    <title>Introducción a la virtualización - Arquitecturas Virtuales</title>
+    
+
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="css/base.min.css" rel="stylesheet">
+    <link href="css/cinder.min.css" rel="stylesheet">
+    <link href="css/highlight.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="//ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+
+     
+</head>
+
+<body class="homepage" >
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            <a class="navbar-brand" href=".">Arquitecturas Virtuales</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li class="active">
+                        <a href=".">Introducción a la virtualización</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="T2/">Virtualización de los recursos HW</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="T3/">Virtualización en el x86</a>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <i class="fas fa-search"></i> Search
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a rel="prev" >
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="next" href="T2/">
+                            Next <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="first-level active"><a href="#introduccion-a-la-virtualizacion">Introducción a la virtualización</a></li>
+            <li class="second-level"><a href="#disclaimer">Disclaimer</a></li>
+                
+        <li class="first-level "><a href="#introduccion">Introducción</a></li>
+            <li class="second-level"><a href="#que-es-una-maquina">¿Qué es una máquina?</a></li>
+                
+            <li class="second-level"><a href="#que-es-la-virtualizacion">¿Qué es la virtualización?</a></li>
+                
+            <li class="second-level"><a href="#principio-de-equivalencia">Principio de equivalencia</a></li>
+                
+            <li class="second-level"><a href="#motivaciones">Motivaciones</a></li>
+                
+            <li class="second-level"><a href="#cpu-con-esquema-user-so-hw">¿CPU con esquema USER-SO-HW?</a></li>
+                
+            <li class="second-level"><a href="#terminologia">Terminología</a></li>
+                
+                <li class="third-level"><a href="#hipervisor-o-vmm-virtual-machine-monitor">Hipervisor (o VMM = Virtual Machine Monitor)</a></li>
+                <li class="third-level"><a href="#maquina-virtual-vm">Máquina Virtual (VM)</a></li>
+                <li class="third-level"><a href="#guest">Guest</a></li>
+                <li class="third-level"><a href="#host">Host</a></li>
+            <li class="second-level"><a href="#historia">Historia</a></li>
+                
+                <li class="third-level"><a href="#1974-articulo-de-popek-y-goldberg">1974 - Artículo de Popek y Goldberg</a></li>
+                <li class="third-level"><a href="#teorema-1-virtualizacion-estricta">Teorema 1: virtualización (estricta)</a></li>
+                <li class="third-level"><a href="#teorema-2-virtualizacion-recursiva">Teorema 2: virtualización recursiva</a></li>
+            <li class="second-level"><a href="#tipos-de-maquinas-virtuales-tecnicas-de-virtualizacion">Tipos de maquinas virtuales (Técnicas de Virtualización)</a></li>
+                
+                <li class="third-level"><a href="#tipo-1-full-machine-virtualization">Tipo 1: Full Machine Virtualization</a></li>
+                <li class="third-level"><a href="#tipo-2-paravirtualizacion">Tipo 2: Paravirtualización</a></li>
+                <li class="third-level"><a href="#tipo-3">Tipo 3:</a></li>
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<h1 id="introduccion-a-la-virtualizacion">Introducción a la virtualización</h1>
+<h2 id="disclaimer">Disclaimer</h2>
+<p>Estos apuntes fueron creados con el fin de estudio propio, sin embargo, para ayudar a los compañeros y futuros internautas se encuentran aquí.</p>
+<p>En diversos puntos de las notas se encuentran varias figuras, las cuales han sido recreadas de notas de la pizarra, de libros o de diapositivas dadas por el profesor. </p>
+<p>Espero que te sirva de apoyo para el estudio y motivación para esta asignatura que he encontrado muy interesante.</p>
+<h1 id="introduccion">Introducción</h1>
+<p>Comúnmente se conoce como virtualización a la emulación de sistemas operativos con programas como VMWare o Virtualbox.
+Sin embargo, la virtualización se encuentra mucho más presente, pues los procesos y threads son también ejemplos de virtualización de la CPU.
+De hecho, incluso los entornos de ventanas también se pueden considerar virtualización.
+A partir de ahora, solo se hablará de "virtualización de máquina".</p>
+<h2 id="que-es-una-maquina">¿Qué es una máquina?</h2>
+<p>Consideramos una máquina a un Autómata con estados, que pasa de un estado a otro según una circustancia dada.
+Un computador no es más que una máquina de estados.</p>
+<p>Un diagrama de estados con conjuntos de [0, 1] nos permitiría englobar todos los estados del ordenador.</p>
+<h2 id="que-es-la-virtualizacion">¿Qué es la virtualización?</h2>
+<p>Nos permite ofrecer recursos hardware ficticios usando software/hardware.
+En su diagrama de estados de una máquina virtual, es posible que encontremos estados no existentes en la máquina real.</p>
+<p><br>
+<img alt="OK Relación Real-Virtual" src="images/T1/2.png" /></p>
+<h2 id="principio-de-equivalencia">Principio de equivalencia</h2>
+<p>El software debe de ejecutarse del mismo modo en la máquina virtual que en el hardware real, el usuario de la máquina virtual no debería de notar la diferencia con un hardware real.
+A pesar de que su comportamiento debe ser el mismo, se permite que el tiempo de ejecución pueda no ser el mismo (en general suele ser más lento).</p>
+<p>El caso idílico de diagrama de estados debe de ser 1:1, pero en lo práctico esto no se cumple.
+Esto se debe en parte a que la máquina real puede ejecutar más cosas en paralelo (como varias máquinas virtuales).</p>
+<h2 id="motivaciones">Motivaciones</h2>
+<ul>
+<li><code>Emulación</code> de máquinas/sistemas operativos: la máquina puede no existir o podemos no tener acceso a ellas.</li>
+<li>Ejecución de <code>legacy code</code>: por problemas de compatibilidad.</li>
+<li>Experimentación (<code>sandboxes</code>, what-if?, etc.): por ejemplo para reversing de malware, o el propio chroot se puede considerar sandboxing.</li>
+<li><code>Isolation</code> entre los guests (separación de servicios en diferentes servidores virtuales)</li>
+<li><code>Consolidación</code>: ejecutar varias máquinas físicas, clonación de máquinas virtuales, facilita el balanceo de carga, infraestructuras a prueba de fallos (failover)...</li>
+</ul>
+<h2 id="cpu-con-esquema-user-so-hw">¿CPU con esquema USER-SO-HW?</h2>
+<p>En un CPU es necesario que existan dos modos para poder tener el esquema <strong>USER-SO-HW</strong>.
+Estos dos modos son usuario y kernel/superusuario. Esto puede conseguirse facilmente en hardware con un solo bit (<em>0 - usuario, 1- kernel</em>).</p>
+<p>Para el cambio entre estos modos se realiza mediante el uso de Interrupciones.
+En teoría un SO no debería de ejecutarse si no se ejecuta una interrupción.
+Un SO que se ejecuta en todo momento no es un SO bueno, pues resta tiempo de ejecución al programa principal.</p>
+<p>Del usuario al SO se utilizan las <code>system calls</code>, del hardware pueden ser ejemplos el timer o la planificación de los procesos.</p>
+<p><img alt="OK Relación HW-SO-USER" src="images/T1/1.png" /></p>
+<h2 id="terminologia">Terminología</h2>
+<h3 id="hipervisor-o-vmm-virtual-machine-monitor">Hipervisor (o VMM = Virtual Machine Monitor)</h3>
+<p>Es el propio software de virtualización en sí (a veces denominado emulador). Es el encargado de proporcionar la abstracción de una máquina.</p>
+<p>Son muy parecidos a los sistemas operativos. Permite la compartición de CPU, de memoria entre máquinas, posee control de permisos y arbitraje al acceso de periféricos, red, etc.</p>
+<p>A pesar de que sea una capa de software, puede estar asistida por el hardware.
+Este posee un control completo de los recursos del sistema físico.</p>
+<p><img alt="OK Modelos hypervisor" src="images/T1/4.png" /></p>
+<h4 id="funciones">Funciones</h4>
+<ul>
+<li>
+<p><strong>Dispatcher</strong>: Se encarga de decidir que hacer tras una trap/interrupción.</p>
+</li>
+<li>
+<p><strong>Allocator</strong>: Asigna los recursos físicos (reales) a la máquina virtual.</p>
+</li>
+<li>
+<p><strong>Intérprete</strong>: Simula las instrucciones que intercepta.</p>
+</li>
+</ul>
+<h3 id="maquina-virtual-vm">Máquina Virtual (VM)</h3>
+<p>Sigue modelo de Neumman, con recursos virtualizados: CPU, RAM, almacenamiento...</p>
+<h3 id="guest">Guest</h3>
+<p>Es el sistema operativo instalado en la máquina virtual</p>
+<h3 id="host">Host</h3>
+<p>Instalado sobre hardware físico. En un modelo de servidor ESXi no existe un Host.</p>
+<p><img alt="OK maq virt y real" src="images/T1/3.png" /></p>
+<h2 id="historia">Historia</h2>
+<h3 id="1974-articulo-de-popek-y-goldberg">1974 - Artículo de Popek y Goldberg</h3>
+<p>Ya se introducen varios conceptos de máquinas virtuales (VM) e hipervisores (VMM).</p>
+<ul>
+<li><strong>Equivalencia</strong>: comportamiento idéntico entre máquinas (de nuevo, a excepción de los temporizadores).</li>
+<li><strong>Control de recursos</strong>: El hipervisor posee todo el control de los recursos virtualizados.</li>
+<li><strong>Eficiencia</strong>: La mayoría de las instrucciones deben de ejecutarse sin intervención del hipervisor.</li>
+</ul>
+<p>Además, se habla de varios tipos de funcionamiento (que ya existían CPU desde los 60 que lo conseguían).</p>
+<ul>
+<li><strong>Privilegiadas</strong>: generaban un trap en usuario y se ejecutaban en privilegiado.</li>
+<li><strong>Sensitive instructions</strong><ul>
+<li><em>Control-sensitive</em>: cambian la configuración de recursos del sistema. Por ejemplo I/O o cambiar la tabla de vectores.</li>
+<li><em>Behaviour-sensitive</em>: su comportamiento depende de la configuración de recursos (modo supervisor/usuario).</li>
+</ul>
+</li>
+<li><strong>Inocuas</strong>: ej. suma</li>
+</ul>
+<h3 id="teorema-1-virtualizacion-estricta">Teorema 1: virtualización (estricta)</h3>
+<pre><code class="text">Todas las instrucciones críticas deben de ser cedidas al hipervisor mediante el uso de traps.
+</code></pre>
+
+<p>Un ejemplo de instrucción crítica que debe de ser ejecutada en forma privilegiada es HALT.
+Esta para la ejecución del procesador hasta que sea despertada por una interrupción.</p>
+<p>Esta característica debe de ser proporcionada por la CPU.
+Si no cumple esta característica no son estríctamente virtualizables, sin embargo, mediante el uso de "trucos" se puede llegar a conseguir.</p>
+<p><img alt="OK Instrucciones criticas" src="images/T1/5.png" /></p>
+<h3 id="teorema-2-virtualizacion-recursiva">Teorema 2: virtualización recursiva</h3>
+<pre><code class="text">Una máquina es virtualizable si cumple el teorema 1 y posee suficientes recursos.
+</code></pre>
+
+<p>La virtualización recursiva no es siempre posible (virtualizar dentro de la máquina virtualizada).</p>
+<h2 id="tipos-de-maquinas-virtuales-tecnicas-de-virtualizacion">Tipos de maquinas virtuales (Técnicas de Virtualización)</h2>
+<h3 id="tipo-1-full-machine-virtualization">Tipo 1: Full Machine Virtualization</h3>
+<p>El SO esta en una capa de abstracción independiente (totalmente desacoplado del HW) gracias al hipervisor.</p>
+<p>El SO no es consciente de que esta siendo virtualizado y no requiere de modificaciones.</p>
+<h4 id="_1"></h4>
+<p><div class="row">
+  <div class="col-md-8" markdown="1">
+    <h4>Hipervisores tipo 1 (Native/Bare Metal)</h4>
+    <p>El VMM se ejecuta sobre la propia máquina física. Los SO estan bajo el control de VMM.
+Simula las operaciones de E/S directamente sobre sus propios drivers que controlan el hardware.
+Los threads que existen en las máquinas virtuales son invisibles para el hipervisor.
+El hipervisor solo se encarga de servir estas llamadas sin saber que ocurre.</p>
+<p></p>
+  </div>
+  <div class="col-md-4" markdown="1">
+    <img  class="center-block" height="250vh" src="images/T1/7.png">
+  </div>
+</div></p>
+<hr />
+<div class="row">
+  <div class="col-md-8" markdown="1">
+    <h4>Hipervisores tipo 2 (Hosted)</h4>
+    <p>El VMM es una aplicación de un SO host, pero emula una máquina virtual sobre el que se puede ejecutar un SO invitado.
+
+Esto se ejecuta en un proceso normal de un SO en modo usuario. Por tanto, es necesario que las instrucciones privilegiadas sean interceptadas por un módulo del núcleo del SO.
+
+Simula las operaciones de E/S con servicios del SO real (por ejemplo ficheros).
+
+Algunos ejemplos podrían ser VMWare Workstation o VirtualBox.
+</p>
+  </div>
+  <div class="col-md-4" markdown="1">
+    <img  class="center-block" height="350vh" src="images/T1/6.png">
+  </div>
+</div>
+
+<h3 id="tipo-2-paravirtualizacion">Tipo 2: Paravirtualización</h3>
+<p>El VMM se ejecuta sobre el hardware (sin emular), como un SO, y ofrece interfaz con la máquina real donde el SO invitado debe ser adaptado a dicho interfaz.</p>
+<p>Existe comunicación explícita entre el SO guest y el hipervisor, con el objetivo de ser más eficaz. 
+Esta rapidez en parte se debe a eliminar las traps necesarias con las instrucciones críticas. </p>
+<p>Se debe de modificar el kernel del SO guest, reemplazando las instrucciones no-virtualizables por hipercalls que comunican directamente con el hipervisor.</p>
+<p>El hipervisor también proporciona hipercalls para otras operaciones críticas del kernel (tales como manejo de memoria, manejo de las interrupciones, información de reloj, etc.).</p>
+<p>Ejemplo de paravirtualización en la realidad: <a href="https://wiki.xen.org/wiki/Main_Page">Proyecto Xen</a></p>
+<h3 id="tipo-3">Tipo 3:</h3>
+<p>Language Runtimes (como la máquina virtual de Java) o los contenedores son ejemplos de esta categoría.</p></div>
+        
+        
+    </div>
+
+    <footer class="col-md-12 text-center">
+        
+        <hr>
+        <p>
+        <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
+
+        
+        
+    </footer>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/bootstrap-3.0.3.min.js"></script>
+    <script src="js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>var base_url = "."</script>
+    
+    <script src="js/base.js"></script>
+    <script src="search/main.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>
+
+<!--
+MkDocs version : 1.0.4
+Build Date UTC : 2019-11-23 14:23:30
+-->
