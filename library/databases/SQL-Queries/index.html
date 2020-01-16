@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="../img/favicon.ico">
+
+    
+    <title>SQL Queries - Databases</title>
+    
+
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
+    <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../css/base.min.css" rel="stylesheet">
+    <link href="../css/cinder.min.css" rel="stylesheet">
+    <link href="../css/highlight.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
+
+    <script src="//ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
+
+    
+
+     
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+
+            <a class="navbar-brand" href="..">Databases</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Introduction to Databases</a>
+                    </li>
+                
+                
+                
+                    <li class="active">
+                        <a href="./">SQL Queries</a>
+                    </li>
+                
+                
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <i class="fas fa-search"></i> Search
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="..">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a rel="next" >
+                            Next <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="first-level active"><a href="#sql-queries">SQL Queries</a></li>
+            <li class="second-level"><a href="#dml-basic-sql-sentences">DML Basic SQL sentences</a></li>
+                
+            <li class="second-level"><a href="#dml-more-sql-sentences">DML more SQL sentences</a></li>
+                
+            <li class="second-level"><a href="#dml-subqueries">DML Subqueries</a></li>
+                
+            <li class="second-level"><a href="#aggregate-functions">Aggregate Functions</a></li>
+                
+            <li class="second-level"><a href="#group-queries">Group Queries</a></li>
+                
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<h1 id="sql-queries">SQL Queries</h1>
+<h2 id="dml-basic-sql-sentences">DML Basic SQL sentences</h2>
+<pre><code class="SQL">-- Full name of those customers belonging to the country identified by the id 52778. 2039 rows
+SELECT CUST_FIRST_NAME || ' ' || CUST_LAST_NAME AS NAME
+FROM CUSTOMERS
+WHERE COUNTRY_ID=52778;
+
+-- (INCORRECT?) Full name and descriptions of the products whose category is not 205 (the largest category). 
+-- 50 rows. Notice that both attributes have the same content.
+SELECT DISTINCT PROD_NAME, PROD_DESC
+FROM PRODUCTS
+WHERE PROD_CATEGORY_ID &lt;&gt; 205; --&gt; 53 ROWS
+--    AND PROD_NAME=PROD_DESC; (HAVE THE SAME CONENT? -&gt; 44 ROWS)
+
+-- Full name of the customers having an email address in the server &quot;apple.com&quot;. 1897 rows
+SELECT CUST_FIRST_NAME || ' ' || CUST_LAST_NAME AS NAME
+FROM CUSTOMERS
+WHERE CUST_EMAIL LIKE '%@apple.com';
+
+-- Full name of those customers that have not provided their marital status. 17428 rows
+SELECT CUST_FIRST_NAME || ' ' || CUST_LAST_NAME AS NAME
+FROM CUSTOMERS
+WHERE cust_marital_status IS NULL;
+
+-- Write the query using the IS NULL operator and using = NULL. Do they have the same behavior?
+SELECT CUST_FIRST_NAME || ' ' || CUST_LAST_NAME AS NAME
+FROM CUSTOMERS
+WHERE cust_marital_status=NULL; -- -&gt; 0 rows selected
+
+-- Show the sales of the product 45. Show the list chronologically ordered by date and also by the customer code (ascending). 10742
+SELECT quantity_sold, amount_sold
+FROM SALES
+WHERE PROD_ID=45
+ORDER BY time_id, cust_id ASC;
+
+-- Products in the category 205. Provide their names and the proportion between the catalog price and the minimum price 
+-- (provide the data in percentage, with the % at the end to indicate it). 28 rows 
+SELECT PROD_NAME, to_char((PROD_LIST_PRICE * 100)/PROD_MIN_PRICE) ||'%' AS PERCENTAGE
+FROM PRODUCTS
+WHERE prod_category_id=205;
+</code></pre>
+
+<h2 id="dml-more-sql-sentences">DML more SQL sentences</h2>
+<pre><code>-- (INCORRECTO?) List the information of all the sales made in the last century (we consider that the current century began on Jan 1st 2000). 427.256 rows
+SELECT PROD_ID, AMOUNT_SOLD
+FROM SALES
+WHERE TIME_ID &gt; TO_DATE('2000-01-01', 'YYYY-MM-DD'); -- -&gt; 492160 rows
+
+-- (INCORRECT?) Information of the costs that was stored in the database at most 18 years ago. 2173 rows 
+SELECT PROD_ID, UNIT_COST, UNIT_PRICE
+FROM COSTS
+WHERE TIME_ID &gt; ADD_MONTHS(SYSDATE, -(12*18)); -- -&gt; 0 ROWS
+
+-- Get a list with the id of the customer and the id of the product sold and the date of the sale. Show the amount of three-years period spent from that day up to now. Name this column TRIENNIUM. 919.569 rows
+SELECT CUST_ID, PROD_ID, TIME_ID, TRUNC(MONTHS_BETWEEN(SYSDATE, TIME_ID)/(12*3)) Trienios
+FROM SALES;
+
+-- Show the name of all the products containing the (verbatim) tag &quot;Phone&quot;. In the list, substitute such tag by &quot;Smartphone&quot;. 9 rows
+SELECT PROD_NAME
+FROM PRODUCTS
+WHERE PROD_NAME LIKE '%Phone%'; 
+
+-- Show the information of the customers (get the first and last name, ID and year of birth) living in the cities Aachen, Aalborg or Aalen. Those customers with no year of birth provided will appear with the label &quot;NON SUBMITTED&quot;. Notice that the NVL function must have all its parameters of the same data_type.
+-- Can you simplify your query by using the property that these three cities begin with &quot;Aa&quot; (they are no more cities fulfilling this property). 175 rows
+SELECT CUST_FIRST_NAME, CUST_LAST_NAME, CUST_ID, NVL(TO_CHAR(CUST_YEAR_OF_BIRTH), 'NOT SUBMITTED')
+FROM CUSTOMERS
+WHERE CUST_CITY LIKE 'Aa%';
+
+
+-- List the information of the sales made on the second Monday of each month. Provide the ID of the customer, ID of the product and date. Take into account that the DAY token in the TO_CHAR function for the dates can provides some extra spaces because it renders a fixed size output. 25181 
+SELECT CUST_ID, PROD_ID, TO_CHAR(TIME_ID, 'DD')
+FROM SALES
+WHERE TO_CHAR(TIME_ID, 'DD') BETWEEN 8 AND 14;
+
+
+-- Get a list of the customers that didn't submit their marital status. You have to inform about this situation and the name of the customer, following the schema: &quot;The customer ..........(full name of the customer) didn't provide .......(his or her) marital status. You can use the concat function (||) and also the DECODE function. The scape code for the symbol ' in Oracle is ''. 17428 rows
+SELECT CUST_FIRST_NAME || ' ' || CUST_LAST_NAME
+FROM CUSTOMERS
+WHERE CUST_MARITAL_STATUS IS NULL;
+
+
+</code></pre>
+
+<h2 id="dml-subqueries">DML Subqueries</h2>
+<pre><code>-- Name of the products where the difference between their cost and their price is more than 600 and such that it have been 
+-- sold in a sale where the amount_sold value is greater than 1780. [V_SUBQ_1]
+
+SELECT DISTINCT PROD_NAME
+FROM PRODUCTS JOIN COSTS USING (PROD_ID)
+WHERE ABS(UNIT_COST - UNIT_PRICE) &gt; 600
+    AND PROD_ID IN (SELECT DISTINCT PROD_ID
+                    FROM SALES
+                    WHERE AMOUNT_SOLD &gt; 1780);
+
+
+-- (INCORRECT?) Full name and customer id of the customers from USA who bought some product listed in the above query and their salary is 
+-- greater than 200.000. [V_SUBQ_2]
+
+SELECT DISTINCT CUST_ID, CUST_FIRST_NAME || ' ' || CUST_LAST_NAME
+FROM CUSTOMERS JOIN SALES SL USING (CUST_ID)
+WHERE PROD_ID IN (
+    SELECT DISTINCT PROD_ID
+    FROM PRODUCTS JOIN COSTS USING (PROD_ID)
+    WHERE ABS(UNIT_COST - UNIT_PRICE) &gt; 600
+        AND PROD_ID IN (SELECT DISTINCT PROD_ID
+                        FROM SALES
+                        WHERE AMOUNT_SOLD &gt; 1780))
+
+    AND (CUST_INCOME_LEVEL LIKE 'J%'
+        OR CUST_INCOME_LEVEL LIKE 'K%'
+        OR CUST_INCOME_LEVEL LIKE 'l%');
+
+-- List the name of the products bought in USA on 1998 Christmas holidays. Notice that Christmas in USA coincides with the last 
+-- two weeks of the year. [V_SUBQ_3]
+
+SELECT DISTINCT PROD_NAME
+FROM PRODUCTS
+WHERE PROD_ID IN (SELECT PROD_ID
+                    FROM SALES
+                    WHERE TIME_ID BETWEEN (SELECT date'1998-12-31' - 14 FROM DUAL) 
+                                            AND date'1999-01-01');
+
+
+
+-- List the same information of the above query but translating it to Spain. In Spain, as you know, Christmas holidays also 
+-- includes the first week of the next year.
+
+SELECT DISTINCT PROD_NAME
+FROM PRODUCTS
+WHERE PROD_ID IN (SELECT PROD_ID
+                    FROM SALES
+                    WHERE TIME_ID BETWEEN (SELECT date'1998-12-31' - 14 FROM DUAL) 
+                                            AND date'1998-12-31' + 7);
+
+
+-- How can you get all these sales in a single query?
+-- I don't understand, they should be already included in the last query.
+
+
+-- List the customer full name and yearof birth of the customers who have bought a product of the Hardware category
+
+SELECT DISTINCT CUST_FIRST_NAME || ' ' || CUST_LAST_NAME AS &quot;FULL NAME&quot;, CUST_YEAR_OF_BIRTH
+FROM CUSTOMERS
+WHERE CUST_ID IN (SELECT CUST_ID
+                    FROM SALES JOIN PRODUCTS USING (PROD_ID)
+                    WHERE PROD_CATEGORY LIKE 'Hardware');
+
+
+-- List the time ID of the sales where the customer was some of the previous customers. [V_SUBQ_7]
+
+SELECT DISTINCT TIME_ID
+FROM SALES
+WHERE CUST_ID IN (SELECT CUST_ID
+                    FROM (SELECT COUNT(TIME_ID) AS &quot;TIMES&quot;, CUST_ID FROM SALES GROUP BY CUST_ID)
+                    WHERE TIMES &gt; 1);
+
+-- Observe that in the previous query we are not searching the date of the product of the Hardware category sales, but the 
+-- TIME ID of any sale of any of the customers in the previous exercise. Is there any difference? [V_SUBQ_8] 
+
+SELECT DISTINCT TIME_ID
+FROM SALES JOIN PRODUCTS USING (PROD_ID)
+WHERE CUST_ID IN (SELECT CUST_ID
+                    FROM (SELECT COUNT(TIME_ID) AS &quot;TIMES&quot;, CUST_ID FROM SALES GROUP BY CUST_ID)
+                    WHERE TIMES &gt; 1)
+    AND PROD_CATEGORY LIKE 'Hardware';
+
+
+</code></pre>
+
+<h2 id="aggregate-functions">Aggregate Functions</h2>
+<pre><code>-- Calculate the number of customers stored in the database.V_AGGR_1
+
+SELECT COUNT(CUST_ID) FROM CUSTOMERS;
+
+-- What is the total number of products?. Does it correspond with the highest ID_PRODUCTS or there exist some 
+-- gap in the sequence?V_AGGR_2
+
+SELECT COUNT(PROD_ID) FROM PRODUCTS;
+-- There are gaps in the sequence
+
+-- What is the number of different values for the marital status attribute?V_AGGR_3
+
+SELECT COUNT(*) FROM (SELECT DISTINCT NVL(TO_CHAR(CUST_MARITAL_STATUS), 'NULLVALUE') FROM CUSTOMERS);
+
+
+-- Calculate the average of money that the customers spend.V_AGGR_4
+
+SELECT ROUND(AVG(AMOUNT_SOLD), 2) AS &quot;AVERAGE MONEY SPENT&quot; FROM SALES;
+
+--  What is the average of the list price and the minimum price all the products?V_AGGR_5
+
+SELECT ROUND(AVG(PROD_LIST_PRICE),2) AS &quot;AVERAGE LIST PRICE&quot;, ROUND(AVG(PROD_MIN_PRICE), 2) AS &quot;AVERAGE MIN PRICE&quot; FROM PRODUCTS;
+
+
+--  What is the average, the maximum and the minimum of the list price of all the products?V_AGGR_6
+SELECT  ROUND(AVG(PROD_LIST_PRICE),2) AS &quot;AVERAGE LIST PRICE&quot;,
+        ROUND(MIN(PROD_LIST_PRICE),2) AS &quot;MINIMUM LIST PRICE&quot;, 
+        ROUND(MAX(PROD_LIST_PRICE),2) AS &quot;MAXIMUM LIST PRICE&quot; 
+FROM PRODUCTS;
+
+
+-- Compute the global amount of money earn by the company and the total number of single sales made during its lifetime.V_AGGR_7
+</code></pre>
+
+<h2 id="group-queries">Group Queries</h2>
+<pre><code>
+-- For each product, list its ID and the total amount of money earn with it. V_GR_1
+
+SELECT PROD_ID, SUM(AMOUNT_SOLD) FROM SALES GROUP BY PROD_ID;
+
+-- For each country, list the number of its citizens and the ID of the country. V_GR_2
+
+SELECT COUNTRY_ID, COUNT(DISTINCT CUST_ID) AS &quot;NUMBER OF CUSTOMERS&quot; FROM CUSTOMERS GROUP BY COUNTRY_ID;
+
+-- For each promotion, list its ID, the total number of sales corresponding with it, the number of different channels 
+-- and the number of different customers that use the advantages of such promotion. V_GR_3
+
+SELECT PROMO_ID, COUNT(QUANTITY_SOLD), COUNT(DISTINCT CHANNEL_ID), COUNT(DISTINCT CUST_ID)
+FROM SALES
+GROUP BY PROMO_ID;
+
+-- For each promotion and channel, compute the total amount of money received with its sales. V_GR_4
+
+SELECT PROMO_ID, CHANNEL_ID, SUM(AMOUNT_SOLD)
+FROM SALES
+GROUP BY PROMO_ID, CHANNEL_ID;
+
+-- For each country and gender, calculate the number of customers in such category. Provide also the range of 
+-- ages (minimum and maximum) for each category. V_GR_5
+SELECT COUNTRY_ID, CUST_GENDER, COUNT(CUST_ID), MIN(CUST_YEAR_OF_BIRTH), MAX(CUST_YEAR_OF_BIRTH)
+FROM CUSTOMERS
+GROUP BY COUNTRY_ID, CUST_GENDER;
+
+-- For each continent, list the number of countries and the number of subcontinents. V_GR_6
+SELECT COUNTRY_REGION, COUNT(COUNTRY_ID), COUNT(COUNTRY_SUBREGION)
+FROM COUNTRIES
+GROUP BY COUNTRY_REGION;
+
+</code></pre></div>
+        
+        
+    </div>
+
+    <footer class="col-md-12 text-center">
+        
+        <hr>
+        <p>
+        <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
+
+        
+        
+    </footer>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>var base_url = ".."</script>
+    
+    <script src="../js/base.js"></script>
+    <script src="../search/main.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>
