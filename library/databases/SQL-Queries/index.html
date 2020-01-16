@@ -120,6 +120,8 @@
                 
             <li class="second-level"><a href="#group-queries">Group Queries</a></li>
                 
+            <li class="second-level"><a href="#more-group-queries">More group queries</a></li>
+                
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
@@ -361,6 +363,41 @@ GROUP BY COUNTRY_ID, CUST_GENDER;
 SELECT COUNTRY_REGION, COUNT(COUNTRY_ID), COUNT(COUNTRY_SUBREGION)
 FROM COUNTRIES
 GROUP BY COUNTRY_REGION;
+
+</code></pre>
+
+<h2 id="more-group-queries">More group queries</h2>
+<pre><code>-- For each product, list the money earn with it. List the name of the product and the global amount of money.SH.V_MOREGR_1
+SELECT PROD_NAME, SUM(AMOUNT_SOLD)
+FROM SALES JOIN PRODUCTS USING (PROD_ID)
+GROUP BY PROD_NAME;
+
+-- For each country, list the number of its citizens. Show the name of the customer and this number of people.SH.V_MOREGR_2
+SELECT COUNTRY_NAME, COUNT(CUST_ID) AS &quot;NUM_CITIZENS&quot;
+FROM COUNTRIES JOIN CUSTOMERS USING (COUNTRY_ID)
+GROUP BY COUNTRY_NAME;
+
+-- For each month, make a report with the total number of sales (show the month name stored in the TIMES table).SH.V_MOREGR_3
+
+SELECT CALENDAR_MONTH_NAME, COUNT(QUANTITY_SOLD)
+FROM TIMES JOIN SALES USING (TIME_ID)
+GROUP BY CALENDAR_MONTH_NAME;
+
+-- In the above query, add the global amount of money sold in the month.SH.V_MOREGR_4
+SELECT CALENDAR_MONTH_NAME, COUNT(QUANTITY_SOLD), SUM(AMOUNT_SOLD)
+FROM TIMES JOIN SALES USING (TIME_ID)
+GROUP BY CALENDAR_MONTH_NAME;
+
+-- Change the above query to structure the information according to the day of the weeks instead of the month.SH.V_MOREGR_5
+-- In the above query, add the global amount of money sold in the month.SH.V_MOREGR_4
+SELECT DAY_NAME, COUNT(QUANTITY_SOLD), SUM(AMOUNT_SOLD)
+FROM TIMES JOIN SALES USING (TIME_ID)
+GROUP BY DAY_NAME;
+
+-- For each promotion and product, list the number of sales. Show the name of the product and the name of the promotion.SH.V_MOREGR_6
+SELECT COUNT(QUANTITY_SOLD) AS &quot;NUMBER OF SALES&quot;, PROD_NAME, PROMO_NAME
+FROM PRODUCTS JOIN SALES  USING (PROD_ID) JOIN PROMOTIONS USING (PROMO_ID)
+GROUP BY PROMO_NAME, PROD_NAME;
 
 </code></pre></div>
         
