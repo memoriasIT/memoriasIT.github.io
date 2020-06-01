@@ -1,0 +1,276 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>EDUALITY</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+  </head>
+  <body class="is-preload">
+
+    <!-- Header -->
+      <header id="header">
+        <a class="logo" href="dashboard.html">EDUALITY</a>
+         <div class="topnav">
+          <input type="text" placeholder="Search..">
+        </div>
+        <nav>
+          <a href="#menu">Menu</a>
+        </nav>
+      </header>
+       
+              <div  style="" class="card1">
+              
+            
+            
+                 <div class="container"style="margin-left:30px; padding-bottom:40px;">
+                 
+                  <div class="row">
+                  <!--vote-->
+                  <div class="col-md-2" >
+                     <div class="buttons" style="width:40px;">
+
+                  <button style="padding: 0; margin: 0; " id="up"  onclick="up();" > <img src="images/up.png" style="width:50px;"></img></button>
+                    <p id="demo" style="font-size:20px; text-align:center; margin:0px; margin-left:10px; margin-top:-12px;" ></p>
+                  <button style="padding: 0; margin: 0; margin-top:-8px;" id="down"  onclick="down();"> <img src="images/down.png" style="width:50px;"></img></button>
+                      
+                      <script type="text/javascript">
+                            var count=0;
+                            function up() {
+                             document.getElementById("demo").innerHTML = count++;
+                            }
+                          
+                            function down() {
+                               document.getElementById("demo").innerHTML = --count;
+                            }
+                      </script>                 
+                
+                    </div>
+                </div>
+
+<div class="row">
+  <div class="leftcolumn">
+    <div class="card1">
+      <h2>TITLE HEADING</h2>
+      <h5>Title description, Dec 7, 2017</h5>
+      <div class="fakeimg" style="height:200px;">Image</div>
+      <p>Some text..</p>
+      <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+    </div>
+    <div class="card1">
+      <h2>TITLE HEADING</h2>
+      <h5>Title description, Sep 2, 2017</h5>
+      <div class="fakeimg" style="height:200px;">Image</div>
+      <p>Some text..</p>
+      <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+    </div>
+    <div class="card1">
+      <h2>TITLE HEADING</h2>
+      <h5>Title description, Sep 2, 2017</h5>
+      <div class="fakeimg" style="height:200px;">Image</div>
+      <p>Some text..</p>
+      <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+    </div>
+    <div class="card1">
+      <h2>TITLE HEADING</h2>
+      <h5>Title description, Sep 2, 2017</h5>
+      <div class="fakeimg" style="height:200px;">Image</div>
+      <p>Some text..</p>
+      <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+    </div>
+    <div class="card1">
+      <h2>TITLE HEADING</h2>
+      <h5>Title description, Sep 2, 2017</h5>
+      <div class="fakeimg" style="height:200px;">Image</div>
+      <p>Some text..</p>
+      <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+    </div>
+  </div>
+
+      <!-- Nav -->
+      <nav id="menu">
+        <ul class="links">
+          <li><a href="index.html">Home</a></li>
+        
+          <li><a href="generic.html">About us</a></li>
+          <li><a href="profile.html">My profile</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="categories.html">Categories</a></li>
+        </ul>
+      </nav>
+
+      </body>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.card1 {
+   background-color: white;
+   padding: 20px;
+   margin-top: 20px;
+}
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+  }
+.upvote{
+   width:30px;
+   height: 20px;
+   cursor: pointer;
+}
+.downvote{
+   width:30px;
+   height: 20px;
+   background-image: "images/images.png";
+   cursor: pointer;
+}
+.card {
+ position: absolute;
+  right: 0;
+ margin-right:30px;
+float: right-side;
+  box-shadow: 3px 6px 8px 3px rgba(0.2, 0.2, 0.2, 0.2);
+  max-width: 300px;
+  text-align: center;
+  font-family: arial;
+}
+
+.title {
+  color: grey;
+  font-size: 18px;
+}
+/*main information*/
+.leftcolumn {   
+  float: left;
+  width: 75%;
+}
+
+/* Right column */
+.rightcolumn {
+  float: left;
+  width: 25%;
+  padding-left: 20px;
+}
+/* Fake image */
+.fakeimg {
+  background-color: #aaa;
+  width: 100%;
+  padding: 20px;
+}
+
+/* Footer */
+
+.tweet-body{
+width:82%;
+margin-lft:60px;}
+}
+.tweet-body textarea {
+overflow:hidden;
+resize:none;
+margin-top:40px;
+height:80px;
+border:1px solid red;
+border-radius 4px;
+padding:10 px;
+font-size:14px;}
+
+.topnav {
+  overflow: hidden;
+  background-color: grey;
+  position: right;
+  width:30%;
+
+}
+
+
+button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+
+button:hover, a:hover {
+  opacity: 0.7;
+}
+</style>
+</head>
+
+
+
+<h2 style="text-align:center"></h2>
+<div id="Profile-content">
+          <div class="card" style="background-color:white; border-radius:10%">
+          <img src="images/pic.01.jpg" alt="John" style="width:50%; border-radius: 50%; margin-top:20px; margin-bottom:10px">
+          <h1>Nuta Andreea</h1>
+          <p class="title">Eduality co-founder</p>
+          <p>UMA ETS de Ingeniería Informática</p>
+          <p>523 posts</p>
+          <div style="margin: 24px 0;">
+          <a href="#"><i class="fa fa-instagram"></i></a> 
+          <a href="#"><i class="fa fa-twitter"></i></a>  
+          <a href="#"><i class="fa fa-linkedin"></i></a>  
+          <a href="#"><i class="fa fa-facebook"></i></a> 
+          </div>
+          <p><button>Contact</button></p>
+        </div>
+</div> 
+
+<!-- Footer -->
+      <footer id="footer">
+        <div class="inner">
+          <div class="content">
+            <section>
+              <h3>How is all of this possible?</h3>
+              <p> The magnificent work of 6 UMA students.
+              
+              We divided the activities into smaller tasks, after that we tried to solve them by our own, then we met to try to achieve the best possible solution for each task using the ideas that we developed alone. Once we got a common solution we checked if it fulfills the constraints of our main problem.</p>
+            </section>
+            <section>
+              <h4>Can we help you with anything else?</h4>
+              <ul class="alt">
+                <li><a href="#">Report inappropiate content</a></li>
+                <li><a href="#">Report user</a></li>
+                <li><a href="#">Regulations and privacy</a></li>
+                <li><a href="#">More questions</a></li>
+              </ul>
+            </section>
+            <section>
+              <h4>You can find us here</h4>
+              <ul class="plain">
+                <li><a href="#"><i class="icon fa-twitter">&nbsp;</i>Twitter</a></li>
+                <li><a href="#"><i class="icon fa-facebook">&nbsp;</i>Facebook</a></li>
+                <li><a href="#"><i class="icon fa-instagram">&nbsp;</i>Instagram</a></li>
+                <li><a href="#"><i class="icon fa-github">&nbsp;</i>Github</a></li>
+              </ul>
+            </section>
+          </div>
+          <div class="copyright">
+            &copy; UMA. Introduction <a href="">to</a>, Software <a href="">Engineering</a>.
+          </div>
+        </div>
+      </footer>
+
+    <!-- Scripts -->
+      <script src="assets/js/jquery.min.js"></script>
+      <script src="assets/js/browser.min.js"></script>
+      <script src="assets/js/breakpoints.min.js"></script>
+      <script src="assets/js/util.js"></script>
+      <script src="assets/js/main.js"></script>
+
+  </body>
+</html>
