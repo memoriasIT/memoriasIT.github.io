@@ -41,5 +41,20 @@
 				resetForms: true,
 				side: 'right'
 			});
+		// Menu.
+		
+		$('#categories')
+			.append('<a href="#categories" class="close"></a>')
+			.appendTo($body)
+			.panel({
+				target: $body,
+				visibleClass: 'is-categories-visible',
+				delay: 400,
+				hideOnClick: true,
+				hideOnSwipe: true,
+				resetScroll: true,
+				resetForms: true,
+				side: 'left'
+			});
 
 })(jQuery);

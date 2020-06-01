@@ -59,18 +59,7 @@
 					color: _palette($accent, fg-bold);
 				}
 
-				&[href="#menu"] {
-					@include icon;
-					-webkit-tap-highlight-color: rgba(0,0,0,0);
-
-					&:before {
-						content: '\f0c9';
-						margin: 0 0.5rem 0 0;
-					}
-				}
-
-				& + a[href="#menu"]:last-child {
-					border-left: solid 1px _palette($accent, border);
+				1px _palette($accent, border);
 					margin-left: 0.5rem;
 					padding-left: 1.25rem;
 				}
@@ -86,7 +75,11 @@
 						margin-left: 0.25rem;
 						padding-left: 1rem;
 					}
-
+					
+					& + a[href="#categories"]:last-child {
+						margin-left: 0.25rem;
+						padding-left: 1rem;
+					}
 					&:last-child {
 						padding-right: 1rem;
 					}

@@ -1,4 +1,25 @@
-
+<?php 
+$conn = mysqli_connect('localhost','root','','demo');
+ 
+if(!$conn)
+{
+	die(mysqli_error());
+}
+ 
+if(isset($_POST['submit']))
+{
+	$textareaValue = trim($_POST['content']);
+	
+	$sql = "insert into textarea_value (textarea_content) values ('".$textareaValue."')";
+	$rs = mysqli_query($conn, $sql);
+	$affectedRows = mysqli_affected_rows($conn);
+	
+	if($affectedRows == 1)
+	{
+		$successMsg = "Record has been saved successfully";
+	}
+}
+?>
 
 <!DOCTYPE HTML>
 <!--
@@ -89,7 +110,7 @@ button:hover, a:hover {
 				  <h1>Nuta Andreea</h1>
 				  <p class="title">Eduality co-founder</p>
 				  <p>UMA ETSde Ingeniería Informática</p>
-				  <p>523 posts</p>
+				  <p>2 posts</p>
 				  <div style="margin: 24px 0;">
 					<a href="#"><i class="fa fa-instagram"></i></a> 
 					<a href="#"><i class="fa fa-twitter"></i></a>  
@@ -187,8 +208,6 @@ font-size:14px;}
 </style>
 </body>
 
-
-
 		<!-- Posts -->
 			<section style="position:relative; margin-left:-230px; margin-top:-130px;
 	left:0;" class="wrapper" >
@@ -204,18 +223,32 @@ font-size:14px;}
 						<div style="margin-bottom:20px;border-radius:2%;" class="card1">
 							<div class="container"style="margin-left:30px; padding-bottom:20px; widht:70px;">
 								<div class="row">
-							<div class="col-md-2">
-							<textarea style="width:950px;height:70px; margin-top:20px;" onkeypress="hcb.delta(event)" class="commentbox hcb-shadow-r" name="content" id="hcb_form_content" rows="1" placeholder="Enter your new post"></textarea>
-							  </div>
+								
+	<form th:action="@{/content/save}" method = "post" th:object = "${content}">
+									<input type = "hidden" id = "contentId" th:field = "*{contentId}">
+							<div>
+										<label style="margin-bottom:1px;"for = "title">Title</label>
+										<input style="width:400px;height:40px;"type = "text" id = "title" th:field = "*{title}">
+							</div>
+		
+					<div>
+							<label style ="margin:0px;"for = "topic">Topic</label>
+							<input style="width:400px;height:30px;" type="text" id="topic" th:field = "*{topic}"> 
+					</div>		
+					
+					<div class="col-md-2">
+							<textarea th:field = "*{body}" style="width:950px;height:70px; margin-top:20px;" onkeypress="hcb.delta(event)" class="commentbox hcb-shadow-r" name="content" id="text" rows="1" placeholder="Enter your new post" required></textarea>
+					</div>
 							  <div class="col-md-2">
 							  
 				  <img src="images/pic.01.jpg" alt="John" style="width:5%; border-radius: 50%; margin-top:9px;">
 							 
-							 
-  <input style="position:absolute;margin-top:15px;margin-left:20px; " type="file" id="myfile" name="myfile" value="Attach a file" multiple><br><br>
+				 <input style="position:absolute;margin-top:15px;margin-left:20px; " type="file" id="myfile" name="myfile" value="Attach a file" multiple><br><br>
  
-							 <input style="margin-left:850px; position:absolute; margin-top:-75px; "class="submit btn" id="hcb_submit" type="submit" value="Upload">
-									</div>
+				  <input style="margin-left:850px; position:absolute; margin-top:-75px; "class="submit btn" id="hcb_submit" type="submit" name="submit" value="Send">
+							</div>
+										
+	</form>
 								</div>
 							</div>
 						</div>
@@ -232,20 +265,20 @@ font-size:14px;}
 									<div class="col-md-2" >
 										 <div class="buttons" style="width:40px;">
 
-									<button style="padding: 0; margin: 0; " id="up"  onclick="up();" > <img src="images/up.png" style="width:50px;"></img></button>
+									<button style="padding: 0; margin: 0; " id="up"  onclick="up1();" > <img src="images/up.png" style="width:50px;"></img></button>
 										<p id="demo" style="font-size:20px; text-align:center; margin:0px; margin-left:10px; margin-top:-12px;" ></p>
-									<button style="padding: 0; margin: 0; margin-top:-8px;" id="down"  onclick="down();"> <img src="images/down.png" style="width:50px;"></img></button>
+									<button style="padding: 0; margin: 0; margin-top:-8px;" id="down"  onclick="down1();"> <img src="images/down.png" style="width:50px;"></img></button>
 											
 											<script type="text/javascript">
 														var count=0;
-														function up() {
+														function up1() {
 													   document.getElementById("demo").innerHTML = count++;
 														}
 													
-														function down() {
+														function down1() {
 														   document.getElementById("demo").innerHTML = --count;
 														}
-											</script>									
+													</script>									
 								
 										</div>
 								</div>
@@ -294,7 +327,7 @@ font-size:14px;}
   <div  style="" class="card1">
 							
 						
-						
+						<h1 th:text = "${content}"></h1>
 								 <div class="container"style="margin-left:30px; padding-bottom:40px;">
 								 
 									<div class="row">
@@ -303,6 +336,7 @@ font-size:14px;}
 										 <div class="buttons" style="width:40px;">
 
 									<button style="padding: 0; margin: 0; " id="up"  onclick="up();" > <img src="images/up.png" style="width:50px;"></img></button>
+										<span  id="demo1"th:text = "${content.upvotes}"></span>
 										<p id="demo1" style="font-size:20px; text-align:center; margin:0px; margin-left:10px; margin-top:-12px;" ></p>
 									<button style="padding: 0; margin: 0; margin-top:-8px;" id="down"  onclick="down();"> <img src="images/down.png" style="width:50px;"></img></button>
 											
@@ -316,25 +350,28 @@ font-size:14px;}
 														   document.getElementById("demo1").innerHTML = --count;
 														}
 													</script>									
-								
+								<td><a th:href = "@{/content/upvote/{contentId}(contentId = ${content.contentId})}"> Up-vote </a>
 										</div>
 								</div>
 						<!-- titlu post
 							  ////////////////////////////////////////////////////////////////-->
 							  <div class="col-md-2">
-							 <h2 style="padding:10px; margin-top:30px;">NAME OF THE POST</h2>
+							  <span style="padding:10px; margin-top:30px;" th:text = "${content.title}"></span>
+							 <h2 >NAME OF THE POST</h2>
 							  </div>
 							  </div>
 						   </div>
 				
 <!-- gata cu partea de sus-->
-						<h5 style="padding:2px; margin-left:30px;">Title description, date, 2020</h5>
+<span th:text = "${content.title}"style="padding:2px; margin-left:30px;"></span>
+						<h5 >Title description, date, 2020</h5>
 						
 						<img src="images/descarcare.jpg" style=" margin:20px; margin-left:30px;">
 
 							<p style="margin:20px; margin-bottom:-20px;"></p>
-							
-							
+						<div>	
+							<span th:text = "${content.title}"></span>
+						</div>	
 							
 							
 	<!---comment-->						

@@ -1,22 +1,30 @@
-<!DOCTYPE HTML>
-<!--
-	Industrious by TEMPLATED
-	templated.co @templatedco
-	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
--->
-<html>
-<style>
-@import url(font-awesome.min.css);
-@import url("https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600");
-</style>
+<?php 
+$conn = mysqli_connect('localhost','root','','demo');
+ 
+if(!$conn)
+{
+	die(mysqli_error());
+}
+ 
+if(isset($_POST['submit']))
+{
+	$textareaValue = trim($_POST['content']);
+	
+	$sql = "insert into textarea_value (textarea_content) values ('".$textareaValue."')";
+	$rs = mysqli_query($conn, $sql);
+	$affectedRows = mysqli_affected_rows($conn);
+	
+	if($affectedRows == 1)
+	{
+		$successMsg = "Record has been saved successfully";
+	}
+}
+?>
 
+<!DOCTYPE HTML>
+
+<html>
 	<head>
-	<meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
 		<title>EDUALITY</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -28,43 +36,17 @@
 
 		<!-- Header -->
 			<header id="header">
-				<a class="logo" href="index.html">EDUALITY</a>
-				
-				 <nav style="position:absolute; margin-left:100px;" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Categories <span class="caret"></span></a>
-        <ul style=" background-color: #111111;
-  color: white; -moz-osx-font-smoothing: grayscale;
-      -webkit-font-smoothing: antialiased;
-      font-family: FontAwesome;
-      font-style: normal;
-      font-weight: normal;
-      text-transform: none !important; content: '\f00d';
-      font-size: 1.25rem;
-"class="dropdown-menu">
-          <li><a style="" href="generic.html">Animals</a></li>
-          <li><a href="#">Books</a></li>
-          <li><a href="#">Cardiovasculatiry</a></li>
-		  <li><a href="#">Doplhins</a></li>
-          <li><a href="#">Engineering</a></li>
-		  <li><a href="#">Facts</a></li>
-          <li><a href="#">GitHub</a></li>
-		  <li><a href="#">History</a></li>
-          <li><a href="#">Informatics</a></li>
-		  <li><a href="#">Photography</a></li>
-
-		  
-        </ul>
-				</nav>
+				<a class="logo" href="profile.html">EDUALITY</a>
 				<nav>
 					<a href="#menu">Menu</a>
 				</nav>
 			</header>
 
 		<!-- Nav -->
-		
 			<nav id="menu">
 				<ul class="links">
 					<li><a href="index.html">Home</a></li>
-					
+				
 					<li><a href="generic.html">About us</a></li>
 					<li><a href="profile.html">My profile</a></li>
 					<li><a href="dashboard.html">Dashboard</a></li>
@@ -72,179 +54,390 @@
 				</ul>
 			</nav>
 
-		<!-- Banner -->
-			<section id="banner">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.card {
+ position: absolute;
+  left: 0;
+ margin-right:30px;
+float: right-side;
+  box-shadow: 3px 6px 8px 3px rgba(0.2, 0.2, 0.2, 0.2);
+  max-width: 700px;
+width:1730px;
+height:150px;
+  text-align: center;
+  font-family: arial;
+}
+
+.title {
+  color: grey;
+  font-size: 18px;
+}
+
+button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+
+button:hover, a:hover {
+  opacity: 0.7;
+}
+</style>
+</head>
+<body>
+
+<h2 style="text-align:center"></h2>
+<div id="Profile-content">
+					<div class="card" style="background-color:white; border-radius:10%; margin-left:30px;">
+					
+					<h3>Your Profile</h1>
+				  
+				  <div class="row">
+									<!--vote-->
+									<div class="col-md-2" >
+				  <img src="images/pic.01.jpg" alt="John" style="width:10%; border-radius: 50%; margin-left:-500px;margin-top:0px; margin-bottom:10px">
+				  <h3 style="margin-left:-220px; margin-top:-50px; margin-bottom:-10px;">Nuta Andreea</h3> </div>
+<div class="col-md-2" >		
+<button th:href = "@{/content/add}" style="width:200px;height:60px;margin-left:350px; margin-top:-800px; text-margin-top:0px;">Create new post</button>
+
+				  </div> </div>
+			
+				  
+				</div>
+</div>				
+				<style>
+				
+/* Right column */
+
+.rightcolumn {
+  float: left;
+  width: 25%;
+  padding-left: 20px;
+}
+
+/* Fake image */
+.fakeimg {
+  background-image:url(images/malaga.jpg);
+  width: 65;
+  padding: 20px;
+  margin:20px;
+}
+.fakeimg1{
+ image:url(images/descarcare.jpg);
+align:no-repeat;
+  padding: 20px;
+  margin:20px;
+}
+
+
+/* Add a card effect for articles */
+.card1 {
+  background-color: white;
+    border-radius:1%;
+  width:1100px;
+  box-shadow: 3px 6px 8px 3px rgba(0.1, 0.3, 0.5, 0.2);
+  margin: auto;
+  font-family: arial;
+  text-padding:10px;
+  margin-bottom:22px;
+
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;}
+  
+  
+  .leftcolumn {
+  float: left;
+  width: 7500px;}
+  
+@media screen and (max-width: 8000px) {
+  .leftcolumn, .rightcolumn {
+    width: 800px;
+    padding: 0;
+  
+  
+  #voting{
+   width:30px;
+   height:40px;
+}
+.upvote{
+   width:30px;
+   height: 20px;
+   cursor: pointer;
+}
+.downvote{
+   width:30px;
+   height: 20px;
+   background-image: "images/images.png";
+   cursor: pointer;
+}
+
+.tweet-body{
+width:82%;
+margin-lft:60px;}
+}
+.tweet-body textarea {
+overflow:hidden;
+resize:none;
+margin-top:40px;
+height:80px;
+border:1px solid red;
+border-radius 4px;
+padding:10 px;
+font-size:14px;}
+
+</style>
+</body>
+
+		<!-- Posts -->
+			<section style="position:relative; align:center; margin-top:-130px;
+	" class="wrapper"  th:each = "c : ${contentList}" >
+	
 				<div class="inner">
+					<header class="first">
+						<h4 style="align:left-side;"></h4>
+					
+					</header>
+					<!--partea de sus-->
+					<div style=""class="row">
+						<div class="leftcolumn">
+					
+						
+							<div  style="margin-top:200px;" class="card1">
+							
+						
+						
+								 <div class="container"style="margin-left:50px; padding-bottom:40px;">
+								 
+									<div class="row">
+									<!--vote-->
+									<div class="col-md-2" >
+										 <div class="buttons" style="width:40px;">
+
+									<button style="padding: 0; margin: 0; " id="up"  onclick="up1();" > <img src="images/up.png" style="width:50px;"></img></button>
+										<p id="demo" style="font-size:20px; text-align:center; margin:0px; margin-left:10px; margin-top:-12px;" ></p>
+									<button style="padding: 0; margin: 0; margin-top:-8px;" id="down"  onclick="down1();"> <img src="images/down.png" style="width:50px;"></img></button>
+											
+											<script type="text/javascript">
+														var count=0;
+														function up1() {
+													   document.getElementById("demo").innerHTML = count++;
+														}
+													
+														function down1() {
+														   document.getElementById("demo").innerHTML = --count;
+														}
+													</script>									
+								
+										</div>
+								</div>
+						<!-- titlu post
+							  ////////////////////////////////////////////////////////////////-->
+							  <div class="col-md-2">
+							 <h2 style="padding:10px; margin-top:30px;">Coronavirus in Malaga</h2>
+							  </div>
+							  </div>
+						   </div>
+				
+<!-- gata cu partea de sus-->
+						<h5 style="padding:2px; margin-left:20px;">Title description, date, 2020</h5>
+						<a th:text="${c.topic}"  style="padding:2px; margin-left:20px;">Topic: News</a>
+						<div class="fakeimg" style="height:200px;">Image</div>
+							<p style="margin:20px; margin-bottom:-20px;">The common spaces of Muelle Uno , in the port of Malaga , and the Miramar Shopping Center in Fuengirola , will be disinfected with NASA technology to keep the coronavirus at bay once both spaces can reopen their doors.
+
+									Myramar Retail , the company that manages both commercial spaces, has been looking for technological alternatives that certify the safety of its customers and workers for some time and, finally, it has decided on photocatalytic oxidation, "which guarantees air quality and virus destruction and bacteria in especially sensitive areas of both centers, such as elevators, bathrooms and lactation rooms, among others "
+
+									<p style="margin:20px; padding-bottom:30px;">The photocatalysis is oriented management, design, development and exploitation of large areas commercial in the province of Malaga, photochemical reaction that occurs in nature whereby surface - treated titanium dioxide, in the presence of sunlight or artificial of a specific wavelength, they acquire decontaminating and self-cleaning properties , destroying viruses, toxic, bacteriological substances in the environment, allowing breathing fresh air and therefore more benefits for humans, as Myramar Retail has indicated in a statement.
+
+									Therefore, after analyzing this technology and comparing it with other available systems such as ozone or ultraviolet light, it has opted for photocatalysis: "In addition to being extremely effective in reducing the bacterial load in the environment, it can be used continuously - 24 hours a day - and it is completely harmless to humans . Furthermore, this technology is beneficial since it uses the principle of decontamination from nature itself. "</p>
+					
+`
+				 <div class="container"style="margin-left:30px; padding-bottom:20px;">
+						   <div class="row">
+							<div class="col-md-2">
+							<textarea style="width:950px;" onkeypress="hcb.delta(event)" class="commentbox hcb-shadow-r" name="content" id="hcb_form_content" rows="1" placeholder="Enter your comment here"></textarea>
+							  </div>
+							  <div class="col-md-2">
+							 <input style="margin-top:9px;"class="submit btn" id="hcb_submit" type="submit" value="Comment">
+							 
+							  </div>
+							  <div class="col-md-2">
+							 <img src="images/pic.01.jpg" alt="John" style="width:3.5%; border-radius: 50%; position:absolute; margin-top:9px;  margin-left:730px;">
+							 
+							  </div>
+						   </div>
+				</div>
+
+
+
+					</div>
+						<!----//////post2-->
+						
+  <div  style="" class="card1">
+							
+						
+						<h1 th:text = "${content}"></h1>
+								 <div class="container"style="margin-left:50px; align:center; padding-bottom:40px;">
+								 
+									<div class="row">
+									<!--vote-->
+									<div class="col-md-2" >
+										 <div class="buttons" style="width:40px;">
+
+									<button style="padding: 0; margin: 0; " id="up"  onclick="up();" > <img src="images/up.png" style="width:50px;"></img></button>
+										<span  id="demo1"th:text="${c.upvotes}"></span>
+										<p  id="demo1" style="font-size:20px; text-align:center; margin:0px; margin-left:10px; margin-top:-12px;" ></p>
+									<button style="padding: 0; margin: 0; margin-top:-8px;" id="down"  onclick="down();"> <img src="images/down.png" style="width:50px;"></img></button>
+											
+											<script type="text/javascript">
+														var count=0;
+														function up() {
+													   document.getElementById("demo1").innerHTML = count++;
+														}
+													
+														function down() {
+														   document.getElementById("demo1").innerHTML = --count;
+														}
+													</script>									
+								<a th:href = "@{/content/upvote/{contentId}(contentId = ${content.contentId})}"> Up-vote </a>
+								
+								</div>
+								</div>
+						<!-- titlu post
+							  ////////////////////////////////////////////////////////////////-->
+							  <div class="col-md-2">
+							  <span style="padding:10px; margin-top:30px;" th:text="${c.title}"></span>
+							 <h2 >NAME OF THE POST</h2>
+							  </div>
+							  </div>
+						   </div>
+				
+<!-- gata cu partea de sus-->
+<span th:text = "${content.title}"style="padding:2px; margin-left:30px;"></span>
+						<h5 style="padding:2px; margin-left:30px;" >Title description, date, 2020</h5>
+						<a style="padding:2px; margin-left:30px;" th:text="${c.topic}"> Topic </a>
+						<img src="images/descarcare.jpg" style=" margin:20px; margin-left:30px;">
+
+							<p style="margin:20px; margin-bottom:-20px;"></p>
+						<div>	
+							<span th:text = "${content.title}"></span>
+						</div>	
+							
+							
+	<!---comment-->						
+`					<div class="container"style="margin-left:30px; padding-bottom:20px;">
+						   <div class="row">
+							<div class="col-md-2">
+							<textarea style="width:950px;" onkeypress="hcb.delta(event)" class="commentbox hcb-shadow-r" name="content" id="hcb_form_content" rows="1" placeholder="Enter your comment here"></textarea>
+							  </div>
+							  <div class="col-md-2">
+							 <input style="margin-top:9px;"class="submit btn" id="hcb_submit" type="submit" value="Comment">
+							 
+							  </div>
+							  <div class="col-md-2">
+							 <img src="images/pic.01.jpg" alt="John" style="width:3.5%; border-radius: 50%; position:absolute; margin-top:9px;  margin-left:730px;">
+							 
+							  </div>
+						   </div>
+				</div>
+
+
+
+					</div>
 					
 					
-				</div>
-				<img src="images/banner.png"></img>
-			</section>
+					
+					
+	 <div  style="" class="card1">
+							
+						
+						<h1 th:text = "${content}"></h1>
+								 <div class="container"style="margin-left:30px; padding-bottom:40px;">
+								 
+									<div class="row">
+									<!--vote-->
+									<div class="col-md-2" >
+										 <div class="buttons" style="width:40px;">
 
-		<!-- Highlights -->
-			<section class="wrapper">
-				<div class="inner">
-					<header class="special">
-						<h2>A place for knowledge</h2>
-						<p>Eduality is a platform where content creators pick a domain (from a wide variety of categories like science, photography, sports) and share papers, videos, podcasts in order to get points/recognition from other users for their content. </p>
-					</header>
-					<div class="highlights">
-						<section>
-							<div class="content">
-								<header>
-									<a href="#" class="icon fa-vcard-o"><span class="label">Icon</span></a>
-									<h3>Connection</h3>
-								</header>
-								<p>You can connect with other people intersted in the samefield as you.</p>
-							</div>
-						</section>
-						<section>
-							<div class="content">
-								<header>
-									<a href="#" class="icon fa-files-o"><span class="label">Icon</span></a>
-									<h3>Variety</h3>
-								</header>
-								<p>Different topics from many domains found in the same simple accesible place</p>
-							</div>
-						</section>
-						<section>
-							<div class="content">
-								<header>
-									<a href="#" class="icon fa-floppy-o"><span class="label">Icon</span></a>
-									<h3>Resources</h3>
-								</header>
-								<p>Save and store reliable informations easy and free.</p>
-							</div>
-						</section>
-						<section>
-							<div class="content">
-								<header>
-									<a href="#" class="icon fa-line-chart"><span class="label">Icon</span></a>
-									<h3>Improvement</h3>
-								</header>
-								<p>Make your knowledge grow faster and imporve your work statistics</p>
-							</div>
-						</section>
-						<section>
-							<div class="content">
-								<header>
-									<a href="#" class="icon fa-paper-plane-o"><span class="label">Icon</span></a>
-									<h3>Feedback</h3>
-								</header>
-								<p>Provide and receive constant feedback through a fair algorithm.</p>
-							</div>
-						</section>
-						<section>
-							<div class="content">
-								<header>
-									<a href="#" class="icon fa-qrcode"><span class="label">Icon</span></a>
-									<h3>Simplicity</h3>
-								</header>
-								<p>You can navigate through different pages easily through the accesible interface.</p>
-							</div>
-						</section>
+									<button style="padding: 0; margin: 0; " id="up"  onclick="up();" > <img src="images/up.png" style="width:50px;"></img></button>
+										<span  id="demo1"th:text = "${content.upvotes}"></span>
+										<p id="demo2" style="font-size:20px; text-align:center; margin:0px; margin-left:10px; margin-top:-12px;" ></p>
+									<button style="padding: 0; margin: 0; margin-top:-8px;" id="down"  onclick="down();"> <img src="images/down.png" style="width:50px;"></img></button>
+											
+											<script type="text/javascript">
+														var count=0;
+														function up() {
+													   document.getElementById("demo2").innerHTML = count++;
+														}
+													
+														function down() {
+														   document.getElementById("demo2").innerHTML = --count;
+														}
+													</script>									
+								<td><a th:href = "@{/content/upvote/{contentId}(contentId = ${content.contentId})}"> Up-vote </a>
+										</div>
+								</div>
+						<!-- titlu post
+							  ////////////////////////////////////////////////////////////////-->
+							  <div class="col-md-2">
+							  <span style="padding:10px; margin-top:30px;" th:text = "${content.title}"></span>
+							 <h2 >NAME OF THE POST</h2>
+							  </div>
+							  </div>
+						   </div>
+				
+<!-- gata cu partea de sus-->
+<span th:text = "${content.title}"style="padding:2px; margin-left:30px;"></span>
+						<h5  style="padding:2px; margin-left:30px;">Title description, date, 2020</h5>
+						
+						<img src="images/cover.jpg" style=" margin:20px; margin-left:30px;">
+
+							<p style="margin:20px; margin-bottom:-20px;"></p>
+						<div>	
+							<span th:text = "${content.title}"></span>
+						</div>	
+							
+							
+	<!---comment-->						
+`					<div class="container"style="margin-left:30px; padding-bottom:20px;">
+						   <div class="row">
+							<div class="col-md-2">
+							<textarea style="width:950px;" onkeypress="hcb.delta(event)" class="commentbox hcb-shadow-r" name="content" id="hcb_form_content" rows="1" placeholder="Enter your comment here"></textarea>
+							  </div>
+							  <div class="col-md-2">
+							 <input style="margin-top:9px;"class="submit btn" id="hcb_submit" type="submit" value="Comment">
+							 
+							  </div>
+							  <div class="col-md-2">
+							 <img src="images/pic.01.jpg" alt="John" style="width:3.5%; border-radius: 50%; position:absolute; margin-top:9px;  margin-left:730px;">
+							 
+							  </div>
+						   </div>
+				</div>
+
+
+
 					</div>
-				</div>
-			</section>
-
-		<!-- CTA -->
-			<section id="cta" class="wrapper">
-				<div class="inner">
-					<h2>Promote yourself and get the recognition that you deserve</h2>
-					<p>In modern society, certain subjects have been heavily controlled by a little group of people who decide what should and should not be popular. Eduality allows people to promote themselves and get the recognition that they deserve, to the extent of even getting the chance of working with brands we have agreements with.
-</p>
-				</div>
-			</section>
-
-		<!-- Testimonials -->
-			<section class="wrapper">
-				<div class="inner">
-					<header class="special">
-						<h2>This is a place for everyone</h2>
-						<p>In our platform at the same time that we compensate and value our most experts users we make sure that newcomers influence and have a similar potential so that our ranking system is not exploited by a small minority with a lot of power.</p>
-					</header>
-					<div class="testimonials">
-					<section>
-							<div class="content">
-								<blockquote>
-									<p>I turn to Eduality for almost eveything I want to know. It's trustworthy and it even helps me with my schoolwork!</p>
-								</blockquote>
-								<div class="author">
-									<div class="image">
-										<img src="images/pic.01.jpg" alt="" />
-									</div>
-									<p class="credit">- <strong>Nuta Andreea</strong> <span>,Eduality S.A.</span></p>
-								</div>
-							</div>
-						</section>
-						<section>
-							<div class="content">
-								<blockquote>
-									<p>ALL SHE WANNA DO</p>
-								</blockquote>
-								<div class="author">
-									<div class="image">
-										<img src="images/pic03.jpg" alt="" />
-									</div>
-									<p class="credit">- <strong>Antonio Jesús Canales Delgado</strong> <span>,Eduality S.A.</span></p>
-								</div>
-							</div>
-						</section>
-						<section>
-							<div class="content">
-								<blockquote>
-									<p>As a student, Eduality has helped me finding information about my interests and satisfying my curiosity about any topic I could think of.</p>
-								</blockquote>
-								<div class="author">
-									<div class="image">
-										<img src="images/Leiva.jpeg" alt="" />
-									</div>
-									<p class="credit">- <strong>Manuel Leiva Gómez</strong> <span>,Eduality S.A.</span></p>
-								</div>
-							</div>
-						</section>
-						<section>
-							<div class="content">
-								<blockquote>
-									<p>Eduality is the supreme platform for those who want their digital content fairly valued.</p>
-								</blockquote>
-								<div class="author">
-									<div class="image">
-										<img src="images/alvaro.jpeg" alt="" />
-									</div>
-									<p class="credit">- <strong>Álvaro Lloret López</strong> <span>,Eduality S.A.</span></p>
-								</div>
-							</div>
-						</section>
-						<section>
-							<div class="content">
-								<blockquote>
-									<p> Everything I've ever needed and wanted as a student, all in one place. </p>
-								</blockquote>
-								<div class="author">
-									<div class="image">
-										<img src="images/liana.jpeg" alt="" />
-									</div>
-									<p class="credit">- <strong>Sacu Liana</strong> <span>,Eduality S.A.</span></p>
-								</div>
-							</div>
-						</section>
-						<section>
-							<div class="content">
-								<blockquote>
-									<p>As a content creator Eduality has helped me leverage my engagement and allowed me to get the audience that my content deserves.
-Furthermore, brand agreements helped me get sponsorship which motivate me to create even more.</p>
-								</blockquote>
-								<div class="author">
-									<div class="image">
-										<img src="images/lorenzo.jpeg" alt="" />
-									</div>
-									<p class="credit">- <strong>Lorenzo Velasco Sánchez</strong> <span>,Eduality S.A.</span></p>
-								</div>
-							</div>
-						</section>
-					</div>
-				</div>
+		   </div>
+		  </div>
 			</section>
 
 		<!-- Footer -->
