@@ -1,4 +1,7 @@
 {
-    "img": "https://media.allauthor.com/img/20170316190122.png",
-    "city": "testing"
+    "0": {
+        "alt": "testing",
+        "img": "https://media.allauthor.com/img/20170316190122.png"  
+    }
+      
   }
