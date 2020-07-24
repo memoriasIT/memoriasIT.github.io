@@ -63,7 +63,7 @@
             <div class="modal">
             <div class="modal-content-wrapper">
                 <h1 class="modal-title">This will be changed</h1>
-                <h3 class="subtitle">Product photography</h3>
+                <h3 class="modal-subtitle">Product photography</h3>
                 <a onclick="closeModal()" class="modal-close close">×</a>
                 <div class="modal-content">This will be changed</div>
             </div>
@@ -162,13 +162,13 @@
         // Create item and append to gallery
         function addToGallery(item, index){
             images.push(item);
-            var itemGal = createItem(item.content, item.img, index);
+            var itemGal = createItem(item.title, item.subtitle, item.img, index);
             colc.append(itemGal);
         }
 
 
         // Create DOM item to add to gallery
-        function createItem(ContentText, ImageSrc, index) {
+        function createItem(ContentTitle, ContentSubtitle, ImageSrc, index) {
             // Main item div
             var item = document.createElement('div');
             item.classList.add('grid-item');
@@ -182,7 +182,7 @@
             contentDiv.classList.add('content');
 
             var h2Text = document.createElement('h2')
-            h2Text.innerHTML = ContentText;
+            h2Text.innerHTML = ContentTitle;
 
             // Image
             var img = document.createElement('img'); 
@@ -224,8 +224,10 @@
         // Don't mix this with the other functions
         function renderItem(itemIndex) {
             var titleEl = document.querySelector('.modal-title');
+            var subtitleEl = document.querySelector('.modal-subtitle');
             var descriptionEl = document.querySelector('.modal-content');
-            titleEl.innerText = images[itemIndex].content;
+            titleEl.innerText = images[itemIndex].title;
+            subtitleEl.innerText = images[itemIndex].subtitle;
             descriptionEl.innerHTML = images[itemIndex].html;
         }
 
